@@ -9,6 +9,12 @@ public class Database {
     private String name;
 
     public Database(String name){
+        String address = Settings.getInstance().getProperty(name);
+        if(address == null) {
+            throw new RuntimeException("No allocation for the database: " + name + "\nPlease refer to settings");
+        }
+        deployDataBase(address,name);
+        //save open connection
 
     }
     public void deployDataBase(String location,String name){
@@ -24,5 +30,19 @@ public class Database {
             System.out.println(e.getMessage());
         }
     }
+    public void createTuple(){
 
+    }
+    public void editTuple(){
+
+    }
+    public String[] getTuple(){
+        return null;
+    }
+    public void deleteTuple(){
+
+    }
+    public void closeConnection(){
+
+    }
 }

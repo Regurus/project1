@@ -68,13 +68,21 @@ public class LoginDatabase extends Database {
         String sql = "SELECT login, password, name, lastName, address " + "FROM accounts WHERE ? = ?";
         ResultSet rs = null;
         try{
-            PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql));
+            PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
             pstmt.setString(1,field);
             pstmt.setString(2,value);
             rs = pstmt.executeQuery();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        boolean exists = false;
+        try {
+            exists = rs.next();
+        } catch (SQLException e) {}
+
+        if(!exists)
+            return null;
         String[] res = new String[5];
         try {
             res[0] = rs.getString("login");

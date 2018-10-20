@@ -2,17 +2,17 @@ package Controller;
 
 
 public class LoginInterface extends LoginInteraction{
-
+    public static String currentLogin;//should be updated to null on exit
     public LoginInterface(){
-
     }
     public boolean combinationApprove(String login,String password){
-        String expectedPasswordHash = " ";
-        //get password hash from sql
-        String actualPasswordHash = " ";
-        //do the hashing by selected algorithm
-        if(expectedPasswordHash.contentEquals(actualPasswordHash)&&this.loginApprove(login))
+        String[] account = this.activeConnection.getTuple("login",login);
+        if(account==null)
+            return false;
+        if(account[1].contentEquals(password)){
+            currentLogin=login;
             return true;
+        }
         return false;
     }
 

@@ -1,10 +1,12 @@
 package Controller;
 
 
-public class RegisterInterface {
+public class RegisterInterface extends LoginInteraction {
     public boolean newLoginApprove(String login){
-        //check with database if already used
-        return true;
+        String[] res = this.activeConnection.getTuple("login",login);
+        if(res==null)
+            return true;
+        else return false;
     }
 
     public boolean detailsApprove(String[] details){

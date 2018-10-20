@@ -10,11 +10,12 @@ import java.util.regex.Pattern;
 public abstract class LoginInteraction {
     protected LoginDatabase activeConnection;
     protected LoginInteraction(){
-        this.activeConnection = new LoginDatabase("accounts");
+        this.activeConnection = new LoginDatabase();
     }
     protected boolean loginApprove(String login){
-        String found = " ";
         //check with sql
+        String[] tuple = this.activeConnection.getTuple("login",login);
+        String found = tuple[0];
         if(found.equalsIgnoreCase(login))
             return true;
         return false;

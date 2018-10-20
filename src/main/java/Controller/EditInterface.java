@@ -21,6 +21,7 @@ public class EditInterface extends LoginInteraction{
         return true;
     }
     public boolean updateDetails(String[] details){
+        //string amount should be checked
         //update to sql
         return true;
     }

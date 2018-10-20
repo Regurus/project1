@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.Database;
+import Model.LoginDatabase;
 
 import java.util.regex.Pattern;
 
@@ -8,9 +8,9 @@ import java.util.regex.Pattern;
  * basic abstract class for extension by any interface interacting with login details
  */
 public abstract class LoginInteraction {
-    protected Database activeConnection;
+    protected LoginDatabase activeConnection;
     protected LoginInteraction(){
-        this.activeConnection = new Database("accounts");
+        this.activeConnection = new LoginDatabase("accounts");
     }
     protected boolean loginApprove(String login){
         String found = " ";

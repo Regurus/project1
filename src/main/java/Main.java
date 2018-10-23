@@ -14,16 +14,16 @@ public class Main extends Application {
         primaryStage.setTitle("Nituts");
         primaryStage.setScene(new Scene(root, 600, 400));
         //SetStageCloseEvent(primaryStage);
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
-        primaryStage.show();
-    }
+        //primaryStage.initStyle(StageStyle.TRANSPARENT);
 
+        primaryStage.show();
+
+    }
     public static void main(String[] args) {
         //deployment check
         //if not deployed do deployment procedure
         //initialize database connections
         //open Login UI
         launch(args);
-
     }
 }

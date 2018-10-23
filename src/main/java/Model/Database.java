@@ -1,21 +1,24 @@
 package Model;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
-    private Connection currentConnection;
+    protected Connection currentConnection;
     protected Database(String name){
-        String address = Settings.getInstance().getProperty(name);
+        String address = " ";
+        File a = new File("src/main/resources/Database.sqlite3");
+        File parentFolder = new File(a.getParent());
         if(address == null) {
             throw new RuntimeException("No allocation for the database: " + name + "\nPlease refer to settings");
         }
-        deployDataBase(address,name);
+        deployDataBase(parentFolder.getParent(),name);
     }
     protected void deployDataBase(String location,String name){
-        String url = "jdbc:sqlite:"+location + name;
+        String url = "jdbc:sqlite:"+location + "\\" + name;
         Connection conn = null;
         try{
             conn = DriverManager.getConnection(url);

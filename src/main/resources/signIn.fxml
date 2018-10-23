@@ -45,6 +45,7 @@
                            </cursor>
                         </Button>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Member?" textAlignment="CENTER" wrappingWidth="93.478515625" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+                        <Text fx:id="messageLabel" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="134.478515625" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>

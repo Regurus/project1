@@ -2,7 +2,7 @@ package Controller;
 
 
 public class LoginInterface extends LoginInteraction{
-    public static String currentLogin;//should be updated to null on exit
+    private String currentLogin;//should be updated to null on exit
     public LoginInterface(){
     }
     public boolean combinationApprove(String login,String password){
@@ -10,10 +10,15 @@ public class LoginInterface extends LoginInteraction{
         if(account==null)
             return false;
         if(account[1].contentEquals(password)){
-            currentLogin=login;
+            this.setCurrentUser(login);
             return true;
         }
         return false;
     }
-
+    private void setCurrentUser(String user){
+        this.currentLogin=user;
+    }
+    public static String getCurrentUser(){
+        return this.currentLogin;
+    }
 }

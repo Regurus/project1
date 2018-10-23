@@ -37,11 +37,6 @@ public class signUpController {
         LocalDate bdayValue= this.bday.getValue().plusYears(18);
         if(!bdayValue.isBefore(LocalDate.now())){
             msg.setText("You are not over 18");
-            try {
-                wait(5);
-            } catch (InterruptedException e) {
-            }
-            this.username.getScene().getWindow().fireEvent(new WindowEvent(this.username.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
 
         }
         String[] data = new String[4];

@@ -30,22 +30,35 @@ public class signUpController {
     Text msg;
     @FXML
     public void handleSignUp(){
-        if(!data.newLoginApprove(username.getText()))
+        msg.setText("");
+        if(!data.newLoginApprove(username.getText())){
             msg.setText("Login used or incorrect!");
-        if(password.getText().contentEquals(cpassword.getText()))
+            return;
+        }
+        if(!password.getText().equals(cpassword.getText())){
             msg.setText("Passwords doesn`t match!");
+            return;
+        }
+        if(this.bday.getValue()==null){
+            msg.setText("Birth date field is empty");
+            return;
+        }
         LocalDate bdayValue= this.bday.getValue().plusYears(18);
         if(!bdayValue.isBefore(LocalDate.now())){
             msg.setText("You are not over 18");
-
+            return;
         }
-        String[] data = new String[4];
-        data[0] = password.getText();
-        data[1] = fname.getText();
-        data[2] = lname.getText();
-        data[3] = city.getText();
-
-
+        String[] data = new String[5];
+        data[0] = username.getText();
+        data[1] = password.getText();
+        data[2] = fname.getText();
+        data[3] = lname.getText();
+        data[4] = city.getText();
+        if(!this.data.detailsApprove(data)){
+            msg.setText("Details not filled!");
+            return;
+        }
+        this.data.wiriteToDB(data);
     }
     @FXML
     public void redirectToSignIn(){

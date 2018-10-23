@@ -16,4 +16,7 @@ public class RegisterInterface extends LoginInteraction {
         }
         return true;
     }
+    public void wiriteToDB(String[] details){
+        this.activeConnection.createTuple(details);
+    }
 }

@@ -12,8 +12,7 @@ public class LoginDatabase extends Database {
                 + "	password text NOT NULL,\n"
                 + "	fname text NOT NULL,\n"
                 + "	lname text NOT NULL,\n"
-                + "	city text NOT NULL,\n"
-                + "	bday date NOT NULL\n"
+                + "	city text NOT NULL\n"
                 + ");";
         try{
             // create a new table
@@ -30,11 +29,10 @@ public class LoginDatabase extends Database {
     //2-fname
     //3-lname
     //4-city
-    //5-bday
     public void createTuple(String[] tuple){
-        if(tuple.length!=6)
+        if(tuple.length!=5)
             throw new RuntimeException("Incorrect tuple size, cannot index");
-        String sql = "INSERT INTO login_table (login,password,fname,lname,city,bday) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO login_table (login,password,fname,lname,city) VALUES(?,?,?,?,?)";
         try {
             PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
             pstmt.setString(1, tuple[0]);
@@ -42,7 +40,6 @@ public class LoginDatabase extends Database {
             pstmt.setString(3, tuple[2]);
             pstmt.setString(4, tuple[3]);
             pstmt.setString(5, tuple[4]);
-            pstmt.setString(6, tuple[5]);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -67,7 +64,7 @@ public class LoginDatabase extends Database {
     }
     //limited to a single result
     public String[] getTuple(String field,String value){
-        String sql = "SELECT login, password, fname, lname, city, bday " + "FROM login_table WHERE ? = ?";
+        String sql = "SELECT login, password, fname, lname, city " + "FROM login_table WHERE ? = ?";
         ResultSet rs = null;
         try{
             PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
@@ -92,7 +89,6 @@ public class LoginDatabase extends Database {
             res[2] = rs.getString("fname");
             res[3] = rs.getString("lname");
             res[4] = rs.getString("city");
-            res[5] = rs.getString("bday");
         }
         catch (SQLException e){
             System.out.println("Information retrieval error.");

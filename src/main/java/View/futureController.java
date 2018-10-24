@@ -19,4 +19,7 @@ public class futureController extends WindowController{
         this.menu.getScene().getWindow().fireEvent(new WindowEvent(this.menu.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
 
     }
+    public void appDelete(){
+        this.openNewWindow("Confirm","/deleteUser.fxml",400, 250);
+    }
 }

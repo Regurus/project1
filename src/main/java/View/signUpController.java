@@ -59,6 +59,7 @@ public class signUpController {
             return;
         }
         this.data.wiriteToDB(data);
+        this.username.getScene().getWindow().fireEvent(new WindowEvent(this.username.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
     @FXML
     public void redirectToSignIn(){

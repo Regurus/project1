@@ -3,7 +3,7 @@ package Controller;
 
 public class RegisterInterface extends LoginInteraction {
     public boolean newLoginApprove(String login){
-        String[] res = this.activeConnection.getByLogin(login);
+        String[] res = activeConnection.getByLogin(login);
         if(res==null)
             return true;
         else return false;
@@ -17,6 +17,6 @@ public class RegisterInterface extends LoginInteraction {
         return true;
     }
     public void wiriteToDB(String[] details){
-        this.activeConnection.createTuple(details);
+        activeConnection.createTuple(details);
     }
 }

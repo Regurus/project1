@@ -8,13 +8,14 @@ import java.util.regex.Pattern;
  * basic abstract class for extension by any interface interacting with login details
  */
 public abstract class LoginInteraction {
-    protected LoginDatabase activeConnection;
+    protected  static LoginDatabase activeConnection;
     protected LoginInteraction(){
-        this.activeConnection = new LoginDatabase();
+        if(activeConnection==null)
+            activeConnection = new LoginDatabase();
     }
     protected boolean loginApprove(String login){
         //check with sql
-        String[] tuple = this.activeConnection.getByLogin(login);
+        String[] tuple = activeConnection.getByLogin(login);
         String found = tuple[0];
         if(found.equalsIgnoreCase(login))
             return true;
@@ -27,6 +28,6 @@ public abstract class LoginInteraction {
         return false;
     }
     public void endSession(){
-        this.activeConnection.closeConnection();
+        activeConnection.closeConnection();
     }
 }

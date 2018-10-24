@@ -9,19 +9,19 @@ public class EditInterface extends LoginInteraction{
         boolean exists = this.loginApprove(newLogin);
         if(exists)
             return false;
-        this.activeConnection.editTuple("login",newLogin,LoginInterface.getCurrentUser());
+        activeConnection.editTuple("login",newLogin,LoginInterface.getCurrentUser());
         return true;
     }
     public boolean updatePassword(String newPassword){
         boolean passwordOK = this.passwordApprove(newPassword);
         if(!passwordOK)
             return false;
-        this.activeConnection.editTuple("password",newPassword,LoginInterface.getCurrentUser());
+        activeConnection.editTuple("password",newPassword,LoginInterface.getCurrentUser());
         return true;
     }
     //detail field should be: name or lastName or address
     public boolean updateDetails(String newDetail,String detailField){
-        this.activeConnection.editTuple(detailField,newDetail,LoginInterface.getCurrentUser());
+        activeConnection.editTuple(detailField,newDetail,LoginInterface.getCurrentUser());
         return true;
     }
 }

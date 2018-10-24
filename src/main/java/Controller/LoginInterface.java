@@ -7,7 +7,7 @@ public class LoginInterface extends LoginInteraction{
 
     }
     public boolean combinationApprove(String login,String password){
-        String[] account = this.activeConnection.getByLogin(login);
+        String[] account = activeConnection.getByLogin(login);
         if(account==null)
             return false;
         if(account[1].contentEquals(password)){

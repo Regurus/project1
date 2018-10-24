@@ -1,3 +1,4 @@
+import Model.LoginDatabase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,5 +28,6 @@ public class Main extends Application {
         //initialize database connections
         //open Login UI
         launch(args);
+
     }
 }

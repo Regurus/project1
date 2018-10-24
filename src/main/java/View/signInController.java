@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -19,12 +20,14 @@ public class signInController extends WindowController {
     @FXML
     public void handleSignIn(){
         boolean ok = dataBase.combinationApprove(username.getText(),password.getText());
-        /*if(!ok){
+        if(!ok){
             this.messageLabel.setText("Wrong Login/Password");
             return;
-        }*/
+        }
 
         openNewWindow("Future Functions", "/future.fxml",1300,1000);
+        this.username.getScene().getWindow().fireEvent(new WindowEvent(this.username.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
+
     }
     @FXML
     public void handleSignUpFromSignIn()throws IOException {

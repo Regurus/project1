@@ -62,39 +62,6 @@ public class LoginDatabase extends Database {
         }
 
     }
-    //limited to a single result
-    public String[] getTuple(String field,String value){
-        String sql = "SELECT login, password, fname, lname, city " + "FROM login_table WHERE ? = ?";
-        ResultSet rs = null;
-        try{
-            PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
-            pstmt.setString(1,field);
-            pstmt.setString(2,value);
-            rs = pstmt.executeQuery();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        boolean exists = false;
-        try {
-            exists = rs.next();
-        } catch (SQLException e) {}
-
-        if(!exists)
-            return null;
-        String[] res = new String[6];
-        try {
-            res[0] = rs.getString("login");
-            res[1] = rs.getString("password");
-            res[2] = rs.getString("fname");
-            res[3] = rs.getString("lname");
-            res[4] = rs.getString("city");
-        }
-        catch (SQLException e){
-            System.out.println("Information retrieval error.");
-        }
-        return res;
-    }
     public void deleteTuple(String login){
         String sql = "DELETE FROM login_table WHERE login = ?";
         try {
@@ -110,4 +77,40 @@ public class LoginDatabase extends Database {
 
     }
 
+
+    public String[] getByLogin(String login){
+        String sql = "SELECT login, password, fname, lname, city " + "FROM login_table WHERE login = ?";
+        ResultSet rs = null;
+        try{
+            PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
+            pstmt.setString(1,login);
+            rs = pstmt.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return this.parseResultSet(rs);
+    }
+
+    private String[] parseResultSet(ResultSet rs){
+        boolean exists = false;
+        try {
+            exists = rs.next();
+        } catch (SQLException e) {}
+
+        if(!exists)
+            return null;
+        String[] res = new String[5];
+        try {
+            res[0] = rs.getString("login");
+            res[1] = rs.getString("password");
+            res[2] = rs.getString("fname");
+            res[3] = rs.getString("lname");
+            res[4] = rs.getString("city");
+        }
+        catch (SQLException e){
+            System.out.println("Information retrieval error.");
+        }
+        return res;
+    }
 }

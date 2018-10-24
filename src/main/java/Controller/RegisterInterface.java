@@ -3,7 +3,7 @@ package Controller;
 
 public class RegisterInterface extends LoginInteraction {
     public boolean newLoginApprove(String login){
-        String[] res = this.activeConnection.getTuple("login",login);
+        String[] res = this.activeConnection.getByLogin(login);
         if(res==null)
             return true;
         else return false;

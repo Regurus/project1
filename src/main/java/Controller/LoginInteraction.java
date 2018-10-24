@@ -14,7 +14,7 @@ public abstract class LoginInteraction {
     }
     protected boolean loginApprove(String login){
         //check with sql
-        String[] tuple = this.activeConnection.getTuple("login",login);
+        String[] tuple = this.activeConnection.getByLogin(login);
         String found = tuple[0];
         if(found.equalsIgnoreCase(login))
             return true;

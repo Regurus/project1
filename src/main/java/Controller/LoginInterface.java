@@ -7,7 +7,7 @@ public class LoginInterface extends LoginInteraction{
 
     }
     public boolean combinationApprove(String login,String password){
-        String[] account = this.activeConnection.getTuple("login",login);
+        String[] account = this.activeConnection.getByLogin(login);
         if(account==null)
             return false;
         if(account[1].contentEquals(password)){
@@ -18,6 +18,9 @@ public class LoginInterface extends LoginInteraction{
     }
     private void setCurrentUser(String user){
         this.currentLogin=user;
+    }
+    public static void nullifyCurrentUser(){
+        currentLogin=null;
     }
     public static String getCurrentUser(){
         return currentLogin;

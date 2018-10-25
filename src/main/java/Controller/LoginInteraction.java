@@ -33,9 +33,6 @@ public abstract class LoginInteraction {
         String[] account = activeConnection.getByLogin(login);
         if(account==null)
             return false;
-        if(account[1].contentEquals(password)){
-            return true;
-        }
-        return false;
+        return account[1].contentEquals(password);
     }
 }

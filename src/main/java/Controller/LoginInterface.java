@@ -12,13 +12,13 @@ public class LoginInterface extends LoginInteraction{
         if(account==null)
             return false;
         if(account[1].contentEquals(password)){
-            this.setCurrentUser(login);
+            setCurrentUser(login);
             return true;
         }
         return false;
     }
-    private void setCurrentUser(String user){
-        this.currentLogin=user;
+    private static void setCurrentUser(String user){
+        currentLogin=user;
     }
     public static void nullifyCurrentUser(){
         currentLogin=null;

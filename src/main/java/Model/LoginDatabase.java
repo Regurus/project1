@@ -92,10 +92,13 @@ public class LoginDatabase extends Database {
     }
 
     private String[] parseResultSet(ResultSet rs){
-        boolean exists = false;
+        boolean exists;
         try {
             exists = rs.next();
-        } catch (SQLException e) {}
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
 
         if(!exists)
             return null;

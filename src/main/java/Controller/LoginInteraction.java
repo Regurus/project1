@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * basic abstract class for extension by any interface interacting with login details
  */
 public abstract class LoginInteraction {
-    protected  static LoginDatabase activeConnection;
+    static LoginDatabase activeConnection;
     protected LoginInteraction(){
         if(activeConnection==null)
             activeConnection = new LoginDatabase();
@@ -17,17 +17,25 @@ public abstract class LoginInteraction {
         //check with sql
         String[] tuple = activeConnection.getByLogin(login);
         String found = tuple[0];
-        if(found.equalsIgnoreCase(login))
-            return true;
-        return false;
+        return found.equalsIgnoreCase(login);
     }
     public boolean passwordApprove(String password){
         //approves only passwords that include at least 1 number, 1 capital letter and one regular letter.
-        if(Pattern.matches("[0-9]",password)&&Pattern.matches("[a-z]",password)&&Pattern.matches("[A-Z]",password))
-            return true;
-        return false;
+        return Pattern.matches("[0-9]", password) && Pattern.matches("[a-z]", password) && Pattern.matches("[A-Z]", password);
+    }
+    public String[] getUserInfo(String login){
+        return activeConnection.getByLogin(login);
     }
     public void endSession(){
         activeConnection.closeConnection();
+    }
+    public boolean combinationApprove(String login,String password){
+        String[] account = activeConnection.getByLogin(login);
+        if(account==null)
+            return false;
+        if(account[1].contentEquals(password)){
+            return true;
+        }
+        return false;
     }
 }

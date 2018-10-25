@@ -12,12 +12,8 @@ public class EditInterface extends LoginInteraction{
         activeConnection.editTuple("login",newLogin,LoginInterface.getCurrentUser());
         return true;
     }
-    public boolean updatePassword(String newPassword){
-        boolean passwordOK = this.passwordApprove(newPassword);
-        if(!passwordOK)
-            return false;
+    public void updatePassword(String newPassword){
         activeConnection.editTuple("password",newPassword,LoginInterface.getCurrentUser());
-        return true;
     }
     //detail field should be: name or lastName or address
     public boolean updateDetails(String newDetail,String detailField){

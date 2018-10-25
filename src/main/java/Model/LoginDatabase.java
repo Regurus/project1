@@ -47,14 +47,13 @@ public class LoginDatabase extends Database {
         }
     }
     public void editTuple(String field, String newValue, String login){
-        String sql = "UPDATE login_table SET ? = ? "
+        String sql = "UPDATE login_table SET "+field+" = ? "
                 + "WHERE login = ?";
         try {
             PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
             // set the corresponding param
-            pstmt.setString(1, field);
-            pstmt.setString(2, newValue);
-            pstmt.setString(3, login);
+            pstmt.setString(1, newValue);
+            pstmt.setString(2, login);
             // update
             pstmt.executeUpdate();
         } catch (SQLException e) {

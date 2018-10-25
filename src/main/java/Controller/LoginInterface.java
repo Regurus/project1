@@ -6,6 +6,7 @@ public class LoginInterface extends LoginInteraction{
     public LoginInterface(){
 
     }
+    @Override
     public boolean combinationApprove(String login,String password){
         String[] account = activeConnection.getByLogin(login);
         if(account==null)

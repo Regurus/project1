@@ -23,7 +23,7 @@
           <items>
             <MenuItem mnemonicParsing="false" text="My Listings" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Edit Personal Info" />
+            <MenuItem mnemonicParsing="false" onAction="#appEdit" text="Edit Personal Info" />
                   <MenuItem mnemonicParsing="false" onAction="#appDelete" text="Delete My Account" />
           </items>
         </Menu>

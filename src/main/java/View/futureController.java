@@ -22,4 +22,7 @@ public class futureController extends WindowController{
     public void appDelete(){
         this.openNewWindow("Confirm","/deleteUser.fxml",400, 250);
     }
+    public void appEdit(){
+        this.openNewWindow("Edit Details","/updateUser.fxml",600,400);
+    }
 }

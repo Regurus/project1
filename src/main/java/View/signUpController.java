@@ -43,7 +43,7 @@ public class signUpController {
             msg.setText("Birth date field is empty");
             return;
         }
-        LocalDate bdayValue= this.bday.getValue().plusYears(18);
+        LocalDate bdayValue= this.bday.getValue().minusDays(1).plusYears(18);
         if(!bdayValue.isBefore(LocalDate.now())){
             msg.setText("You are not over 18");
             return;

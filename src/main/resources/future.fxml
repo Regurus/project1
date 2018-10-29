@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.futureController">
+<VBox prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.futureController">
   <children>
     <MenuBar fx:id="menu" VBox.vgrow="NEVER">
       <menus>
@@ -24,6 +24,7 @@
             <MenuItem mnemonicParsing="false" text="My Listings" />
                   <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#appEdit" text="Edit Personal Info" />
+                  <MenuItem mnemonicParsing="false" onAction="#appView" text="Search Personal Info" />
                   <MenuItem mnemonicParsing="false" onAction="#appDelete" text="Delete My Account" />
           </items>
         </Menu>

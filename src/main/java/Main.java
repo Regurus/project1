@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("signIn.fxml"));
         //root.getStylesheets().add(getClass().getResource("Main_Style.css").toString());
-        primaryStage.setTitle("Nituts");
+        primaryStage.setTitle("Vaction4U");
         primaryStage.setScene(new Scene(root, 600, 400));
         //SetStageCloseEvent(primaryStage);
         //primaryStage.initStyle(StageStyle.TRANSPARENT);

@@ -10,3 +10,10 @@
     -fx-alignment: CENTER;
     -fx-content-display: LEFT;
 }
+.date-picker {
+    -fx-font: 16px "Century Gothic";
+}
+
+.date-picker .text-field {
+    -fx-font: 16px "Century Gothic";
+}

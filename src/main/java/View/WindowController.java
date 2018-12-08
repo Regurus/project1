@@ -1,11 +1,13 @@
 package View;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class WindowController {
+    protected FontAwesomeIcon logo;
     protected final String IDLE_BUTTON_STYLE = "-fx-background-color: transparent;";
     protected final String HOVERED_BUTTON_STYLE = "-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;";
     protected void openNewWindow(String windowName, String fxmlFile,int width,int height){

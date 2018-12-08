@@ -66,4 +66,9 @@ public class signUpController {
         this.data.endSession();
         this.username.getScene().getWindow().fireEvent(new WindowEvent(this.username.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
+    @FXML
+    public void close(){
+        this.data.endSession();
+        this.username.getScene().getWindow().fireEvent(new WindowEvent(this.username.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
+    }
 }

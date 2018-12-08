@@ -46,26 +46,31 @@ public class UiController extends WindowController implements InitialiableWindow
     @FXML
     private AnchorPane user_edit_pane;
     @FXML
-    private SplitPane search_pane;
-    @FXML
-    private SplitPane history_pane;
-    @FXML
-    private SplitPane favorites_pane;
-    @FXML
     private Button home_btn;
     @FXML
-    private Button settings_btn;
+    private Button add_btn;
     @FXML
     private Button history_btn;
     @FXML
     private Button favorites_btn;
     @FXML
-    private TilePane favorites_container;
+    private TilePane home_scr_items;
     @FXML
-    private ScrollPane scrollPane;
+    private AnchorPane home_scr;
+    @FXML
+    private TilePane history_scr_items;
+    @FXML
+    private AnchorPane history_scr;
+    @FXML
+    private TilePane favorites_scr_items;
+    @FXML
+    private AnchorPane favorites_scr;
+    @FXML
+    private GridPane add_scr;
     public void initialize(){
         home_btn.setStyle("-fx-background-color: #ffffff");
         this.depressedBtn = 0;
+
         Node[] nodes = new Node[10];
         for(int i=0;i<10;i++){
             try{
@@ -74,9 +79,10 @@ public class UiController extends WindowController implements InitialiableWindow
             catch (Exception e){
                 System.out.println("FXML Error");
             }
-            favorites_container.getChildren().add(nodes[i]);
+            home_scr_items.getChildren().add(nodes[i]);
         }
-        scrollPane.setContent(this.favorites_container);
+        home_scr.toFront();
+        //scrollPane.setContent(this.test_container);
     }
     public UiController(){
         this.userValues=this.data.getUserInfo(LoginInterface.getCurrentUser());
@@ -122,21 +128,26 @@ public class UiController extends WindowController implements InitialiableWindow
     public void handle_menu_click(ActionEvent actionEvent){
         int newButton=0;
         if (actionEvent.getSource() == home_btn) {
-            search_pane.toFront();
+            home_scr.toFront();
+            newButton=0;
         }
-        if (actionEvent.getSource() == settings_btn) {
-            user_edit_pane.toFront();
+        if (actionEvent.getSource() == add_btn) {
+            add_scr.toFront();
             newButton=1;
         }
         if (actionEvent.getSource() == history_btn) {
-            history_pane.toFront();
+            history_scr.toFront();
             newButton=2;
         }
         if (actionEvent.getSource() == favorites_btn) {
-            favorites_pane.toFront();
+            favorites_scr.toFront();
             newButton=3;
         }
         this.updateMenu(newButton);
+    }
+    @FXML
+    public void openSettings(){
+        user_edit_pane.toFront();
     }
     public void appLogOut(){
         LoginInterface.nullifyCurrentUser();
@@ -151,7 +162,7 @@ public class UiController extends WindowController implements InitialiableWindow
         if(this.depressedBtn==0)
             active = home_btn;
         if(this.depressedBtn==1)
-            active = settings_btn;
+            active = add_btn;
         if(this.depressedBtn==2)
             active = history_btn;
         if(this.depressedBtn==3)
@@ -161,7 +172,7 @@ public class UiController extends WindowController implements InitialiableWindow
         if(newActiveButton==0)
             newActive = home_btn;
         if(newActiveButton==1)
-            newActive = settings_btn;
+            newActive = add_btn;
         if(newActiveButton==2)
             newActive = history_btn;
         if(newActiveButton==3)

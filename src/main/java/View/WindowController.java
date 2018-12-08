@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class WindowController {
     protected FontAwesomeIcon logo;
@@ -13,6 +14,7 @@ public class WindowController {
     protected void openNewWindow(String windowName, String fxmlFile,int width,int height){
         try {
             Stage stage = new Stage();
+            stage.initStyle(StageStyle.TRANSPARENT);
             stage.setTitle(windowName);
             FXMLLoader fxmlLoader = new FXMLLoader();
             Parent root = fxmlLoader.load(getClass().getResource(fxmlFile).openStream());

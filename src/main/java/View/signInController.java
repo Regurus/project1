@@ -37,13 +37,11 @@ public class signInController extends WindowController {
     }
     @FXML
     public void handleSignUpFromSignIn()throws IOException {
-        openNewWindow("SignUp", "/signUp.fxml",600,400);
+        openNewWindow("SignUp", "/signUp.fxml",601,509);
     }
-
-
-
-
-    public static void close(){
+    @FXML
+    public void close(){
         dataBase.endSession();
+        this.username.getScene().getWindow().fireEvent(new WindowEvent(this.username.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 }

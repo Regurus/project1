@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 import java.io.File;
@@ -17,7 +18,7 @@ public class Main extends Application {
         primaryStage.setTitle("Vaction4U");
         primaryStage.setScene(new Scene(root, 600, 400));
         //SetStageCloseEvent(primaryStage);
-        //primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         primaryStage.show();
 

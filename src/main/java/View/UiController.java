@@ -11,6 +11,7 @@ import Controller.SearchInterface;
 import Model.Vacation;
 import Model.VacationDatabase;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -58,6 +59,16 @@ public class UiController extends WindowController implements InitialiableWindow
     private AnchorPane user_edit_pane;
     @FXML
     private Label username_lbl;
+    //<editor-fold desc="Icons">
+    @FXML
+    private FontAwesomeIconView homeIcon;
+    @FXML
+    private FontAwesomeIconView addIcon;
+    @FXML
+    private FontAwesomeIconView historyIcon;
+    @FXML
+    private FontAwesomeIconView favoritesIcon;
+    //</editor-fold>
 
     //<editor-fold desc="Menu">
     @FXML
@@ -217,24 +228,40 @@ public class UiController extends WindowController implements InitialiableWindow
     }
     private void updateMenu(int newActiveButton){
         Button active = null;
-        if(this.depressedBtn==0)
+        if(this.depressedBtn==0){
             active = home_btn;
-        if(this.depressedBtn==1)
+            this.homeIcon.setFill(Paint.valueOf("#FFFFFF"));
+        }
+        if(this.depressedBtn==1){
             active = add_btn;
-        if(this.depressedBtn==2)
+            this.addIcon.setFill(Paint.valueOf("#FFFFFF"));
+        }
+        if(this.depressedBtn==2){
             active = history_btn;
-        if(this.depressedBtn==3)
+            this.historyIcon.setFill(Paint.valueOf("#FFFFFF"));
+        }
+        if(this.depressedBtn==3){
             active = favorites_btn;
+            this.favoritesIcon.setFill(Paint.valueOf("#FFFFFF"));
+        }
         active.setStyle("-fx-background-color:  #4682B4");
         Button newActive = null;
-        if(newActiveButton==0)
+        if(newActiveButton==0){
             newActive = home_btn;
-        if(newActiveButton==1)
+            this.homeIcon.setFill(Paint.valueOf("#000000"));
+        }
+        if(newActiveButton==1){
             newActive = add_btn;
-        if(newActiveButton==2)
+            this.addIcon.setFill(Paint.valueOf("#000000"));
+        }
+        if(newActiveButton==2){
             newActive = history_btn;
-        if(newActiveButton==3)
+            this.historyIcon.setFill(Paint.valueOf("#000000"));
+        }
+        if(newActiveButton==3){
             newActive = favorites_btn;
+            this.favoritesIcon.setFill(Paint.valueOf("#000000"));
+        }
         newActive.setStyle("-fx-background-color:  #FFFFFF");
         this.depressedBtn = newActiveButton;
     }

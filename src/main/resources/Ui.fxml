@@ -54,22 +54,22 @@
                <children>
                   <Button fx:id="home_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="131.0" prefWidth="195.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="1">
                      <graphic>
-                        <FontAwesomeIconView fx:id="homeIcon" glyphName="HOME" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <FontAwesomeIconView fx:id="homeIcon" glyphName="HOME" size="75" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="icon" />
                      </graphic>
                   </Button>
                   <Button fx:id="add_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="131.0" prefWidth="195.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="3">
                      <graphic>
-                        <FontAwesomeIconView fx:id="addIcon" glyphName="PLUS" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <FontAwesomeIconView fx:id="addIcon" fill="WHITE" glyphName="PLUS" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </graphic>
                   </Button>
                   <Button fx:id="history_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="178.0" prefWidth="246.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="5">
                      <graphic>
-                        <FontAwesomeIconView glyphName="HISTORY" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <FontAwesomeIconView fx:id="historyIcon" fill="WHITE" glyphName="HISTORY" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </graphic>
                   </Button>
                   <Button fx:id="favorites_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="178.0" prefWidth="246.0" style="-fx-background-color: #4682B4;" styleClass="menuItem" stylesheets="@style.css" GridPane.rowIndex="7">
                      <graphic>
-                        <FontAwesomeIconView glyphName="STAR" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <FontAwesomeIconView fx:id="favoritesIcon" fill="WHITE" glyphName="STAR" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </graphic>
                   </Button>
                </children>
@@ -116,14 +116,17 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Hello!" GridPane.rowIndex="1" />
-                                    <Label fx:id="username_lbl" text="\$USERNAME$" GridPane.rowIndex="2">
+                                    <Label text="Hello!" textFill="WHITE" GridPane.rowIndex="1">
                                        <font>
-                                          <Font name="Century Gothic Bold" size="12.0" />
+                                          <Font name="Century Gothic" size="14.0" />
                                        </font></Label>
-                                    <Label fx:id="settings_btn" onMouseClicked="#openSettings" text="Settings" GridPane.rowIndex="3">
+                                    <Label fx:id="username_lbl" text="\$USERNAME$" textFill="WHITE" GridPane.rowIndex="2">
                                        <font>
-                                          <Font name="Century Gothic" size="12.0" />
+                                          <Font name="Century Gothic Bold" size="14.0" />
+                                       </font></Label>
+                                    <Label fx:id="settings_btn" onMouseClicked="#openSettings" text="Settings" textFill="WHITE" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="Century Gothic" size="14.0" />
                                        </font>
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
@@ -144,7 +147,7 @@
                                  <children>
                                     <Button mnemonicParsing="false" prefHeight="58.0" prefWidth="86.0" style="-fx-background-color: #4682B4;" styleClass="icon" stylesheets="@style.css" GridPane.rowIndex="1">
                                        <graphic>
-                                          <MaterialDesignIconView glyphName="EXIT_TO_APP" onMouseClicked="#appLogOut" size="30" strokeType="OUTSIDE" strokeWidth="0.0">
+                                          <MaterialDesignIconView fill="WHITE" glyphName="EXIT_TO_APP" onMouseClicked="#appLogOut" size="30" strokeType="OUTSIDE" strokeWidth="0.0">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor></MaterialDesignIconView>
@@ -152,11 +155,11 @@
                                     </Button>
                                     <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #4682B4;" translateX="35.0" GridPane.columnIndex="1">
                                        <graphic>
-                                          <MaterialDesignIconView fx:id="exit_btn" glyphName="CLOSE_BOX" onMouseClicked="#close" size="25" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="24.0" />
+                                          <MaterialDesignIconView fx:id="exit_btn" fill="WHITE" glyphName="CLOSE_BOX" onMouseClicked="#close" size="25" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="24.0" />
                                        </graphic></Button>
                                  </children>
                               </GridPane>
-                              <FontAwesomeIconView glyphName="USER" size="75" strokeType="OUTSIDE" strokeWidth="0.0" translateX="50.0" />
+                              <FontAwesomeIconView fill="WHITE" glyphName="USER" size="75" strokeType="OUTSIDE" strokeWidth="0.0" translateX="50.0" />
                            </children>
                         </GridPane>
                         <GridPane prefHeight="95.0" prefWidth="443.0" GridPane.rowIndex="1">
@@ -181,7 +184,7 @@
                                  </effect>
                               </TextField>
                               <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" style="-fx-background-color: #4682B4;" textFill="LIGHTGRAY" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <FontAwesomeIconView fx:id="search_btn" glyphName="SEARCH" onMouseClicked="#searchProcedure" size="35" strokeType="OUTSIDE" strokeWidth="0.0" translateX="5.0" translateY="-2.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <FontAwesomeIconView fx:id="search_btn" fill="WHITE" glyphName="SEARCH" onMouseClicked="#searchProcedure" size="35" strokeType="OUTSIDE" strokeWidth="0.0" translateX="15.0" translateY="-2.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <DatePicker fx:id="searchDate" prefHeight="25.0" prefWidth="339.0" promptText="When you are ready to go?" style="-fx-background-color: ffffff;" styleClass="my-date-picker" stylesheets="@style.css" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>

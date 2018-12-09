@@ -32,6 +32,7 @@
     -fx-control-inner-background:#4682B4;
     -fx-prompt-text-fill: #FFFFFF;
     -fx-text-inner-color: #FFFFFF;
+    -fx-text-fill: #FFFFFF;
 }
 
 .text-area{

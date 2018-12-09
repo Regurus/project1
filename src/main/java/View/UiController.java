@@ -1,10 +1,13 @@
 package View;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import Controller.EditInterface;
 import Controller.LoginInterface;
+import Controller.SearchInterface;
+import Model.Vacation;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,11 +17,14 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.WindowEvent;
 
 
@@ -27,6 +33,7 @@ public class UiController extends WindowController implements InitialiableWindow
     private EditInterface data = new EditInterface();
     private String[] userValues;
     private int depressedBtn;
+    private SearchInterface searchInterface;
     @FXML
     private TextField username;
     @FXML
@@ -67,10 +74,21 @@ public class UiController extends WindowController implements InitialiableWindow
     private AnchorPane favorites_scr;
     @FXML
     private GridPane add_scr;
+    @FXML
+    private Label add_msg;
+    @FXML
+    private ImageView add_image_preview;
+    @FXML
+    private DatePicker searchDate;
+    @FXML
+    private TextField searchBox;
+
     public void initialize(){
         home_btn.setStyle("-fx-background-color: #ffffff");
         this.depressedBtn = 0;
-
+        this.searchInterface = new SearchInterface();
+        //SearchInterface.ui = this;
+        //TODO: delete on real testing
         Node[] nodes = new Node[10];
         for(int i=0;i<10;i++){
             try{
@@ -180,6 +198,32 @@ public class UiController extends WindowController implements InitialiableWindow
         newActive.setStyle("-fx-background-color:  #FFFFFF");
         this.depressedBtn = newActiveButton;
     }
-
+    @FXML
+    private void openImage(){
+        FileChooser fileChooser = new FileChooser();
+        //fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPEG Image(*.jpg)"));
+        File selectedImage = fileChooser.showOpenDialog(null);
+        if(selectedImage !=null){
+            this.add_image_preview.setImage(new Image(selectedImage.toURI().toString()));
+        }
+        else{
+            add_msg.setText("Invalid Image File");
+        }
+    }
+    //functional
+    @FXML
+    private void searchProcedure(){
+        //this.searchInterface.search(this.searchBox.getText(),this.searchDate.getValue());
+    }
+    public void addResultItem(){
+        Node newResult = null;
+        try{
+            newResult = FXMLLoader.load(getClass().getResource("/resultItem.fxml"));
+            home_scr_items.getChildren().add(newResult);
+        }
+        catch (Exception e){
+            System.out.println("FXML Error");
+        }
+    }
 
 }

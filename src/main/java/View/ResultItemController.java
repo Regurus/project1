@@ -1,7 +1,9 @@
 package View;
 
+import Controller.SearchInterface;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
@@ -21,10 +23,12 @@ public class ResultItemController {
     public void openItem(){
 
     }
-    public void defineContent(String dest_city,String dest_reg,int len,int price){
+    public void defineContent(Image preview,String dest_city, String dest_reg, int len, int price){
+        //SearchInterface.lastItem = this;
         lbl_len.setText(""+len);
         lbl_price.setText(""+price+'$');
         lbl_area_name.setText(dest_reg);
         lbl_city_name.setText(dest_city);
+        this.preview.setImage(preview);
     }
 }

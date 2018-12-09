@@ -26,3 +26,9 @@
     -fx-font: 16px "Century Gothic";
 }
 
+.add-date_picker{
+    -fx-font: 16px "Century Gothic";
+    -fx-background-color: #4682B4;
+    -fx-border-color: #4682B4;
+    -fx-border-radius: 15;
+}

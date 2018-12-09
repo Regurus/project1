@@ -33,7 +33,7 @@
                         <Font name="Century Gothic" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbl_len" layoutX="171.0" layoutY="27.0" prefHeight="18.0" prefWidth="65.0" text="\$Lenght" textFill="#999999">
+                  <Label fx:id="lbl_len" layoutX="171.0" layoutY="27.0" prefHeight="18.0" prefWidth="65.0" text="\$Length" textFill="#999999">
                      <font>
                         <Font name="Century Gothic" size="14.0" />
                      </font>

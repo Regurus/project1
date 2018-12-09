@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import Controller.AddVacationInterface;
 import Controller.EditInterface;
 import Controller.LoginInterface;
 import Controller.SearchInterface;
@@ -31,6 +32,7 @@ import javafx.stage.WindowEvent;
 public class UiController extends WindowController implements InitialiableWindow {
 
     private EditInterface data = new EditInterface();
+    private AddVacationInterface addVacInterface = new AddVacationInterface();
     private String[] userValues;
     private int depressedBtn;
     private SearchInterface searchInterface;
@@ -52,6 +54,8 @@ public class UiController extends WindowController implements InitialiableWindow
     private Text msg;
     @FXML
     private AnchorPane user_edit_pane;
+
+    //<editor-fold desc="Menu">
     @FXML
     private Button home_btn;
     @FXML
@@ -60,28 +64,54 @@ public class UiController extends WindowController implements InitialiableWindow
     private Button history_btn;
     @FXML
     private Button favorites_btn;
+    //</editor-fold>
+
     @FXML
     private TilePane home_scr_items;
     @FXML
     private AnchorPane home_scr;
+
+    //<editor-fold desc="History">
     @FXML
     private TilePane history_scr_items;
     @FXML
     private AnchorPane history_scr;
+    //</editor-fold>
+
+    //<editor-fold desc="Favorites">
     @FXML
     private TilePane favorites_scr_items;
     @FXML
     private AnchorPane favorites_scr;
+    //</editor-fold>
+
+    //<editor-fold desc="Add Vacation">
+    @FXML
+    private TextField add_text_region;
+    @FXML
+    private TextField add_text_city;
+    @FXML
+    private TextField add_text_price;
+    @FXML
+    private DatePicker add_date_start;
+    @FXML
+    private DatePicker add_date_end;
+    @FXML
+    private TextArea add_text_description;
+    @FXML
+    private ImageView add_image_preview;
     @FXML
     private GridPane add_scr;
     @FXML
     private Label add_msg;
-    @FXML
-    private ImageView add_image_preview;
+    //</editor-fold>
+
+    //<editor-fold desc="Search">
     @FXML
     private DatePicker searchDate;
     @FXML
     private TextField searchBox;
+    //</editor-fold>
 
     public void initialize(){
         home_btn.setStyle("-fx-background-color: #ffffff");
@@ -226,4 +256,10 @@ public class UiController extends WindowController implements InitialiableWindow
         }
     }
 
+    public void handlePublishNewVacation(ActionEvent actionEvent) {
+        Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText()," ");
+        if(addVacInterface.detailsApprove(vacation.toStringArray())){
+            addVacInterface.wiriteToDB(vacation.toStringArray());
+        }
+    }
 }

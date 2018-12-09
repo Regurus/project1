@@ -29,6 +29,22 @@
 .add-date_picker{
     -fx-font: 16px "Century Gothic";
     -fx-background-color: #4682B4;
-    -fx-border-color: #4682B4;
-    -fx-border-radius: 15;
+    -fx-control-inner-background:#4682B4;
+    -fx-prompt-text-fill: #FFFFFF;
+    -fx-text-inner-color: #FFFFFF;
+}
+
+.text-area{
+    -fx-font: 12px "Century Gothic";
+    -fx-background-color: #4682B4;
+    -fx-control-inner-background:#4682B4;
+    -fx-text-fill:#FFFFFF;
+}
+
+.add-buttons{
+    -fx-font: 16px "Century Gothic";
+    -fx-background-color: #4682B4;
+    -fx-background-radius: 10;
+    -fx-text-fill: #FFFFFF;
+    -fx-prompt-text-fill: #FFFFFF;
 }

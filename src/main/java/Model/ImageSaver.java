@@ -14,14 +14,11 @@ public class ImageSaver {
     }
     public static String saveImage(File im){
         ID++;
-
         File file=im;
         //String folder_path="C:\\Users\\Razi\\Desktop\\project1\\src\\main\\resources\\images\\userImages";
         String folder_path=System.getProperty("user.dir")+"\\src\\main\\resources\\images\\userImages";
         //   boolean renameResult = file.renameTo(new File(String.valueOf(ID)));
-        file.renameTo(new File(folder_path +
-                "\\" + String.valueOf(ID) + ".png"));
-
+        file.renameTo(new File(folder_path + "\\" + String.valueOf(ID) + ".png"));
         String absolutePath = String.valueOf(ID) + ".png";
         return absolutePath;
     }
@@ -32,8 +29,7 @@ public class ImageSaver {
         int h = im.getHeight();
         BufferedImage dimg = new BufferedImage(width, height, im.getType());
         Graphics2D g = dimg.createGraphics();
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g.drawImage(im, 0, 0, width, height, 0, 0, w, h, null);
         g.dispose();
         ImageIO.write(dimg, "PNG", file);
@@ -41,14 +37,8 @@ public class ImageSaver {
     }
 
     public static void main(String[] args) throws IOException {
-
-        // File f=new File("D:\\documents\\users\\dvil\\Downloads\\project1\\trump_-_hipstory_-_amit_shimoni_1024x1024.JPG");
-        //  saveImage(f);
-
-        File s=new File("C:\\Users\\Razi\\Pictures\\Saved Pictures\\download.jpg");
+        File s=new File("D:\\Users\\Bogdan\\Pictures\\GTR\\rear.jpg");
         changeSizeImage(s,100,100);
-
-
     }
 
 

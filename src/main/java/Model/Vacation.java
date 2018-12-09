@@ -1,5 +1,10 @@
 package Model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
 public class Vacation {
     private String dest_region;
     private String dest_city;
@@ -50,5 +55,19 @@ public class Vacation {
     public String[] toStringArray(){
         String[] res = {dest_region,dest_city,price,start,end,description,image_path};
         return res;
+    }
+    public int getVacationLenght(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+        try{
+            Date startTime = sdf.parse(start);
+            Date endTime = sdf.parse(end);
+            long diffInMillies = Math.abs(endTime.getTime() - startTime.getTime());
+            long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            return (int)diff;
+        }
+        catch (Exception e){
+            return 0;
+        }
     }
 }

@@ -90,7 +90,7 @@ public class VacationDatabase extends Database{
 
 
     public Vacation[] getRelevantTuples(String location, String date){
-        String sql = "SELECT destination_region, destination_city, price, departure, arrival,description, picture_name " + "FROM vacation_table WHERE (destination_region = ? OR destination_city = ?) AND departure = ?;";
+        String sql = "SELECT * FROM vacation_table WHERE (destination_region = ? OR destination_city = ?) AND departure = ?;";
         ResultSet rs = null;
         try{
             PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
@@ -98,41 +98,38 @@ public class VacationDatabase extends Database{
             pstmt.setString(2,location);
             pstmt.setString(3,date);
             rs = pstmt.executeQuery();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            return this.parseResultSet(rs);
         }
-        return this.parseResultSet(rs);
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     public Vacation[] getTwentyVactions(){
-        Vacation[] res = new Vacation[20];
-        ResultSet rs = null;
-        int i = 0;
+        ArrayList<Vacation> res = new ArrayList<>();
         try{
             PreparedStatement pstmt  = this.currentConnection.prepareStatement("SELECT * FROM vacation_table LIMIT 20;");
-            rs = pstmt.executeQuery();
-            while(rs.next()){
-                res[i] = new Vacation(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7));
-                i++;
-            }
+            ResultSet rs = pstmt.executeQuery();
+            return this.parseResultSet(rs);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return null;
         }
-        return res;
     }
 
     private Vacation[] parseResultSet(ResultSet rs){
         ArrayList<Vacation> res = new ArrayList<>();
         try{
-            int i = 0;
             while(rs.next()){
-                res.add(new Vacation(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)));
-                i++;
+                res.add(new Vacation(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
-        return (Vacation[])res.toArray();
+        Vacation[] arr = new Vacation[res.size()];
+        arr = res.toArray(arr);
+        return arr;
     }
 }

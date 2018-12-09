@@ -37,7 +37,6 @@ public class UiController extends WindowController implements InitialiableWindow
     private String[] userValues;
     private int depressedBtn;
     private SearchInterface searchInterface;
-    private VacationDatabase vacationDatabase = new VacationDatabase();
 
     @FXML
     private TextField username;
@@ -57,6 +56,8 @@ public class UiController extends WindowController implements InitialiableWindow
     private Text msg;
     @FXML
     private AnchorPane user_edit_pane;
+    @FXML
+    private Label username_lbl;
 
     //<editor-fold desc="Menu">
     @FXML
@@ -121,10 +122,11 @@ public class UiController extends WindowController implements InitialiableWindow
         this.depressedBtn = 0;
         this.searchInterface = new SearchInterface();
         SearchInterface.ui = this;
-        Vacation[] existing = vacationDatabase.getTwentyVactions();
+        this.username_lbl.setText(this.userValues[0]);
+        Vacation[] existing = searchInterface.vacDB.getTwentyVactions();
         //TODO: delete on real testing
         Node[] nodes = new Node[existing.length];
-        for(int i=0;i<2;i++){
+        for(int i=0;i<existing.length;i++){
             try{
                 nodes[i] = FXMLLoader.load(getClass().getResource("/resultItem.fxml"));
             }
@@ -132,7 +134,7 @@ public class UiController extends WindowController implements InitialiableWindow
                 System.out.println("FXML Error");
             }
             home_scr_items.getChildren().add(nodes[i]);
-            SearchInterface.lastItem.defineContent(null,existing[i].getDest_city(),existing[i].getDest_region(),"20",existing[i].getPrice());
+            SearchInterface.lastItem.defineContent(null,existing[i].getDest_city(),existing[i].getDest_region(),""+existing[i].getVacationLenght(),existing[i].getPrice());
         }
         home_scr.toFront();
         //scrollPane.setContent(this.test_container);
@@ -168,6 +170,8 @@ public class UiController extends WindowController implements InitialiableWindow
             if(!message.equals(""))
                 return;
             data.updatePassword(npassword.getText());
+            if(!dataChanged)
+                this.home_btn.fire();
         }
         if(dataChanged){
             if(!fname.getText().equals(this.userValues[2]))
@@ -176,6 +180,7 @@ public class UiController extends WindowController implements InitialiableWindow
                 data.updateDetails(lname.getText(),"lname");
             if(!city.getText().equals(this.userValues[4]))
                 data.updateDetails(city.getText(),"city");
+            this.home_btn.fire();
         }
     }
     public void handle_menu_click(ActionEvent actionEvent){
@@ -248,8 +253,8 @@ public class UiController extends WindowController implements InitialiableWindow
     //functional
     @FXML
     private void searchProcedure(){
+        this.home_scr_items.getChildren().clear();
         this.searchInterface.search(this.searchBox.getText(),this.searchDate.getValue());
-
     }
     public void addResultItem(){
         Node newResult = null;
@@ -265,6 +270,9 @@ public class UiController extends WindowController implements InitialiableWindow
         Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText()," ");
         if(addVacInterface.detailsApprove(vacation.toStringArray())){
             addVacInterface.wiriteToDB(vacation.toStringArray());
+            this.home_btn.fire();
         }
+        else
+            this.add_msg.setText("All fields are required!");
     }
 }

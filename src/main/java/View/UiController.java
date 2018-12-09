@@ -248,19 +248,19 @@ public class UiController extends WindowController implements InitialiableWindow
         Button newActive = null;
         if(newActiveButton==0){
             newActive = home_btn;
-            this.homeIcon.setFill(Paint.valueOf("#000000"));
+            this.homeIcon.setFill(Paint.valueOf("#4682B4"));
         }
         if(newActiveButton==1){
             newActive = add_btn;
-            this.addIcon.setFill(Paint.valueOf("#000000"));
+            this.addIcon.setFill(Paint.valueOf("#4682B4"));
         }
         if(newActiveButton==2){
             newActive = history_btn;
-            this.historyIcon.setFill(Paint.valueOf("#000000"));
+            this.historyIcon.setFill(Paint.valueOf("#4682B4"));
         }
         if(newActiveButton==3){
             newActive = favorites_btn;
-            this.favoritesIcon.setFill(Paint.valueOf("#000000"));
+            this.favoritesIcon.setFill(Paint.valueOf("#4682B4"));
         }
         newActive.setStyle("-fx-background-color:  #FFFFFF");
         this.depressedBtn = newActiveButton;

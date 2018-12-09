@@ -52,22 +52,22 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="home_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="131.0" prefWidth="195.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="1">
+                  <Button fx:id="home_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="85.0" prefWidth="131.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="1">
                      <graphic>
-                        <FontAwesomeIconView fx:id="homeIcon" glyphName="HOME" size="75" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="icon" />
+                        <FontAwesomeIconView fx:id="homeIcon" fill="STEELBLUE" glyphName="HOME" size="75" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="icon" />
                      </graphic>
                   </Button>
-                  <Button fx:id="add_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="131.0" prefWidth="195.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="3">
+                  <Button fx:id="add_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="3">
                      <graphic>
                         <FontAwesomeIconView fx:id="addIcon" fill="WHITE" glyphName="PLUS" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </graphic>
                   </Button>
-                  <Button fx:id="history_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="178.0" prefWidth="246.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="5">
+                  <Button fx:id="history_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="85.0" prefWidth="126.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="5">
                      <graphic>
                         <FontAwesomeIconView fx:id="historyIcon" fill="WHITE" glyphName="HISTORY" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </graphic>
                   </Button>
-                  <Button fx:id="favorites_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="178.0" prefWidth="246.0" style="-fx-background-color: #4682B4;" styleClass="menuItem" stylesheets="@style.css" GridPane.rowIndex="7">
+                  <Button fx:id="favorites_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="85.0" prefWidth="148.0" style="-fx-background-color: #4682B4;" styleClass="menuItem" stylesheets="@style.css" GridPane.rowIndex="7">
                      <graphic>
                         <FontAwesomeIconView fx:id="favoritesIcon" fill="WHITE" glyphName="STAR" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </graphic>
@@ -349,8 +349,8 @@
                                        <font>
                                           <Font name="Century Gothic" size="16.0" />
                                        </font></TextField>
-                                    <DatePicker fx:id="add_date_start" prefHeight="25.0" prefWidth="220.0" promptText="Start Date" styleClass="add-date_picker" stylesheets="@style.css" />
-                                    <DatePicker fx:id="add_date_end" prefHeight="25.0" prefWidth="220.0" promptText="End Date" styleClass="add-date_picker" stylesheets="@style.css" />
+                                    <DatePicker fx:id="add_date_start" prefHeight="40.0" prefWidth="220.0" promptText="Start Date" styleClass="add-date_picker" stylesheets="@style.css" />
+                                    <DatePicker fx:id="add_date_end" prefHeight="40.0" prefWidth="220.0" promptText="End Date" styleClass="add-date_picker" stylesheets="@style.css" />
                                  </children>
                               </TilePane>
                               <GridPane GridPane.columnIndex="3" GridPane.rowIndex="1">

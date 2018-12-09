@@ -9,6 +9,7 @@ import Controller.EditInterface;
 import Controller.LoginInterface;
 import Controller.SearchInterface;
 import Model.Vacation;
+import Model.VacationDatabase;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,6 +37,8 @@ public class UiController extends WindowController implements InitialiableWindow
     private String[] userValues;
     private int depressedBtn;
     private SearchInterface searchInterface;
+    private VacationDatabase vacationDatabase = new VacationDatabase();
+
     @FXML
     private TextField username;
     @FXML
@@ -117,10 +120,11 @@ public class UiController extends WindowController implements InitialiableWindow
         home_btn.setStyle("-fx-background-color: #ffffff");
         this.depressedBtn = 0;
         this.searchInterface = new SearchInterface();
-        //SearchInterface.ui = this;
+        SearchInterface.ui = this;
+        Vacation[] existing = vacationDatabase.getTwentyVactions();
         //TODO: delete on real testing
-        Node[] nodes = new Node[10];
-        for(int i=0;i<10;i++){
+        Node[] nodes = new Node[existing.length];
+        for(int i=0;i<2;i++){
             try{
                 nodes[i] = FXMLLoader.load(getClass().getResource("/resultItem.fxml"));
             }
@@ -128,6 +132,7 @@ public class UiController extends WindowController implements InitialiableWindow
                 System.out.println("FXML Error");
             }
             home_scr_items.getChildren().add(nodes[i]);
+            SearchInterface.lastItem.defineContent(null,existing[i].getDest_city(),existing[i].getDest_region(),"20",existing[i].getPrice());
         }
         home_scr.toFront();
         //scrollPane.setContent(this.test_container);
@@ -243,7 +248,8 @@ public class UiController extends WindowController implements InitialiableWindow
     //functional
     @FXML
     private void searchProcedure(){
-        //this.searchInterface.search(this.searchBox.getText(),this.searchDate.getValue());
+        this.searchInterface.search(this.searchBox.getText(),this.searchDate.getValue());
+
     }
     public void addResultItem(){
         Node newResult = null;
@@ -255,7 +261,6 @@ public class UiController extends WindowController implements InitialiableWindow
             System.out.println("FXML Error");
         }
     }
-
     public void handlePublishNewVacation(ActionEvent actionEvent) {
         Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText()," ");
         if(addVacInterface.detailsApprove(vacation.toStringArray())){

@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VacationDatabase extends Database{
     private String name;
@@ -56,22 +58,22 @@ public class VacationDatabase extends Database{
             System.out.println("Database insertion error.");
         }
     }
-    public void editTuple(String field, String newValue, String vacation_id){
-        String sql = "UPDATE vacation_table SET "+field+" = ? "
-                + "WHERE vacation_id = ?";
-        try {
-            PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
-            // set the corresponding param
-            pstmt.setString(1, newValue);
-            pstmt.setString(2, vacation_id);
-            // update
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
-    public void deleteTuple(String vacation_id){
+//    public void editTuple(String field, String newValue, String vacation_id){
+//        String sql = "UPDATE vacation_table SET "+field+" = ? "
+//                + "WHERE vacation_id = ?";
+//        try {
+//            PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
+//            // set the corresponding param
+//            pstmt.setString(1, newValue);
+//            pstmt.setString(2, vacation_id);
+//            // update
+//            pstmt.executeUpdate();
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//
+//    }
+    /*public void deleteTuple(String vacation_id){
         String sql = "DELETE FROM vacation_table WHERE vacation_id = ?";
         try {
             PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
@@ -84,48 +86,53 @@ public class VacationDatabase extends Database{
             System.out.println(e.getMessage());
         }
 
-    }
+    }*/
 
 
-    public String[] getByVacationID(String vacation_id){
-        String sql = "SELECT destination_region, destination_city, price, departure, arrival,description, picture_name " + "FROM vacation_table WHERE vacation_id = ?";
+    public Vacation[] getRelevantTuples(String location, String date){
+        String sql = "SELECT destination_region, destination_city, price, departure, arrival,description, picture_name " + "FROM vacation_table WHERE (destination_region = ? OR destination_city = ?) AND departure = ?;";
         ResultSet rs = null;
         try{
             PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
-            pstmt.setString(1,vacation_id);
+            pstmt.setString(1,location);
+            pstmt.setString(2,location);
+            pstmt.setString(3,date);
             rs = pstmt.executeQuery();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return this.parseResultSet(rs);
     }
 
-    private String[] parseResultSet(ResultSet rs){
-        boolean exists;
-        try {
-            exists = rs.next();
+    public Vacation[] getTwentyVactions(){
+        Vacation[] res = new Vacation[20];
+        ResultSet rs = null;
+        int i = 0;
+        try{
+            PreparedStatement pstmt  = this.currentConnection.prepareStatement("SELECT * FROM vacation_table LIMIT 20;");
+            rs = pstmt.executeQuery();
+            while(rs.next()){
+                res[i] = new Vacation(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7));
+                i++;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return res;
+    }
+
+    private Vacation[] parseResultSet(ResultSet rs){
+        ArrayList<Vacation> res = new ArrayList<>();
+        try{
+            int i = 0;
+            while(rs.next()){
+                res.add(new Vacation(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)));
+                i++;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
-
-        if(!exists)
-            return null;
-        String[] res = new String[7];
-        try {
-            res[0] = rs.getString("vacation_id");
-            res[1] = rs.getString("destination_region");
-            res[2] = rs.getString("destination_city");
-            res[3] = rs.getString("price");
-            res[4] = rs.getString("departure");
-            res[5] = rs.getString("arrival");
-            res[6] = rs.getString("description");
-            res[7] = rs.getString("picture_name");
-        }
-        catch (SQLException e){
-            System.out.println("Information retrieval error.");
-        }
-        return res;
+        return (Vacation[])res.toArray();
     }
 }

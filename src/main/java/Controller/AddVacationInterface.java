@@ -2,12 +2,12 @@ package Controller;
 
 
 public class AddVacationInterface extends VacationInteraction{
-    public boolean newVacationApprove(String vacation_id){
+    /*public boolean newVacationApprove(String vacation_id){
         String[] res = activeConnection.getByVacationID(vacation_id);
         if(res==null)
             return true;
         else return false;
-    }
+    }*/
 
     /**
      * This function receives a string of inputs to be inserted into the database and returns whether or not they are eligible to be inserted.

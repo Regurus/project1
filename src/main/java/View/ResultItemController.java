@@ -20,15 +20,17 @@ public class ResultItemController {
     @FXML
     private ImageView preview;
     @FXML
+    public void initialize(){
+        SearchInterface.lastItem = this;
+    }
     public void openItem(){
 
     }
-    public void defineContent(Image preview,String dest_city, String dest_reg, int len, int price){
-        //SearchInterface.lastItem = this;
-        lbl_len.setText(""+len);
-        lbl_price.setText(""+price+'$');
+    public void defineContent(Image preview,String dest_city, String dest_reg, String len, String price){
+        lbl_len.setText(len);
+        lbl_price.setText(price+'$');
         lbl_area_name.setText(dest_reg);
         lbl_city_name.setText(dest_city);
-        this.preview.setImage(preview);
+        //this.preview.setImage(preview);
     }
 }

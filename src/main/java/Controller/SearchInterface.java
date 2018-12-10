@@ -12,6 +12,14 @@ public class SearchInterface extends VacationInteraction{
     public static UiController ui;
 
     public void search(String text, LocalDate value) {
+        if(text.equals("")){
+            updateUi(activeConnection.getTuplesByDate(value.toString()));
+            return;
+        }
+        if(value == null){
+            updateUi(activeConnection.getTuplesByLocation(text));
+            return;
+        }
         updateUi(activeConnection.getTuplesByLocationANDDate(text,value.toString()));
     }
     public Vacation[] getTwenty(){

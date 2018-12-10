@@ -4,10 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class VacationDatabase extends Database{
     private String name;
@@ -109,6 +112,64 @@ public class VacationDatabase extends Database{
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public Vacation[] getTuplesByLocation(String location){
+        String sql = "SELECT * FROM vacation_table WHERE destination_region = ? OR destination_city = ?;";
+        ResultSet rs = null;
+        try{
+            PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
+            pstmt.setString(1,location);
+            pstmt.setString(2,location);
+            rs = pstmt.executeQuery();
+            Vacation res[] = /*this.filterResultSetByDate(*/this.parseResultSet(rs)/*, LocalDate.now().toString())*/;
+            return res;
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public Vacation[] getTuplesByDate(String date){
+        return this.getTuplesByField(date,"departure");
+    }
+
+    public Vacation[] getVacationsByName(String name){
+        return getTuplesByField(name,"owner");
+    }
+
+    private Vacation[] getTuplesByField(String field_value, String field_name){
+        String sql = "SELECT * FROM vacation_table WHERE " + field_name + " = ?;";
+        ResultSet rs = null;
+        try{
+            PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
+            pstmt.setString(1,field_value);
+            rs = pstmt.executeQuery();
+            return this.parseResultSet(rs);
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private Vacation[] filterResultSetByDate(Vacation[] parseResultSet, String departure){
+        ArrayList<Vacation> relevantVacations = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        try {
+            Date now = sdf.parse(departure);
+
+            for(Vacation v: parseResultSet){
+                if(sdf.parse(v.getStart()).after(now))
+                    relevantVacations.add(v);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Vacation[] arr = new Vacation[relevantVacations.size()];
+        arr = relevantVacations.toArray(arr);
+        return arr;
     }
 
     public Vacation[] getTwentyVactions(){

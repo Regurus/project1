@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import Controller.*;
 import Model.ImageSaver;
+import Model.PurchaseApplication;
 import Model.Vacation;
 import Model.VacationDatabase;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -34,6 +35,7 @@ public class UiController extends WindowController implements InitialiableWindow
 
     private EditInterface data = new EditInterface();
     private AddVacationInterface addVacInterface = new AddVacationInterface();
+    private PurchaseApplicationInterface purAddInterface = new PurchaseApplicationInterface();
     private MyListingsInterface MLI = new MyListingsInterface();
     private String[] userValues;
     private int depressedBtn;
@@ -360,6 +362,10 @@ public class UiController extends WindowController implements InitialiableWindow
         this.openNewWindow("Payment", "/paymentDialog.fxml",375,419);
         if(UiController.purchase_desition){
             //do add application
+            String vacation_id = UiController.item.item.getListing_id();//vacation_id
+            String applicant = LoginInterface.getCurrentUser();//applicant
+            PurchaseApplication purchaseApplication = new PurchaseApplication(vacation_id,applicant);
+            purAddInterface.wiriteToDB(purchaseApplication.toStringArray());
 
             UiController.purchase_desition=false;
             this.home_btn.fire();

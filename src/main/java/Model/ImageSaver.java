@@ -18,7 +18,7 @@ public class ImageSaver {
     public static String saveImage(File im) throws IOException {
         String absolutePath=new String();
         uniqueID = UUID.randomUUID().toString();
-        String folder_path=System.getProperty("user.dir")+"\\src\\main\\resources\\images\\userImages\\"+uniqueID+".jpg";
+        String folder_path=System.getProperty("user.dir")+"\\src\\main\\resources\\images\\userImages\\"+uniqueID+".png";
         File file2=new File(folder_path);
         InputStream is = null;
         OutputStream os = null;

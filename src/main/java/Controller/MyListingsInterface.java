@@ -1,15 +1,15 @@
 package Controller;
 
 import Model.Vacation;
+import View.ResultItemController;
 import View.UiController;
 import View.myListingsItemController;
 
 public class MyListingsInterface extends VacationInteraction{
     public static myListingsItemController current;
-    public static UiController ui;
 
     public void getPublishedItems(){
-        //this.updateUI(activeConnection.getVacationsByDate(LoginInterface.getCurrentUser()));
+        this.updateUI(activeConnection.getVacationsByName(LoginInterface.getCurrentUser()));
     }
 
     public void updateUI(Vacation[] vacations){
@@ -18,7 +18,7 @@ public class MyListingsInterface extends VacationInteraction{
             return;
         }
         for(int i=0;i<vacations.length;i++){
-            ui.addPublishedItem();
+            ResultItemController.UI.addPublishedItem();
             current.setProperties(vacations[i],false);
         }
     }

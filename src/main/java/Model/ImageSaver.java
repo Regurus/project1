@@ -9,8 +9,6 @@ import java.util.UUID;
 public class ImageSaver {
     //  private static final java.util.UUID UUID ="";
     static String uniqueID;
-
-
     // static int ID=0;
     public ImageSaver() {
     }
@@ -29,10 +27,8 @@ public class ImageSaver {
         while ((length = is.read(buffer)) > 0) {
             os.write(buffer, 0, length);
         }
-
         absolutePath = uniqueID + ".png";
         return absolutePath;
-
     }
 
     public static void  changeSizeImage(File file,int height,int width) throws IOException {

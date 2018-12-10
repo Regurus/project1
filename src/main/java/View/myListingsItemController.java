@@ -25,7 +25,7 @@ public class myListingsItemController {
 
 
     public void setProperties(Vacation vc, boolean status){
-        this.trip_dest_lbl.setText("Trip to: "+vc.getDest_region()+" -> "+vc.getDest_region());
+        this.trip_dest_lbl.setText("Trip to: "+vc.getDest_region()+" -> "+vc.getDest_city());
         this.trip_date_lbl.setText("In Dates: "+vc.getStart().replace('-','/')+" - "+vc.getEnd().replace('-','/'));
         if(status){
             status_lbl.setText("Status: Listed.");

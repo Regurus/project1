@@ -329,8 +329,8 @@ public class UiController extends WindowController implements InitialiableWindow
     public void addPublishedItem(){
         Node newResult = null;
         try{
-            newResult = FXMLLoader.load(getClass().getResource("/resultItem.fxml"));
-            home_scr_items.getChildren().add(newResult);
+            newResult = FXMLLoader.load(getClass().getResource("/myListingsItem.fxml"));
+            this.published_scr_items.getChildren().add(newResult);
         }
         catch (Exception e){
             System.out.println("FXML Error");

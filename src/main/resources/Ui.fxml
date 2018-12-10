@@ -295,7 +295,7 @@
                               </ImageView>
                               <ScrollPane hbarPolicy="NEVER" layoutY="232.0" prefHeight="347.0" prefWidth="1101.0">
                                  <content>
-                                    <TilePane fx:id="history_scr_items" prefWidth="1086.0" />
+                                    <TilePane fx:id="published_scr_items" prefWidth="1086.0" />
                                  </content>
                               </ScrollPane>
                            </children>

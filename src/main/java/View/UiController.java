@@ -39,6 +39,7 @@ public class UiController extends WindowController implements InitialiableWindow
     private int depressedBtn;
     private SearchInterface searchInterface;
     public static ResultItemController item;
+    private String imageID;
 
     //<editor-fold desc="Settings Controls">
     @FXML
@@ -294,11 +295,16 @@ public class UiController extends WindowController implements InitialiableWindow
     @FXML
     private void openImage(){
         FileChooser fileChooser = new FileChooser();
-        //fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPEG Image(*.jpg)"));
         File selectedImage = fileChooser.showOpenDialog(null);
         if(selectedImage !=null){
             this.add_image_preview.setImage(new Image(selectedImage.toURI().toString()));
-            //ImageSaver.changeSizeImage();
+            try{
+                ImageSaver.changeSizeImage(selectedImage,160,250);
+                this.imageID = ImageSaver.saveImage(selectedImage);
+        }
+            catch (Exception e){
+                System.out.println("Picture resize fault");
+            }
         }
         else{
             add_msg.setText("Invalid Image File");
@@ -332,7 +338,7 @@ public class UiController extends WindowController implements InitialiableWindow
     }
     public void handlePublishNewVacation(ActionEvent actionEvent) {
         String uniqueID = UUID.randomUUID().toString();
-        Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText()," ",uniqueID,LoginInterface.getCurrentUser());
+        Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText(),this.imageID,uniqueID,LoginInterface.getCurrentUser());
         if(addVacInterface.detailsApprove(vacation.toStringArray())){
             addVacInterface.wiriteToDB(vacation.toStringArray());
             this.home_btn.fire();

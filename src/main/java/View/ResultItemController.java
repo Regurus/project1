@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.File;
+
 
 public class ResultItemController {
     public static UiController UI;
@@ -35,6 +37,7 @@ public class ResultItemController {
         lbl_price.setText(item.getPrice()+'$');
         lbl_area_name.setText(item.getDest_region());
         lbl_city_name.setText(item.getDest_city());
-        //this.preview.setImage(preview);
+        File file = new File("/resources/images/userImages/"+item.getImage_path());
+        this.preview.setImage(new Image(file.toURI().toString()));
     }
 }

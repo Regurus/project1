@@ -196,21 +196,6 @@
                <children>
                   <StackPane prefHeight="580.0" prefWidth="1128.0">
                      <children>
-                        <AnchorPane fx:id="published_scr" prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <Separator layoutY="232.0" prefHeight="0.0" prefWidth="1101.0" />
-                              <ImageView fitHeight="231.0" fitWidth="1101.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/history_theme.png" />
-                                 </image>
-                              </ImageView>
-                              <ScrollPane hbarPolicy="NEVER" layoutY="232.0" prefHeight="347.0" prefWidth="1101.0">
-                                 <content>
-                                    <TilePane fx:id="history_scr_items" prefWidth="1086.0" />
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
                         <AnchorPane fx:id="favorites_scr" prefHeight="200.0" prefWidth="200.0">
                            <children>
                               <Separator layoutY="232.0" prefHeight="0.0" prefWidth="1101.0" />
@@ -301,6 +286,35 @@
                               </GridPane>
                            </children>
                         </AnchorPane>
+                        <AnchorPane fx:id="home_scr" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Separator layoutY="232.0" prefHeight="0.0" prefWidth="1101.0" />
+                              <ImageView fitHeight="231.0" fitWidth="1101.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/stock_theme.png" />
+                                 </image></ImageView>
+                              <ScrollPane hbarPolicy="NEVER" layoutY="232.0" prefHeight="347.0" prefWidth="1101.0">
+                                 <content>
+                                    <TilePane fx:id="home_scr_items" prefWidth="1086.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="published_scr" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Separator layoutY="232.0" prefHeight="0.0" prefWidth="1101.0" />
+                              <ImageView fitHeight="231.0" fitWidth="1101.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/history_theme.png" />
+                                 </image>
+                              </ImageView>
+                              <ScrollPane hbarPolicy="NEVER" layoutY="232.0" prefHeight="347.0" prefWidth="1101.0">
+                                 <content>
+                                    <TilePane fx:id="history_scr_items" prefWidth="1086.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
                         <GridPane fx:id="add_scr" style="-fx-background-color: ffffff;">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -373,20 +387,6 @@
                               </Label>
                            </children>
                         </GridPane>
-                        <AnchorPane fx:id="home_scr" prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <Separator layoutY="232.0" prefHeight="0.0" prefWidth="1101.0" />
-                              <ImageView fitHeight="231.0" fitWidth="1101.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/stock_theme.png" />
-                                 </image></ImageView>
-                              <ScrollPane hbarPolicy="NEVER" layoutY="232.0" prefHeight="347.0" prefWidth="1101.0">
-                                 <content>
-                                    <TilePane fx:id="home_scr_items" prefWidth="1086.0" />
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
                      </children>
                   </StackPane>
                </children></HBox>

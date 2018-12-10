@@ -6,20 +6,20 @@ import java.io.File;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.UUID;
 
 
 public class ImageSaver {
-    static int ID=0;
+    //static int ID=0;
+    static String uniqueID;
     public ImageSaver() {
     }
     public static String saveImage(File im){
-        ID++;
         File file=im;
-        //String folder_path="C:\\Users\\Razi\\Desktop\\project1\\src\\main\\resources\\images\\userImages";
+        uniqueID= UUID.randomUUID().toString();
         String folder_path=System.getProperty("user.dir")+"\\src\\main\\resources\\images\\userImages";
-        //   boolean renameResult = file.renameTo(new File(String.valueOf(ID)));
-        file.renameTo(new File(folder_path + "\\" + String.valueOf(ID) + ".png"));
-        String absolutePath = String.valueOf(ID) + ".png";
+        file.renameTo(new File(folder_path + "\\" + uniqueID + ".png"));
+        String absolutePath = uniqueID + ".png";
         return absolutePath;
     }
 
@@ -35,11 +35,13 @@ public class ImageSaver {
         ImageIO.write(dimg, "PNG", file);
 
     }
+}
 
-    public static void main(String[] args) throws IOException {
-        File s=new File("D:\\Users\\Bogdan\\Pictures\\GTR\\rear.jpg");
-        changeSizeImage(s,100,100);
+    /*public static void main(String[] args) throws IOException {
+        File s=new File("D:\\Users\\Bogdan\\Pictures\\GTR\\1920x1080-v5-offurl_0.jpg");
+        changeSizeImage(s,150,260);
+        saveImage(s);
     }
 
 
-}
+}*/

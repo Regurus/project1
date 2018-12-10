@@ -9,6 +9,7 @@ import Controller.AddVacationInterface;
 import Controller.EditInterface;
 import Controller.LoginInterface;
 import Controller.SearchInterface;
+import Model.ImageSaver;
 import Model.Vacation;
 import Model.VacationDatabase;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -279,6 +280,7 @@ public class UiController extends WindowController implements InitialiableWindow
         File selectedImage = fileChooser.showOpenDialog(null);
         if(selectedImage !=null){
             this.add_image_preview.setImage(new Image(selectedImage.toURI().toString()));
+            //ImageSaver.changeSizeImage();
         }
         else{
             add_msg.setText("Invalid Image File");
@@ -291,6 +293,16 @@ public class UiController extends WindowController implements InitialiableWindow
         this.searchInterface.search(this.searchBox.getText(),this.searchDate.getValue());
     }
     public void addResultItem(){
+        Node newResult = null;
+        try{
+            newResult = FXMLLoader.load(getClass().getResource("/resultItem.fxml"));
+            home_scr_items.getChildren().add(newResult);
+        }
+        catch (Exception e){
+            System.out.println("FXML Error");
+        }
+    }
+    public void addPublishedItem(){
         Node newResult = null;
         try{
             newResult = FXMLLoader.load(getClass().getResource("/resultItem.fxml"));

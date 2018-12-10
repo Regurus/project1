@@ -37,7 +37,7 @@ public class ResultItemController {
         lbl_price.setText(item.getPrice()+'$');
         lbl_area_name.setText(item.getDest_region());
         lbl_city_name.setText(item.getDest_city());
-        File file = new File("/resources/images/userImages/"+item.getImage_path());
+        File file = new File("images/userImages/"+item.getImage_path());
         this.preview.setImage(new Image(file.toURI().toString()));
     }
 }

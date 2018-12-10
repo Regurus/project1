@@ -16,4 +16,8 @@ public class PaymentDialogController {
     public void close(){
         this.price_lbl.getScene().getWindow().fireEvent(new WindowEvent(this.price_lbl.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
+    public void payAndClose(){
+        UiController.purchase_desition=true;
+        this.price_lbl.getScene().getWindow().fireEvent(new WindowEvent(this.price_lbl.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
+    }
 }

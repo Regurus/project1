@@ -7,13 +7,12 @@ import View.UiController;
 
 import java.time.LocalDate;
 
-public class SearchInterface {
+public class SearchInterface extends VacationInteraction{
     public static ResultItemController lastItem;
     public static UiController ui;
-    public VacationDatabase vacDB = new VacationDatabase();
 
     public void search(String text, LocalDate value) {
-        updateUi(vacDB.getTuplesByLocationANDDate(text,value.toString()));
+        updateUi(this.activeConnection.getTuplesByLocationANDDate(text,value.toString()));
     }
 
     private void updateUi(Vacation[] list){

@@ -39,6 +39,7 @@ public class UiController extends WindowController implements InitialiableWindow
     private int depressedBtn;
     private SearchInterface searchInterface;
     public static ResultItemController item;
+    public static boolean purchase_desition;
     private String imageID;
 
     //<editor-fold desc="Settings Controls">
@@ -310,7 +311,6 @@ public class UiController extends WindowController implements InitialiableWindow
             add_msg.setText("Invalid Image File");
         }
     }
-    //functional
     @FXML
     private void searchProcedure(){
         this.home_scr_items.getChildren().clear();
@@ -352,7 +352,17 @@ public class UiController extends WindowController implements InitialiableWindow
         details_end_lbl.setText("Return: "+UiController.item.item.getEnd().replace('-','/'));
         details_price_lbl.setText("Price: "+UiController.item.item.getPrice()+"$");
         details_desc_area.setText(UiController.item.item.getDescription());
-        //details_img.setImage();
+        File file = new File(System.getProperty("user.dir")+"/src/main/resources/images/userImages/"+UiController.item.item.getImage_path());
+        details_img.setImage(new Image(file.toURI().toString()));
         this.details_scr.toFront();
+    }
+    public void handleApplication(){
+        this.openNewWindow("Payment", "/paymentDialog.fxml",375,419);
+        if(UiController.purchase_desition){
+            //do add application
+
+            UiController.purchase_desition=false;
+            this.home_btn.fire();
+        }
     }
 }

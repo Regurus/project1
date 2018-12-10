@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="419.0" prefWidth="375.0" style="-fx-background-color: #4682B4; -fx-border-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.PaymentDialogController">
+   <children>
+      <MaterialDesignIconView fill="WHITE" glyphName="CLOSE_BOX" layoutX="349.0" layoutY="23.0" onMouseClicked="#close" size="25" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Label layoutX="38.0" layoutY="72.0" prefHeight="36.0" prefWidth="300.0" text="In odrer to commit for buying a ticket," textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="32.0" layoutY="108.0" prefHeight="36.0" prefWidth="313.0" text="you will need to pay full cost of the item." textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="22.0" layoutY="144.0" prefHeight="36.0" prefWidth="333.0" text="In case your application will be approved," textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="18.0" layoutY="180.0" prefHeight="36.0" prefWidth="342.0" text="the transaction will complete automatically" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="210.0" prefHeight="36.0" prefWidth="329.0" text="Otherwise your payment will be refunded." textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="294.0" prefHeight="36.0" prefWidth="132.0" text="Invoice Amount:" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="price_lbl" layoutX="210.0" layoutY="294.0" prefHeight="36.0" prefWidth="132.0" text="\$PRICE" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="344.0" prefHeight="36.0" prefWidth="132.0" text="Checkout with:" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="16.0" />
+         </font>
+      </Label>
+      <FontAwesomeIconView fill="WHITE" glyphName="PAYPAL" layoutX="222.0" layoutY="372.0" onMouseClicked="#close" size="30" strokeType="OUTSIDE" strokeWidth="0.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></FontAwesomeIconView>
+   </children>
+</AnchorPane>

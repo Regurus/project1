@@ -352,7 +352,11 @@ public class UiController extends WindowController implements InitialiableWindow
         details_end_lbl.setText("Return: "+UiController.item.item.getEnd().replace('-','/'));
         details_price_lbl.setText("Price: "+UiController.item.item.getPrice()+"$");
         details_desc_area.setText(UiController.item.item.getDescription());
-        //details_img.setImage();
+        File file = new File(System.getProperty("user.dir")+"/src/main/resources/images/userImages/"+UiController.item.item.getImage_path());
+        details_img.setImage(new Image(file.toURI().toString()));
         this.details_scr.toFront();
+    }
+    public void handleApplication(){
+        this.openNewWindow("Payment", "/paymentDialog.fxml",375,419);
     }
 }

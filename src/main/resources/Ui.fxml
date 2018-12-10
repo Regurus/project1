@@ -410,8 +410,8 @@
                                           <Font name="Century Gothic" size="28.0" />
                                        </font>
                                     </Label>
-                                    <ImageView fx:id="details_img" fitHeight="160.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" translateX="15.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                    <TextField fx:id="details_desc_area" alignment="TOP_LEFT" editable="false" prefHeight="219.0" prefWidth="533.0" styleClass="text-area" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <ImageView fx:id="details_img" fitHeight="160.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" translateX="-80.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    <TextField fx:id="details_desc_area" alignment="TOP_LEFT" editable="false" prefHeight="280.0" prefWidth="421.0" styleClass="text-area" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <TilePane hgap="25.0" prefHeight="283.0" prefWidth="391.0" vgap="10.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                        <children>
                                           <Label fx:id="details_dest_lbl" prefHeight="20.0" prefWidth="227.0" text="Destination: $Country,$City" textFill="STEELBLUE">
@@ -436,7 +436,7 @@
                                           </Label>
                                        </children>
                                     </TilePane>
-                                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="178.0" style="-fx-background-color: #4682b4;" stylesheets="@style.css" text="Apply For Purchase" textFill="WHITE" translateX="50.0" translateY="80.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                    <Button mnemonicParsing="false" onAction="#handleApplication" prefHeight="40.0" prefWidth="178.0" style="-fx-background-color: #4682b4;" stylesheets="@style.css" text="Apply For Purchase" textFill="WHITE" translateX="50.0" translateY="80.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
                                        <font>
                                           <Font name="Century Gothic" size="16.0" />
                                        </font>

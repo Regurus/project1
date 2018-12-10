@@ -27,7 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox fx:id="parent" prefHeight="680.0" prefWidth="1179.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.UiController">
+<HBox fx:id="parent" prefHeight="680.0" prefWidth="1179.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.UiController">
    <children>
       <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="100.0" style="-fx-background-color: #4682B4;">
          <children>
@@ -411,7 +411,7 @@
                                        </font>
                                     </Label>
                                     <ImageView fx:id="details_img" fitHeight="160.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" translateX="15.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                    <TextField fx:id="details_desc_area" editable="false" prefHeight="219.0" prefWidth="533.0" styleClass="text-area" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="details_desc_area" alignment="TOP_LEFT" editable="false" prefHeight="219.0" prefWidth="533.0" styleClass="text-area" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <TilePane hgap="25.0" prefHeight="283.0" prefWidth="391.0" vgap="10.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                        <children>
                                           <Label fx:id="details_dest_lbl" prefHeight="20.0" prefWidth="227.0" text="Destination: $Country,$City" textFill="STEELBLUE">

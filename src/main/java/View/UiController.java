@@ -154,7 +154,7 @@ public class UiController extends WindowController implements InitialiableWindow
 
     public void initialize(){
         ResultItemController.UI = this;
-        this.MLI.getPublishedItems();
+        //this.MLI.getPublishedItems();
         home_btn.setStyle("-fx-background-color: #ffffff");
         this.depressedBtn = 0;
         this.searchInterface = new SearchInterface();

@@ -5,10 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-import Controller.AddVacationInterface;
-import Controller.EditInterface;
-import Controller.LoginInterface;
-import Controller.SearchInterface;
+import Controller.*;
 import Model.ImageSaver;
 import Model.Vacation;
 import Model.VacationDatabase;
@@ -37,9 +34,11 @@ public class UiController extends WindowController implements InitialiableWindow
 
     private EditInterface data = new EditInterface();
     private AddVacationInterface addVacInterface = new AddVacationInterface();
+    private MyListingsInterface MLI = new MyListingsInterface();
     private String[] userValues;
     private int depressedBtn;
     private SearchInterface searchInterface;
+    public static ResultItemController item;
 
     //<editor-fold desc="Settings Controls">
     @FXML
@@ -62,6 +61,21 @@ public class UiController extends WindowController implements InitialiableWindow
     private AnchorPane user_edit_pane;
     @FXML
     private Label username_lbl;
+    //</editor-fold>
+
+    //<editor-fold desc="Details">
+    @FXML
+    private Label details_dest_lbl;
+    @FXML
+    private Label details_start_lbl;
+    @FXML
+    private Label details_end_lbl;
+    @FXML
+    private Label details_price_lbl;
+    @FXML
+    private TextField details_desc_area;
+    @FXML
+    private ImageView details_img;
     //</editor-fold>
 
     //<editor-fold desc="Icons">
@@ -91,6 +105,8 @@ public class UiController extends WindowController implements InitialiableWindow
     private TilePane home_scr_items;
     @FXML
     private AnchorPane home_scr;
+    @FXML
+    private AnchorPane details_scr;
     //</editor-fold>
 
     //<editor-fold desc="Published">
@@ -136,12 +152,14 @@ public class UiController extends WindowController implements InitialiableWindow
     //</editor-fold>
 
     public void initialize(){
+        ResultItemController.UI = this;
+        this.MLI.getPublishedItems();
         home_btn.setStyle("-fx-background-color: #ffffff");
         this.depressedBtn = 0;
         this.searchInterface = new SearchInterface();
         SearchInterface.ui = this;
         this.username_lbl.setText(this.userValues[0]);
-        Vacation[] existing = searchInterface.vacDB.getTwentyVactions();
+        Vacation[] existing = this.searchInterface.getTwenty();
         if(existing!=null&&existing.length>0){
             Node[] nodes = new Node[existing.length];
             for(int i=0;i<existing.length;i++){
@@ -152,7 +170,7 @@ public class UiController extends WindowController implements InitialiableWindow
                     System.out.println("FXML Error");
                 }
                 home_scr_items.getChildren().add(nodes[i]);
-                SearchInterface.lastItem.defineContent(null,existing[i].getDest_city(),existing[i].getDest_region(),""+existing[i].getVacationLenght(),existing[i].getPrice());
+                SearchInterface.lastItem.defineContent(existing[i]);
             }
         }
         home_scr.toFront();
@@ -321,5 +339,14 @@ public class UiController extends WindowController implements InitialiableWindow
         }
         else
             this.add_msg.setText("All fields are required!");
+    }
+    public void openDesciption(){
+        details_dest_lbl.setText("Destination: "+UiController.item.item.getDest_region()+","+UiController.item.item.getDest_city());
+        details_start_lbl.setText("Departure: "+UiController.item.item.getStart().replace("-","/"));
+        details_end_lbl.setText("Return: "+UiController.item.item.getEnd().replace('-','/'));
+        details_price_lbl.setText("Price: "+UiController.item.item.getPrice()+"$");
+        details_desc_area.setText(UiController.item.item.getDescription());
+        //details_img.setImage();
+        this.details_scr.toFront();
     }
 }

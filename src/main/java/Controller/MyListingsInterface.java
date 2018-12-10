@@ -9,7 +9,7 @@ public class MyListingsInterface extends VacationInteraction{
     public static UiController ui;
 
     public void getPublishedItems(){
-
+        //this.updateUI(activeConnection.getVacationsByDate(LoginInterface.getCurrentUser()));
     }
 
     public void updateUI(Vacation[] vacations){

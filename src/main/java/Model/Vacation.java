@@ -13,8 +13,12 @@ public class Vacation {
     private String end;
     private String description;
     private String image_path;
+    private String listing_id;
+    private String owner;
 
-    public Vacation(String dest_region, String dest_city, String price, String start, String end, String description, String image_path) {
+
+
+    public Vacation(String dest_region, String dest_city, String price, String start, String end, String description, String image_path, String listing_id, String owner) {
         this.dest_region = dest_region;
         this.dest_city = dest_city;
         this.price = price;
@@ -22,7 +26,10 @@ public class Vacation {
         this.end = end;
         this.description = description;
         this.image_path = image_path;
+        this.listing_id = listing_id;
+        this.owner = owner;
     }
+
 
     public String getDest_region() {
         return dest_region;
@@ -52,8 +59,16 @@ public class Vacation {
         return image_path;
     }
 
+    public String getListing_id() {
+        return listing_id;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
     public String[] toStringArray(){
-        String[] res = {dest_region,dest_city,price,start,end,description,image_path};
+        String[] res = {dest_region,dest_city,price,start,end,description,image_path,listing_id,owner};
         return res;
     }
     public int getVacationLenght(){

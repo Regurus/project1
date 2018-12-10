@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="120.0" prefWidth="1070.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.myListingsItemController">
+   <children>
+      <GridPane layoutX="14.0" layoutY="15.0" prefHeight="90.0" prefWidth="1043.0" style="-fx-border-color: #4682B4;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="306.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="742.0" minWidth="10.0" prefWidth="582.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="342.0" minWidth="0.0" prefWidth="153.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="24.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="trip_dest_lbl" prefHeight="17.0" prefWidth="345.0" text="Trip to: $Country-&gt;$City" textFill="STEELBLUE" translateX="15.0">
+               <font>
+                  <Font name="Century Gothic" size="16.0" />
+               </font></Label>
+            <Label fx:id="trip_date_lbl" prefHeight="20.0" prefWidth="293.0" text="In Dates: $DATEBEGIN-$DATESTART" textFill="STEELBLUE" translateX="15.0" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Century Gothic" size="16.0" />
+               </font></Label>
+            <Label fx:id="status_lbl" prefHeight="17.0" prefWidth="141.0" text="Status: $STATUS" textFill="STEELBLUE" GridPane.columnIndex="2">
+               <font>
+                  <Font name="Century Gothic" size="16.0" />
+               </font></Label>
+            <Button fx:id="approve_btn" cancelButton="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="162.0" style="-fx-background-color: #4682B4;" text="Approve Selling" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Century Gothic" size="16.0" />
+               </font></Button>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

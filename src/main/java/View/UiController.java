@@ -3,6 +3,7 @@ package View;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 import Controller.AddVacationInterface;
 import Controller.EditInterface;
@@ -39,6 +40,7 @@ public class UiController extends WindowController implements InitialiableWindow
     private int depressedBtn;
     private SearchInterface searchInterface;
 
+    //<editor-fold desc="Settings Controls">
     @FXML
     private TextField username;
     @FXML
@@ -59,13 +61,15 @@ public class UiController extends WindowController implements InitialiableWindow
     private AnchorPane user_edit_pane;
     @FXML
     private Label username_lbl;
+    //</editor-fold>
+
     //<editor-fold desc="Icons">
     @FXML
     private FontAwesomeIconView homeIcon;
     @FXML
     private FontAwesomeIconView addIcon;
     @FXML
-    private FontAwesomeIconView historyIcon;
+    private FontAwesomeIconView publishedIcon;
     @FXML
     private FontAwesomeIconView favoritesIcon;
     //</editor-fold>
@@ -76,21 +80,23 @@ public class UiController extends WindowController implements InitialiableWindow
     @FXML
     private Button add_btn;
     @FXML
-    private Button history_btn;
+    private Button published_btn;
     @FXML
     private Button favorites_btn;
     //</editor-fold>
 
+    //<editor-fold desc="Screens">
     @FXML
     private TilePane home_scr_items;
     @FXML
     private AnchorPane home_scr;
+    //</editor-fold>
 
-    //<editor-fold desc="History">
+    //<editor-fold desc="Published">
     @FXML
-    private TilePane history_scr_items;
+    private TilePane published_scr_items;
     @FXML
-    private AnchorPane history_scr;
+    private AnchorPane published_scr;
     //</editor-fold>
 
     //<editor-fold desc="Favorites">
@@ -135,17 +141,18 @@ public class UiController extends WindowController implements InitialiableWindow
         SearchInterface.ui = this;
         this.username_lbl.setText(this.userValues[0]);
         Vacation[] existing = searchInterface.vacDB.getTwentyVactions();
-        //TODO: delete on real testing
-        Node[] nodes = new Node[existing.length];
-        for(int i=0;i<existing.length;i++){
-            try{
-                nodes[i] = FXMLLoader.load(getClass().getResource("/resultItem.fxml"));
+        if(existing!=null&&existing.length>0){
+            Node[] nodes = new Node[existing.length];
+            for(int i=0;i<existing.length;i++){
+                try{
+                    nodes[i] = FXMLLoader.load(getClass().getResource("/resultItem.fxml"));
+                }
+                catch (Exception e){
+                    System.out.println("FXML Error");
+                }
+                home_scr_items.getChildren().add(nodes[i]);
+                SearchInterface.lastItem.defineContent(null,existing[i].getDest_city(),existing[i].getDest_region(),""+existing[i].getVacationLenght(),existing[i].getPrice());
             }
-            catch (Exception e){
-                System.out.println("FXML Error");
-            }
-            home_scr_items.getChildren().add(nodes[i]);
-            SearchInterface.lastItem.defineContent(null,existing[i].getDest_city(),existing[i].getDest_region(),""+existing[i].getVacationLenght(),existing[i].getPrice());
         }
         home_scr.toFront();
         //scrollPane.setContent(this.test_container);
@@ -204,8 +211,8 @@ public class UiController extends WindowController implements InitialiableWindow
             add_scr.toFront();
             newButton=1;
         }
-        if (actionEvent.getSource() == history_btn) {
-            history_scr.toFront();
+        if (actionEvent.getSource() == published_btn) {
+            published_scr.toFront();
             newButton=2;
         }
         if (actionEvent.getSource() == favorites_btn) {
@@ -237,8 +244,8 @@ public class UiController extends WindowController implements InitialiableWindow
             this.addIcon.setFill(Paint.valueOf("#FFFFFF"));
         }
         if(this.depressedBtn==2){
-            active = history_btn;
-            this.historyIcon.setFill(Paint.valueOf("#FFFFFF"));
+            active = published_btn;
+            this.publishedIcon.setFill(Paint.valueOf("#FFFFFF"));
         }
         if(this.depressedBtn==3){
             active = favorites_btn;
@@ -255,8 +262,8 @@ public class UiController extends WindowController implements InitialiableWindow
             this.addIcon.setFill(Paint.valueOf("#4682B4"));
         }
         if(newActiveButton==2){
-            newActive = history_btn;
-            this.historyIcon.setFill(Paint.valueOf("#4682B4"));
+            newActive = published_btn;
+            this.publishedIcon.setFill(Paint.valueOf("#4682B4"));
         }
         if(newActiveButton==3){
             newActive = favorites_btn;
@@ -294,7 +301,8 @@ public class UiController extends WindowController implements InitialiableWindow
         }
     }
     public void handlePublishNewVacation(ActionEvent actionEvent) {
-        Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText()," ");
+        String uniqueID = UUID.randomUUID().toString();
+        Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText()," ",uniqueID,LoginInterface.getCurrentUser());
         if(addVacInterface.detailsApprove(vacation.toStringArray())){
             addVacInterface.wiriteToDB(vacation.toStringArray());
             this.home_btn.fire();

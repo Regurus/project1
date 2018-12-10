@@ -16,7 +16,7 @@ public class AddVacationInterface extends VacationInteraction{
      * @return whether or not it is eligible to be inserted into the database.
      */
     public boolean detailsApprove(String[] details){
-        for (int i = 0 ; i < 6 ; i++){
+        for (int i = 0 ; i < details.length ; i++){
             if(details[i].length()<1)
                 return false;
         }

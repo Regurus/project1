@@ -6,16 +6,16 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class Vacation {
-    private String dest_region;
-    private String dest_city;
-    private String price;
-    private String start;
-    private String end;
-    private String description;
-    private String image_path;
-    private String listing_id;
-    private String owner;
-    private String applicant;
+    protected String dest_region;
+    protected String dest_city;
+    protected String price;
+    protected String start;
+    protected String end;
+    protected String description;
+    protected String image_path;
+    protected String listing_id;
+    protected String owner;
+    protected String applicant;
 
 
 

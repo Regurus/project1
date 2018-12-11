@@ -26,4 +26,8 @@ public class AddVacationInterface extends VacationInteraction{
         activeConnection.createTuple(details);
     }
 
+    public void deleteFromDB(String vacation_id){
+        activeConnection.deleteTuple(vacation_id);
+    }
+
 }

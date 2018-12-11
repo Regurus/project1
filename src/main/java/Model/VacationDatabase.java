@@ -88,7 +88,7 @@ public class VacationDatabase extends Database{
         }
 
     }
-    /*public void deleteTuple(String vacation_id){
+    public void deleteTuple(String vacation_id){
         String sql = "DELETE FROM vacation_table WHERE vacation_id = ?";
         try {
             PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
@@ -101,7 +101,7 @@ public class VacationDatabase extends Database{
             System.out.println(e.getMessage());
         }
 
-    }*/
+    }
     //</editor-fold>
 
     //<editor-fold desc="Querying">

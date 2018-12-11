@@ -10,7 +10,11 @@ import javafx.stage.StageStyle;
 import java.io.File;
 
 public class Main extends Application {
-
+    /***
+     * currently no UI refresh on action for UI to refresh individual screens have to perform log-out log-in cycle
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("signIn.fxml"));

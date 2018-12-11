@@ -1,30 +1,20 @@
 package View;
 
 import java.io.File;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.UUID;
-
 import Controller.*;
 import Model.ImageSaver;
 import Model.PurchaseApplication;
 import Model.Vacation;
-import Model.VacationDatabase;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -263,6 +253,50 @@ public class UiController extends WindowController implements InitialiableWindow
     public void handleClose(){
         this.home_btn.getScene().getWindow().fireEvent(new WindowEvent(this.home_btn.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
+    public void handleOpenImage(){
+        FileChooser fileChooser = new FileChooser();
+        File selectedImage = fileChooser.showOpenDialog(null);
+        if(selectedImage !=null){
+            this.add_image_preview.setImage(new Image(selectedImage.toURI().toString()));
+            try{
+                ImageSaver.changeSizeImage(selectedImage,160,250);
+                this.imageID = ImageSaver.saveImage(selectedImage);
+        }
+            catch (Exception e){
+                System.out.println("Picture resize fault");
+            }
+        }
+        else{
+            add_msg.setText("Invalid Image File");
+        }
+    }
+    public void handleSearch(){
+        this.home_scr_items.getChildren().clear();
+        this.searchInterface.search(this.searchBox.getText(),this.searchDate.getValue());
+    }
+    public void handlePublishNewVacation(ActionEvent actionEvent) {
+        String uniqueID = UUID.randomUUID().toString();
+        Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText(),this.imageID,uniqueID,LoginInterface.getCurrentUser(),"admin");
+        if(addVacInterface.detailsApprove(vacation.toStringArray())){
+            addVacInterface.wiriteToDB(vacation.toStringArray());
+            this.home_btn.fire();
+        }
+        else
+            this.add_msg.setText("All fields are required!");
+    }
+    public void handleApplication(){
+        this.openNewWindow("Payment", "/paymentDialog.fxml",375,419);
+        if(UiController.purchase_desition){
+            //do add application
+            String vacation_id = UiController.item.item.getListing_id();//vacation_id
+            String applicant = LoginInterface.getCurrentUser();//applicant
+            PurchaseApplication purchaseApplication = new PurchaseApplication(vacation_id,applicant);
+            purAddInterface.wiriteToDB(purchaseApplication);
+
+            UiController.purchase_desition=false;
+            this.home_btn.fire();
+        }
+    }
     private void updateMenu(int newActiveButton){
         Button active = null;
         if(this.depressedBtn==0){
@@ -302,27 +336,6 @@ public class UiController extends WindowController implements InitialiableWindow
         newActive.setStyle("-fx-background-color:  #FFFFFF");
         this.depressedBtn = newActiveButton;
     }
-    public void handleOpenImage(){
-        FileChooser fileChooser = new FileChooser();
-        File selectedImage = fileChooser.showOpenDialog(null);
-        if(selectedImage !=null){
-            this.add_image_preview.setImage(new Image(selectedImage.toURI().toString()));
-            try{
-                ImageSaver.changeSizeImage(selectedImage,160,250);
-                this.imageID = ImageSaver.saveImage(selectedImage);
-        }
-            catch (Exception e){
-                System.out.println("Picture resize fault");
-            }
-        }
-        else{
-            add_msg.setText("Invalid Image File");
-        }
-    }
-    public void handleSearch(){
-        this.home_scr_items.getChildren().clear();
-        this.searchInterface.search(this.searchBox.getText(),this.searchDate.getValue());
-    }
     public void addResultItem(){
         this.addItems("/resultItem.fxml",home_scr_items);
     }
@@ -341,16 +354,6 @@ public class UiController extends WindowController implements InitialiableWindow
             System.out.println("FXML Error");
         }
     }
-    public void handlePublishNewVacation(ActionEvent actionEvent) {
-        String uniqueID = UUID.randomUUID().toString();
-        Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText(),this.imageID,uniqueID,LoginInterface.getCurrentUser(),"admin");
-        if(addVacInterface.detailsApprove(vacation.toStringArray())){
-            addVacInterface.wiriteToDB(vacation.toStringArray());
-            this.home_btn.fire();
-        }
-        else
-            this.add_msg.setText("All fields are required!");
-    }
     public void openDesciption(){
         details_dest_lbl.setText("Destination: "+UiController.item.item.getDest_region()+","+UiController.item.item.getDest_city());
         details_start_lbl.setText("Departure: "+UiController.item.item.getStart().replace("-","/"));
@@ -362,17 +365,5 @@ public class UiController extends WindowController implements InitialiableWindow
         details_img.setImage(new Image(file.toURI().toString()));
         this.details_scr.toFront();
     }
-    public void handleApplication(){
-        this.openNewWindow("Payment", "/paymentDialog.fxml",375,419);
-        if(UiController.purchase_desition){
-            //do add application
-            String vacation_id = UiController.item.item.getListing_id();//vacation_id
-            String applicant = LoginInterface.getCurrentUser();//applicant
-            PurchaseApplication purchaseApplication = new PurchaseApplication(vacation_id,applicant);
-            purAddInterface.wiriteToDB(purchaseApplication);
 
-            UiController.purchase_desition=false;
-            this.home_btn.fire();
-        }
-    }
 }

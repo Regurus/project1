@@ -23,7 +23,15 @@ public class PurchaseApplicationInterface extends VacationInteraction{
         }
     }
 
+    public boolean hasApplicant(String vacation_id){
+        return activeConnection.hasApplicant(vacation_id);
+    }
+
     public void wiriteToDB(PurchaseApplication purchaseApplication){
         activeConnection.applyForPurchase(purchaseApplication.getVacation_id(),purchaseApplication.getApplicant());
+    }
+
+    public void declinePurchaseApplication(String vacation_id){
+        activeConnection.declinePurchaseApplication(vacation_id);
     }
 }

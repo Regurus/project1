@@ -139,6 +139,11 @@ public class VacationDatabase extends Database{
         }
     }
 
+    public Vacation getTupleByID(String vacation_id){
+        Vacation[] tuple = getTuplesByField(vacation_id, "vacation_id");
+        return tuple[0];//assumption: querying by key should always return 1 result, as the key field has no duplicates
+    }
+
     public Vacation[] getTuplesByDate(String date){
         return this.getTuplesByField(date,"departure");
     }
@@ -196,7 +201,7 @@ public class VacationDatabase extends Database{
         ArrayList<Vacation> res = new ArrayList<>();
         try{
             while(rs.next()){
-                res.add(new Vacation(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(1),rs.getString(9),rs.getString(1)));
+                res.add(new Vacation(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(1),rs.getString(9),rs.getString(10)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -209,14 +214,18 @@ public class VacationDatabase extends Database{
     //</editor-fold>
 
     //<editor-fold desc="Purchasing application management">
-    public boolean applyForPurchase(String vacation_id, String applicant){
-        Vacation[] tuple = getTuplesByField(vacation_id, "vacation_id");
-        if(tuple[0].getApplicant().equals("admin")){
-            editTuple(vacation_id,"applicant",applicant);
-            return true;
+    public boolean hasApplicant(String vacation_id){
+        Vacation tuple = getTupleByID(vacation_id);
+        if(tuple.getApplicant().equals("admin")){
+            return false;
         }
         else{
-            return false;
+            return true;
+        }
+    }
+    public void applyForPurchase(String vacation_id, String applicant){
+        if(!hasApplicant(vacation_id)){
+            editTuple(vacation_id,"applicant",applicant);
         }
     }
     public void declinePurchaseApplication(String vacation_id){

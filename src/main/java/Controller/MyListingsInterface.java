@@ -18,7 +18,7 @@ public class MyListingsInterface extends VacationInteraction{
         }
         for(int i=0;i<vacations.length;i++){
             ResultItemController.UI.addPublishedItem();
-            current.defineContent(vacations[i],false);
+            current.defineContent(vacations[i]);
         }
     }
     //public static boolean acceptApplication(Vacation vacation)

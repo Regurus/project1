@@ -19,7 +19,7 @@ public class PurchaseApplicationInterface extends VacationInteraction{
         }
         for(int i=0;i<vacations.length;i++){
             ResultItemController.UI.addPublishedItem();
-            current.defineContent(vacations[i],false);
+            current.defineContent(vacations[i]);
         }
     }
 

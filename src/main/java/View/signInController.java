@@ -31,8 +31,8 @@ public class signInController extends WindowController {
             this.messageLabel.setText("Wrong Login/Password");
             return;
         }
-        openNewWindow("Vactoin4U", "/Ui.fxml",1200,680);
         this.username.getScene().getWindow().fireEvent(new WindowEvent(this.username.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
+        openNewWindow("Vactoin4U", "/Ui.fxml",1200,680);
 
     }
     @FXML

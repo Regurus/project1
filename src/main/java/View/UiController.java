@@ -35,7 +35,7 @@ public class UiController extends WindowController implements InitialiableWindow
 
     private EditInterface data = new EditInterface();
     private AddVacationInterface addVacInterface = new AddVacationInterface();
-    private PurchaseApplicationInterface purAddInterface = new PurchaseApplicationInterface();
+    public static PurchaseApplicationInterface purAddInterface = new PurchaseApplicationInterface();
     private MyListingsInterface MLI = new MyListingsInterface();
     private PurchasesInterface PI = new PurchasesInterface();
     private String[] userValues;

@@ -27,28 +27,25 @@ public class myListingsItemController {
     private void initialize(){
         MyListingsInterface.current = this;
     }
-
-    public void defineContent(Vacation vc, boolean status){
+    public void defineContent(Vacation vc){
         this.trip_dest_lbl.setText("Trip to: "+vc.getDest_region()+" -> "+vc.getDest_city());
         this.trip_date_lbl.setText("In Dates: "+vc.getStart().replace('-','/')+" - "+vc.getEnd().replace('-','/'));
-
-        if(status){
-            status_lbl.setText("Status: Listed.");
-            this.approve_btn.setDisable(true);
-            this.decline_btn.setDisable(true);
-        }
-        else{
+        this.containedItem = vc;
+        this.UI = SearchInterface.ui;
+        if(UiController.purAddInterface.hasApplicant(containedItem.getListing_id())){
             status_lbl.setText("Status: Pending for approval.");
             this.approve_btn.setDisable(false);
             this.decline_btn.setDisable(false);
         }
-        this.containedItem = vc;
-        this.UI = SearchInterface.ui;
+        else{
+            status_lbl.setText("Status: Listed.");
+            this.approve_btn.setDisable(true);
+            this.decline_btn.setDisable(true);
+        }
     }
-
     @FXML
     private void handleDelete(){
-        System.out.println("Delete: Not implemented yet!");
+        System.out.println("Delete: Not implemented on this stage!");
     }
     @FXML
     private void handleAccept(){
@@ -56,6 +53,6 @@ public class myListingsItemController {
     }
     @FXML
     private void handleDecline(){
-        System.out.println("Decline: Not implemented yet!");
+        UiController.purAddInterface.declinePurchaseApplication(containedItem.getListing_id());
     }
 }

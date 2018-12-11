@@ -21,4 +21,5 @@ public class MyListingsInterface extends VacationInteraction{
             current.defineContent(vacations[i],false);
         }
     }
+    //public static boolean acceptApplication(Vacation vacation)
 }

@@ -34,10 +34,10 @@ import javafx.stage.WindowEvent;
 public class UiController extends WindowController implements InitialiableWindow {
 
     private EditInterface data = new EditInterface();
-    private AddVacationInterface addVacInterface = new AddVacationInterface();
+    public static AddVacationInterface addVacInterface = new AddVacationInterface();
     public static PurchaseApplicationInterface purAddInterface = new PurchaseApplicationInterface();
     private MyListingsInterface MLI = new MyListingsInterface();
-    private PurchasesInterface PI = new PurchasesInterface();
+    public static PurchasesInterface PI = new PurchasesInterface();
     private String[] userValues;
     private int depressedBtn = 0;
     private SearchInterface searchInterface = new SearchInterface();
@@ -163,6 +163,7 @@ public class UiController extends WindowController implements InitialiableWindow
         this.username_lbl.setText(this.userValues[0]);
         initializePublished();
         inializeHomeScreen();
+        initializePurchases();
         //scrollPane.setContent(this.test_container);
     }
     private void inializeHomeScreen(){
@@ -195,7 +196,7 @@ public class UiController extends WindowController implements InitialiableWindow
     }
     public void initializePurchases(){
         PurchasesInterface.UI = this;
-        //this.PI.getPurchasedItems(LoginInterface.getCurrentUser());
+        PI.getPublishedItems();
     }
     public void handleUpdate() {
         boolean dataChanged = false;

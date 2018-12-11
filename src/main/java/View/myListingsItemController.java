@@ -45,11 +45,16 @@ public class myListingsItemController {
     }
     @FXML
     private void handleDelete(){
-        System.out.println("Delete: Not implemented on this stage!");
+        if(containedItem!=null)
+            UiController.addVacInterface.deleteFromDB(containedItem.getListing_id());
     }
     @FXML
     private void handleAccept(){
-        System.out.println("Accept: Not implemented yet!");
+        if(containedItem!=null){
+            UiController.addVacInterface.deleteFromDB(containedItem.getListing_id());
+            UiController.PI.addPVacation(containedItem);
+            containedItem=null;
+        }
     }
     @FXML
     private void handleDecline(){

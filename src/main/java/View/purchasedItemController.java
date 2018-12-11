@@ -1,5 +1,6 @@
 package View;
 
+import Controller.PurchasesInterface;
 import Model.Vacation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,6 +13,10 @@ public class purchasedItemController {
     private Label details_lbl;
     @FXML
     private Label id_lbl;
+
+    public void initialize(){
+        PurchasesInterface.lastItem = this;
+    }
 
     public void defineContent(Vacation vac, String dealDate){
         dealDate_lbl.setText("Purchased on: "+dealDate.replace('-','/'));

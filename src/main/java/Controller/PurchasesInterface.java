@@ -13,7 +13,8 @@ public class PurchasesInterface extends PurchasedVacationInteraction{
     public static purchasedItemController lastItem;
 
     public void getPublishedItems(){
-        //this.updateUI(activeConnection.getVacationsByName(LoginInterface.getCurrentUser()));
+        Vacation[] vacs = this.getPurchasingHistory(LoginInterface.getCurrentUser());
+        this.updateUI(vacs);
     }
 
     public void updateUI(Vacation[] vacations){
@@ -23,7 +24,7 @@ public class PurchasesInterface extends PurchasedVacationInteraction{
         }
         for(int i=0;i<vacations.length;i++){
             UI.addPurchasedItem();
-            lastItem.defineContent(vacations[i],"00");
+            lastItem.defineContent(vacations[i],((PurchasedVacation)vacations[i]).getPurchase_date());
         }
     }
 

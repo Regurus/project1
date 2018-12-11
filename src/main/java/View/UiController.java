@@ -195,7 +195,7 @@ public class UiController extends WindowController implements InitialiableWindow
     }
     public void initializePurchases(){
         PurchasesInterface.UI = this;
-        this.PI.getPurchasedItems(LoginInterface.getCurrentUser());
+        //this.PI.getPurchasedItems(LoginInterface.getCurrentUser());
     }
     public void handleUpdate() {
         boolean dataChanged = false;
@@ -368,7 +368,7 @@ public class UiController extends WindowController implements InitialiableWindow
             String vacation_id = UiController.item.item.getListing_id();//vacation_id
             String applicant = LoginInterface.getCurrentUser();//applicant
             PurchaseApplication purchaseApplication = new PurchaseApplication(vacation_id,applicant);
-            purAddInterface.wiriteToDB(purchaseApplication.toStringArray());
+            purAddInterface.wiriteToDB(purchaseApplication);
 
             UiController.purchase_desition=false;
             this.home_btn.fire();

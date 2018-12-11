@@ -22,11 +22,11 @@ public class myListingsItemController {
     @FXML
     private Button approve_btn;
     @FXML
+    private Button decline_btn;
+    @FXML
     private void initialize(){
         MyListingsInterface.current = this;
     }
-
-
 
     public void defineContent(Vacation vc, boolean status){
         this.trip_dest_lbl.setText("Trip to: "+vc.getDest_region()+" -> "+vc.getDest_city());
@@ -35,12 +35,13 @@ public class myListingsItemController {
         if(status){
             status_lbl.setText("Status: Listed.");
             this.approve_btn.setDisable(true);
+            this.decline_btn.setDisable(true);
         }
         else{
             status_lbl.setText("Status: Pending for approval.");
             this.approve_btn.setDisable(false);
+            this.decline_btn.setDisable(false);
         }
-
         this.containedItem = vc;
         this.UI = SearchInterface.ui;
     }
@@ -51,6 +52,10 @@ public class myListingsItemController {
     }
     @FXML
     private void handleAccept(){
-        System.out.println("Aceept: Not implemented yet!");
+        System.out.println("Accept: Not implemented yet!");
+    }
+    @FXML
+    private void handleDecline(){
+        System.out.println("Decline: Not implemented yet!");
     }
 }

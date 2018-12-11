@@ -27,7 +27,7 @@ public class viewUserController implements InitialiableWindow{
     public viewUserController(){
         this.userValues=this.data.getUserInfo(userSearch);
     }
-    public void setInitialValues(){
+    public void inializeUserData(){
         username.setText(this.userValues[0]);
         username.editableProperty().setValue(false);
         fname.setText(this.userValues[2]);
@@ -43,7 +43,7 @@ public class viewUserController implements InitialiableWindow{
         if (this.userValues ==null)
                 results.setText("not found");
         else {
-            this.setInitialValues();
+            this.inializeUserData();
             results.setText("enjoy!");
             }
     }

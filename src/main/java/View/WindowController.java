@@ -21,7 +21,7 @@ public class WindowController {
             Scene scene = new Scene(root, width, height);
             stage.setScene(scene);
             if(fxmlLoader.getController() instanceof InitialiableWindow)
-                ((InitialiableWindow)fxmlLoader.getController()).setInitialValues();
+                ((InitialiableWindow)fxmlLoader.getController()).inializeUserData();
             stage.show();
         }
         catch (Exception e) {e.printStackTrace();}

@@ -10,6 +10,8 @@ import java.io.File;
 
 public class ResultItemController {
     public static UiController UI;
+    public Vacation item;
+
     @FXML
     private Label lbl_len;
     @FXML
@@ -20,10 +22,9 @@ public class ResultItemController {
     private Label lbl_city_name;
     @FXML
     private ImageView preview;
-    public Vacation item;
-    @FXML
 
-    public void initialize(){
+    @FXML
+    private void initialize(){
         SearchInterface.lastItem = this;
     }
 

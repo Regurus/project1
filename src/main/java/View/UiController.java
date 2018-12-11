@@ -38,8 +38,8 @@ public class UiController extends WindowController implements InitialiableWindow
     private PurchaseApplicationInterface purAddInterface = new PurchaseApplicationInterface();
     private MyListingsInterface MLI = new MyListingsInterface();
     private String[] userValues;
-    private int depressedBtn;
-    private SearchInterface searchInterface;
+    private int depressedBtn = 0;
+    private SearchInterface searchInterface = new SearchInterface();
     public static ResultItemController item;
     public static boolean purchase_desition;
     private String imageID;
@@ -77,12 +77,12 @@ public class UiController extends WindowController implements InitialiableWindow
     @FXML
     private Label details_price_lbl;
     @FXML
-    private TextField details_desc_area;
+    private TextArea details_desc_area;
     @FXML
     private ImageView details_img;
     //</editor-fold>
 
-    //<editor-fold desc="Icons">
+    //<editor-fold desc="Menu Icons">
     @FXML
     private FontAwesomeIconView homeIcon;
     @FXML
@@ -111,6 +111,10 @@ public class UiController extends WindowController implements InitialiableWindow
     private AnchorPane home_scr;
     @FXML
     private AnchorPane details_scr;
+    @FXML
+    private GridPane add_scr;
+    @FXML
+    private AnchorPane favorites_scr;
     //</editor-fold>
 
     //<editor-fold desc="Published">
@@ -123,11 +127,10 @@ public class UiController extends WindowController implements InitialiableWindow
     //<editor-fold desc="Favorites">
     @FXML
     private TilePane favorites_scr_items;
-    @FXML
-    private AnchorPane favorites_scr;
+
     //</editor-fold>
 
-    //<editor-fold desc="Add Vacation">
+    //<editor-fold desc="Add Vacation Screen">
     @FXML
     private TextField add_text_region;
     @FXML
@@ -143,8 +146,6 @@ public class UiController extends WindowController implements InitialiableWindow
     @FXML
     private ImageView add_image_preview;
     @FXML
-    private GridPane add_scr;
-    @FXML
     private Label add_msg;
     //</editor-fold>
 
@@ -156,13 +157,14 @@ public class UiController extends WindowController implements InitialiableWindow
     //</editor-fold>
 
     public void initialize(){
-        ResultItemController.UI = this;
-        //this.MLI.getPublishedItems();
-        home_btn.setStyle("-fx-background-color: #ffffff");
-        this.depressedBtn = 0;
-        this.searchInterface = new SearchInterface();
+        this.userValues=this.data.getUserInfo(LoginInterface.getCurrentUser());
         SearchInterface.ui = this;
         this.username_lbl.setText(this.userValues[0]);
+        initializePublished();
+        inializeHomeScreen();
+        //scrollPane.setContent(this.test_container);
+    }
+    private void inializeHomeScreen(){
         Vacation[] existing = this.searchInterface.getTwenty();
         if(existing!=null&&existing.length>0){
             Node[] nodes = new Node[existing.length];
@@ -178,12 +180,12 @@ public class UiController extends WindowController implements InitialiableWindow
             }
         }
         home_scr.toFront();
-        //scrollPane.setContent(this.test_container);
     }
-    public UiController(){
-        this.userValues=this.data.getUserInfo(LoginInterface.getCurrentUser());
+    private void initializePublished(){
+        ResultItemController.UI = this;
+        this.MLI.getPublishedItems();
     }
-    public void setInitialValues(){
+    public void inializeUserData(){
         username.setText(this.userValues[0]);
         username.editableProperty().setValue(false);
         fname.setText(this.userValues[2]);
@@ -224,7 +226,7 @@ public class UiController extends WindowController implements InitialiableWindow
             this.home_btn.fire();
         }
     }
-    public void handle_menu_click(ActionEvent actionEvent){
+    public void handleMenuClick(ActionEvent actionEvent){
         int newButton=0;
         if (actionEvent.getSource() == home_btn) {
             home_scr.toFront();
@@ -244,16 +246,15 @@ public class UiController extends WindowController implements InitialiableWindow
         }
         this.updateMenu(newButton);
     }
-    @FXML
-    public void openSettings(){
+    public void handleSettingsClick(){
         user_edit_pane.toFront();
     }
-    public void appLogOut(){
+    public void handleLogoutClick(){
         LoginInterface.nullifyCurrentUser();
         this.openNewWindow("Vaction4U","/signIn.fxml",600, 400);
         this.home_btn.getScene().getWindow().fireEvent(new WindowEvent(this.home_btn.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
-    public void close(){
+    public void handleClose(){
         this.home_btn.getScene().getWindow().fireEvent(new WindowEvent(this.home_btn.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
     private void updateMenu(int newActiveButton){
@@ -295,8 +296,7 @@ public class UiController extends WindowController implements InitialiableWindow
         newActive.setStyle("-fx-background-color:  #FFFFFF");
         this.depressedBtn = newActiveButton;
     }
-    @FXML
-    private void openImage(){
+    public void handleOpenImage(){
         FileChooser fileChooser = new FileChooser();
         File selectedImage = fileChooser.showOpenDialog(null);
         if(selectedImage !=null){
@@ -313,15 +313,13 @@ public class UiController extends WindowController implements InitialiableWindow
             add_msg.setText("Invalid Image File");
         }
     }
-    @FXML
-    private void searchProcedure(){
+    public void handleSearch(){
         this.home_scr_items.getChildren().clear();
         this.searchInterface.search(this.searchBox.getText(),this.searchDate.getValue());
     }
     public void addResultItem(){
-        Node newResult = null;
         try{
-            newResult = FXMLLoader.load(getClass().getResource("/resultItem.fxml"));
+            Node newResult = FXMLLoader.load(getClass().getResource("/resultItem.fxml"));
             home_scr_items.getChildren().add(newResult);
         }
         catch (Exception e){
@@ -329,9 +327,8 @@ public class UiController extends WindowController implements InitialiableWindow
         }
     }
     public void addPublishedItem(){
-        Node newResult = null;
         try{
-            newResult = FXMLLoader.load(getClass().getResource("/myListingsItem.fxml"));
+            Node newResult = FXMLLoader.load(getClass().getResource("/myListingsItem.fxml"));
             this.published_scr_items.getChildren().add(newResult);
         }
         catch (Exception e){
@@ -354,6 +351,7 @@ public class UiController extends WindowController implements InitialiableWindow
         details_end_lbl.setText("Return: "+UiController.item.item.getEnd().replace('-','/'));
         details_price_lbl.setText("Price: "+UiController.item.item.getPrice()+"$");
         details_desc_area.setText(UiController.item.item.getDescription());
+        details_desc_area.setWrapText(true);
         File file = new File(System.getProperty("user.dir")+"/src/main/resources/images/userImages/"+UiController.item.item.getImage_path());
         details_img.setImage(new Image(file.toURI().toString()));
         this.details_scr.toFront();

@@ -1,20 +1,29 @@
 package Controller;
 
-public class PurchaseApplicationInterface extends PendingInteraction{
-    /**
-     * This function receives a string of inputs to be inserted into the database and returns whether or not they are eligible to be inserted.
-     * Note that the picture_name field ([6] in the array) can be null. in that case, a default image will be used.
-     * @param details -  the tuple we want to verify
-     * @return whether or not it is eligible to be inserted into the database.
-     */
-    public boolean detailsApprove(String[] details){
-        for (int i = 0 ; i < details.length ; i++){
-            if(details[i].length()<1)
-                return false;
-        }
-        return true;
+import Model.PurchaseApplication;
+import Model.Vacation;
+import View.ResultItemController;
+import View.myListingsItemController;
+
+public class PurchaseApplicationInterface extends VacationInteraction{
+    public static myListingsItemController current;
+
+    public void getPublishedItems(){
+        this.updateUI(activeConnection.getVacationsByName(LoginInterface.getCurrentUser()));
     }
-    public void wiriteToDB(String[] details){
-        activeConnection.createTuple(details);
+
+    public void updateUI(Vacation[] vacations){
+        if(vacations==null){
+            System.out.println("No results to show");
+            return;
+        }
+        for(int i=0;i<vacations.length;i++){
+            ResultItemController.UI.addPublishedItem();
+            current.defineContent(vacations[i],false);
+        }
+    }
+
+    public void wiriteToDB(PurchaseApplication purchaseApplication){
+        activeConnection.applyForPurchase(purchaseApplication.getVacation_id(),purchaseApplication.getApplicant());
     }
 }

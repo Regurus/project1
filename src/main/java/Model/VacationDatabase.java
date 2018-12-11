@@ -13,6 +13,7 @@ import java.util.Locale;
 public class VacationDatabase extends Database{
     private String name;
 
+    //<editor-fold desc="Creation management">
     public VacationDatabase(){
         super("vacation_server");
         String sql = "CREATE TABLE IF NOT EXISTS vacation_table(\n"
@@ -25,6 +26,7 @@ public class VacationDatabase extends Database{
                 + "	description TEXT NOT NULL,\n"
                 + "	picture_name TEXT\n,"
                 + "	owner TEXT NOT NULL\n"
+                + " applicant TEXT NOT NULL\n"
                 + ");";
         try{
             // create a new table
@@ -43,10 +45,13 @@ public class VacationDatabase extends Database{
     //4-arrival
     //5-description
     //6-picture_name
+    //7-vacation_id
+    //8-owner
+    //9-applicant
     public void createTuple(String[] tuple){
         if(tuple.length!=9)
             throw new RuntimeException("Incorrect tuple size, cannot index");
-        String sql = "INSERT INTO vacation_table (vacation_id,destination_region,destination_city,price,departure,arrival,description,picture_name,owner) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO vacation_table (vacation_id,destination_region,destination_city,price,departure,arrival,description,picture_name,owner,applicant) VALUES(?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
             pstmt.setString(1, tuple[7]);
@@ -58,27 +63,31 @@ public class VacationDatabase extends Database{
             pstmt.setString(7, tuple[5]);
             pstmt.setString(8, tuple[6]);
             pstmt.setString(9, tuple[8]);
+            pstmt.setString(10, "admin");//initially there is no applicant waiting to purchase this vacation, so "admin" behaves like null here
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println("Database insertion error.");
         }
     }
-//    public void editTuple(String field, String newValue, String vacation_id){
-//        String sql = "UPDATE vacation_table SET "+field+" = ? "
-//                + "WHERE vacation_id = ?";
-//        try {
-//            PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
-//            // set the corresponding param
-//            pstmt.setString(1, newValue);
-//            pstmt.setString(2, vacation_id);
-//            // update
-//            pstmt.executeUpdate();
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//
-//    }
+    //</editor-fold>
+
+    //<editor-fold desc="Content management (edition & deletion)">
+    private void editTuple(String vacation_id, String field, String newValue){
+        String sql = "UPDATE vacation_table SET "+field+" = ? "
+                + "WHERE vacation_id = ?";
+        try {
+            PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setString(1, newValue);
+            pstmt.setString(2, vacation_id);
+            // update
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
     /*public void deleteTuple(String vacation_id){
         String sql = "DELETE FROM vacation_table WHERE vacation_id = ?";
         try {
@@ -93,8 +102,9 @@ public class VacationDatabase extends Database{
         }
 
     }*/
+    //</editor-fold>
 
-
+    //<editor-fold desc="Querying">
     public Vacation[] getTuplesByLocationANDDate(String location, String date){
         String sql = "SELECT * FROM vacation_table WHERE (destination_region = ? OR destination_city = ?) AND departure = ?;";
         ResultSet rs = null;
@@ -196,4 +206,21 @@ public class VacationDatabase extends Database{
         arr = res.toArray(arr);
         return arr;
     }
+    //</editor-fold>
+
+    //<editor-fold desc="Purchasing application management">
+    public boolean applyForPurchase(String vacation_id, String applicant){
+        Vacation[] tuple = getTuplesByField(vacation_id, "vacation_id");
+        if(tuple[9].equals("admin")){
+            return false;
+        }
+        else{
+            editTuple(vacation_id,"applicant",applicant);
+            return true;
+        }
+    }
+    public void declinePurchaseApplication(String vacation_id){
+        editTuple(vacation_id,"applicant","admin");
+    }
+    //</editor-fold>
 }

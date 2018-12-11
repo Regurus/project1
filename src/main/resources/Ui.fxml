@@ -27,7 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox fx:id="parent" prefHeight="680.0" prefWidth="1179.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.UiController">
+<HBox fx:id="parent" prefHeight="680.0" prefWidth="1179.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.UiController">
    <children>
       <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="100.0" style="-fx-background-color: #4682B4;">
          <children>
@@ -52,22 +52,22 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="home_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="85.0" prefWidth="131.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="1">
+                  <Button fx:id="home_btn" mnemonicParsing="false" onAction="#handleMenuClick" prefHeight="85.0" prefWidth="131.0" style="-fx-background-color: #FFFFFF;" stylesheets="@style.css" GridPane.rowIndex="1">
                      <graphic>
                         <FontAwesomeIconView fx:id="homeIcon" fill="STEELBLUE" glyphName="HOME" size="75" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="icon" />
                      </graphic>
                   </Button>
-                  <Button fx:id="add_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="3">
+                  <Button fx:id="add_btn" mnemonicParsing="false" onAction="#handleMenuClick" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="3">
                      <graphic>
                         <FontAwesomeIconView fx:id="addIcon" fill="WHITE" glyphName="PLUS" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </graphic>
                   </Button>
-                  <Button fx:id="published_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="85.0" prefWidth="126.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="5">
+                  <Button fx:id="published_btn" mnemonicParsing="false" onAction="#handleMenuClick" prefHeight="85.0" prefWidth="126.0" style="-fx-background-color: #4682B4;" stylesheets="@style.css" GridPane.rowIndex="5">
                      <graphic>
                         <FontAwesomeIconView fx:id="publishedIcon" fill="WHITE" glyphName="TICKET" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </graphic>
                   </Button>
-                  <Button fx:id="favorites_btn" mnemonicParsing="false" onAction="#handle_menu_click" prefHeight="85.0" prefWidth="148.0" style="-fx-background-color: #4682B4;" styleClass="menuItem" stylesheets="@style.css" GridPane.rowIndex="7">
+                  <Button fx:id="favorites_btn" mnemonicParsing="false" onAction="#handleMenuClick" prefHeight="85.0" prefWidth="148.0" style="-fx-background-color: #4682B4;" styleClass="menuItem" stylesheets="@style.css" GridPane.rowIndex="7">
                      <graphic>
                         <FontAwesomeIconView fx:id="favoritesIcon" fill="WHITE" glyphName="TAGS" size="75" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </graphic>
@@ -124,7 +124,7 @@
                                        <font>
                                           <Font name="Century Gothic Bold" size="14.0" />
                                        </font></Label>
-                                    <Label fx:id="settings_btn" onMouseClicked="#openSettings" text="Settings" textFill="WHITE" GridPane.rowIndex="3">
+                                    <Label fx:id="settings_btn" onMouseClicked="#handleSettingsClick" text="Settings" textFill="WHITE" GridPane.rowIndex="3">
                                        <font>
                                           <Font name="Century Gothic" size="14.0" />
                                        </font>
@@ -145,17 +145,17 @@
                                   <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Button mnemonicParsing="false" prefHeight="58.0" prefWidth="86.0" style="-fx-background-color: #4682B4;" styleClass="icon" stylesheets="@style.css" GridPane.rowIndex="1">
+                                    <Button mnemonicParsing="false" onAction="#handleLogoutClick" prefHeight="58.0" prefWidth="86.0" style="-fx-background-color: #4682B4;" styleClass="icon" stylesheets="@style.css" GridPane.rowIndex="1">
                                        <graphic>
-                                          <MaterialDesignIconView fill="WHITE" glyphName="EXIT_TO_APP" onMouseClicked="#appLogOut" size="30" strokeType="OUTSIDE" strokeWidth="0.0">
+                                          <MaterialDesignIconView fill="WHITE" glyphName="EXIT_TO_APP" size="30" strokeType="OUTSIDE" strokeWidth="0.0">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor></MaterialDesignIconView>
                                        </graphic>
                                     </Button>
-                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #4682B4;" translateX="35.0" GridPane.columnIndex="1">
+                                    <Button mnemonicParsing="false" onAction="#handleClose" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #4682B4;" translateX="35.0" GridPane.columnIndex="1">
                                        <graphic>
-                                          <MaterialDesignIconView fx:id="exit_btn" fill="WHITE" glyphName="CLOSE_BOX" onMouseClicked="#close" size="25" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="24.0" />
+                                          <MaterialDesignIconView fx:id="exit_btn" fill="WHITE" glyphName="CLOSE_BOX" size="25" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="24.0" />
                                        </graphic></Button>
                                  </children>
                               </GridPane>
@@ -183,8 +183,7 @@
                                     <DropShadow height="3.0" radius="0.25" width="0.0" />
                                  </effect>
                               </TextField>
-                              <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" style="-fx-background-color: #4682B4;" textFill="LIGHTGRAY" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <FontAwesomeIconView fx:id="search_btn" fill="WHITE" glyphName="SEARCH" onMouseClicked="#searchProcedure" size="35" strokeType="OUTSIDE" strokeWidth="0.0" translateX="15.0" translateY="-2.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <FontAwesomeIconView fx:id="search_btn" fill="WHITE" glyphName="SEARCH" onMouseClicked="#handleSearch" size="35" strokeType="OUTSIDE" strokeWidth="0.0" translateX="15.0" translateY="-2.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <DatePicker fx:id="searchDate" prefHeight="25.0" prefWidth="339.0" promptText="When you are ready to go?" style="-fx-background-color: ffffff;" styleClass="my-date-picker" stylesheets="@style.css" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
@@ -196,20 +195,6 @@
                <children>
                   <StackPane prefHeight="580.0" prefWidth="1128.0">
                      <children>
-                        <AnchorPane fx:id="home_scr" prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <Separator layoutY="232.0" prefHeight="0.0" prefWidth="1101.0" />
-                              <ImageView fitHeight="231.0" fitWidth="1101.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/stock_theme.png" />
-                                 </image></ImageView>
-                              <ScrollPane hbarPolicy="NEVER" layoutY="232.0" prefHeight="347.0" prefWidth="1101.0">
-                                 <content>
-                                    <TilePane fx:id="home_scr_items" prefWidth="1086.0" />
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
                         <AnchorPane fx:id="user_edit_pane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: FFFFFF;">
                            <children>
                               <GridPane prefHeight="580.0" prefWidth="1101.0">
@@ -285,21 +270,6 @@
                               </GridPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="published_scr" prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <Separator layoutY="232.0" prefHeight="0.0" prefWidth="1101.0" />
-                              <ImageView fitHeight="231.0" fitWidth="1101.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/history_theme.png" />
-                                 </image>
-                              </ImageView>
-                              <ScrollPane hbarPolicy="NEVER" layoutY="232.0" prefHeight="347.0" prefWidth="1101.0">
-                                 <content>
-                                    <TilePane fx:id="published_scr_items" prefWidth="1086.0" />
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
                         <GridPane fx:id="add_scr" style="-fx-background-color: ffffff;">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -353,7 +323,7 @@
                                           <Font name="Century Gothic" size="13.0" />
                                        </font>
                                     </TextArea>
-                                    <Button fx:id="openImage" mnemonicParsing="false" onAction="#openImage" prefHeight="40.0" prefWidth="220.0" styleClass="add-buttons" stylesheets="@style.css" text="Choose Image" textFill="WHITE">
+                                    <Button fx:id="openImage" mnemonicParsing="false" onAction="#handleOpenImage" prefHeight="40.0" prefWidth="220.0" styleClass="add-buttons" stylesheets="@style.css" text="Choose Image" textFill="WHITE">
                                        <font>
                                           <Font name="Century Gothic" size="16.0" />
                                        </font></Button>
@@ -372,7 +342,31 @@
                               </Label>
                            </children>
                         </GridPane>
-                        <AnchorPane fx:id="favorites_scr" prefHeight="580.0" prefWidth="1226.0">
+                        <AnchorPane fx:id="published_scr" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #4682B4;">
+                           <children>
+                              <Separator layoutY="232.0" prefHeight="0.0" prefWidth="1101.0" />
+                              <ImageView fitHeight="231.0" fitWidth="1100.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/history_theme.png" />
+                                 </image>
+                              </ImageView>
+                              <ScrollPane hbarPolicy="NEVER" layoutY="271.0" prefHeight="308.0" prefWidth="1101.0" style="-fx-background-color: #FFFFFF;">
+                                 <content>
+                                    <TilePane fx:id="published_scr_items" prefWidth="1086.0" style="-fx-background-color: #FFFFFF;" />
+                                 </content>
+                              </ScrollPane>
+                              <HBox layoutY="232.0" prefHeight="40.0" prefWidth="1100.0" style="-fx-background-color: #4682B4;">
+                                 <children>
+                                    <Label prefHeight="41.0" prefWidth="118.0" text="My Listings" textFill="WHITE" translateX="450.0">
+                                       <font>
+                                          <Font name="Century Gothic" size="22.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="favorites_scr" prefHeight="580.0" prefWidth="1226.0" style="-fx-background-color: #4682B4;">
                            <children>
                               <Separator layoutY="232.0" prefHeight="0.0" prefWidth="1101.0" />
                               <ImageView fitHeight="231.0" fitWidth="1101.0" pickOnBounds="true" preserveRatio="true">
@@ -380,11 +374,20 @@
                                     <Image url="@images/favorites_theme.png" />
                                  </image>
                               </ImageView>
-                              <ScrollPane hbarPolicy="NEVER" layoutY="232.0" prefHeight="347.0" prefWidth="1101.0">
+                              <ScrollPane hbarPolicy="NEVER" layoutY="272.0" prefHeight="308.0" prefWidth="1101.0" style="-fx-background-color: #FFFFFF;">
                                  <content>
                                     <TilePane fx:id="favorites_scr_items" prefWidth="1086.0" />
                                  </content>
                               </ScrollPane>
+                              <HBox layoutY="232.0" prefHeight="40.0" prefWidth="1101.0" style="-fx-background-color: #4682B4;">
+                                 <children>
+                                    <Label prefHeight="40.0" prefWidth="161.0" text="My Purchases" textFill="WHITE" translateX="430.0">
+                                       <font>
+                                          <Font name="Century Gothic" size="22.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="details_scr" style="-fx-background-color: #FFFFFF;">
@@ -401,8 +404,9 @@
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints maxHeight="152.0" minHeight="10.0" prefHeight="66.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="228.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="288.0" minHeight="10.0" prefHeight="280.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="192.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="417.0" minHeight="10.0" prefHeight="314.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="321.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <Label prefHeight="37.0" prefWidth="94.0" text="Details" textFill="STEELBLUE" GridPane.columnIndex="3">
@@ -411,7 +415,7 @@
                                        </font>
                                     </Label>
                                     <ImageView fx:id="details_img" fitHeight="160.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" translateX="-80.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                    <TextField fx:id="details_desc_area" alignment="TOP_LEFT" editable="false" prefHeight="280.0" prefWidth="421.0" styleClass="text-area" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextArea fx:id="details_desc_area" accessibleRole="TEXT_AREA" editable="false" prefHeight="280.0" prefWidth="421.0" styleClass="text-area" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <TilePane hgap="25.0" prefHeight="283.0" prefWidth="391.0" vgap="10.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                        <children>
                                           <Label fx:id="details_dest_lbl" prefHeight="20.0" prefWidth="227.0" text="Destination: $Country,$City" textFill="STEELBLUE">
@@ -444,6 +448,20 @@
                                  </children>
                               </GridPane>
                            </children></AnchorPane>
+                        <AnchorPane fx:id="home_scr" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #4682b4;">
+                           <children>
+                              <Separator layoutY="232.0" prefHeight="0.0" prefWidth="1101.0" />
+                              <ImageView fitHeight="231.0" fitWidth="1101.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/stock_theme.png" />
+                                 </image></ImageView>
+                              <ScrollPane hbarPolicy="NEVER" layoutY="232.0" prefHeight="347.0" prefWidth="1101.0">
+                                 <content>
+                                    <TilePane fx:id="home_scr_items" prefWidth="1086.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
                      </children>
                   </StackPane>
                </children></HBox>

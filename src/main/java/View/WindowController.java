@@ -22,7 +22,7 @@ public class WindowController {
             stage.setScene(scene);
             if(fxmlLoader.getController() instanceof InitialiableWindow)
                 ((InitialiableWindow)fxmlLoader.getController()).inializeUserData();
-            stage.show();
+            stage.showAndWait();
         }
         catch (Exception e) {e.printStackTrace();}
     }

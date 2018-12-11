@@ -37,6 +37,7 @@ public class UiController extends WindowController implements InitialiableWindow
     private AddVacationInterface addVacInterface = new AddVacationInterface();
     private PurchaseApplicationInterface purAddInterface = new PurchaseApplicationInterface();
     private MyListingsInterface MLI = new MyListingsInterface();
+    private PurchasesInterface PI = new PurchasesInterface();
     private String[] userValues;
     private int depressedBtn = 0;
     private SearchInterface searchInterface = new SearchInterface();
@@ -192,6 +193,10 @@ public class UiController extends WindowController implements InitialiableWindow
         lname.setText(this.userValues[3]);
         city.setText(this.userValues[4]);
     }
+    public void initializePurchases(){
+        PurchasesInterface.UI = this;
+        this.PI.getPurchasedItems(LoginInterface.getCurrentUser());
+    }
     public void handleUpdate() {
         boolean dataChanged = false;
         boolean passwordChanged = false;
@@ -318,18 +323,18 @@ public class UiController extends WindowController implements InitialiableWindow
         this.searchInterface.search(this.searchBox.getText(),this.searchDate.getValue());
     }
     public void addResultItem(){
-        try{
-            Node newResult = FXMLLoader.load(getClass().getResource("/resultItem.fxml"));
-            home_scr_items.getChildren().add(newResult);
-        }
-        catch (Exception e){
-            System.out.println("FXML Error");
-        }
+        this.addItems("/resultItem.fxml",home_scr_items);
     }
     public void addPublishedItem(){
+        this.addItems("/myListingsItem.fxml",published_scr_items);
+    }
+    public void addPurchasedItem(){
+        this.addItems("/purchasedItem.fxml",favorites_scr_items);
+    }
+    private void addItems(String name,TilePane addTo){
         try{
-            Node newResult = FXMLLoader.load(getClass().getResource("/myListingsItem.fxml"));
-            this.published_scr_items.getChildren().add(newResult);
+            Node newResult = FXMLLoader.load(getClass().getResource(name));
+            addTo.getChildren().add(newResult);
         }
         catch (Exception e){
             System.out.println("FXML Error");

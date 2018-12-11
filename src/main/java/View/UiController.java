@@ -342,7 +342,7 @@ public class UiController extends WindowController implements InitialiableWindow
     }
     public void handlePublishNewVacation(ActionEvent actionEvent) {
         String uniqueID = UUID.randomUUID().toString();
-        Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText(),this.imageID,uniqueID,LoginInterface.getCurrentUser());
+        Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText(),this.imageID,uniqueID,LoginInterface.getCurrentUser(),"admin");
         if(addVacInterface.detailsApprove(vacation.toStringArray())){
             addVacInterface.wiriteToDB(vacation.toStringArray());
             this.home_btn.fire();

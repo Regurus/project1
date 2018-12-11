@@ -49,7 +49,7 @@ public class VacationDatabase extends Database{
     //8-owner
     //9-applicant
     public void createTuple(String[] tuple){
-        if(tuple.length!=9)
+        if(tuple.length!=10)
             throw new RuntimeException("Incorrect tuple size, cannot index");
         String sql = "INSERT INTO vacation_table (vacation_id,destination_region,destination_city,price,departure,arrival,description,picture_name,owner,applicant) VALUES(?,?,?,?,?,?,?,?,?,?)";
         try {
@@ -63,7 +63,7 @@ public class VacationDatabase extends Database{
             pstmt.setString(7, tuple[5]);
             pstmt.setString(8, tuple[6]);
             pstmt.setString(9, tuple[8]);
-            pstmt.setString(10, "admin");//initially there is no applicant waiting to purchase this vacation, so "admin" behaves like null here
+            pstmt.setString(10, tuple[9]);//initially there is no applicant waiting to purchase this vacation, so "admin" behaves like null here
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -196,7 +196,7 @@ public class VacationDatabase extends Database{
         ArrayList<Vacation> res = new ArrayList<>();
         try{
             while(rs.next()){
-                res.add(new Vacation(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(1),rs.getString(9)));
+                res.add(new Vacation(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(1),rs.getString(9),rs.getString(1)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -211,12 +211,12 @@ public class VacationDatabase extends Database{
     //<editor-fold desc="Purchasing application management">
     public boolean applyForPurchase(String vacation_id, String applicant){
         Vacation[] tuple = getTuplesByField(vacation_id, "vacation_id");
-        if(tuple[9].equals("admin")){
-            return false;
-        }
-        else{
+        if(tuple[0].getApplicant().equals("admin")){
             editTuple(vacation_id,"applicant",applicant);
             return true;
+        }
+        else{
+            return false;
         }
     }
     public void declinePurchaseApplication(String vacation_id){

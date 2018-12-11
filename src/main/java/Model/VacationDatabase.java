@@ -24,8 +24,8 @@ public class VacationDatabase extends Database{
                 + "	departure TEXT NOT NULL,\n"
                 + "	arrival TEXT NOT NULL,\n"
                 + "	description TEXT NOT NULL,\n"
-                + "	picture_name TEXT\n,"
-                + "	owner TEXT NOT NULL\n"
+                + "	picture_name TEXT,\n"
+                + "	owner TEXT NOT NULL,\n"
                 + " applicant TEXT NOT NULL\n"
                 + ");";
         try{

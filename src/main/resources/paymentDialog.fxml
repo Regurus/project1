@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="419.0" prefWidth="375.0" style="-fx-background-color: #4682B4; -fx-border-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.PaymentDialogController">
+<AnchorPane prefHeight="419.0" prefWidth="375.0" style="-fx-background-color: #4682B4; -fx-border-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.paymentDialogController">
    <children>
       <MaterialDesignIconView fill="WHITE" glyphName="CLOSE_BOX" layoutX="349.0" layoutY="23.0" onMouseClicked="#close" size="25" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Label layoutX="38.0" layoutY="72.0" prefHeight="36.0" prefWidth="300.0" text="In odrer to commit for buying a ticket," textFill="WHITE">

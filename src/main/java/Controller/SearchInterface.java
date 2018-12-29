@@ -1,15 +1,12 @@
 package Controller;
 
 import Model.Vacation;
-import Model.VacationDatabase;
-import View.ResultItemController;
-import View.UiController;
+import View.uiController;
 
 import java.time.LocalDate;
 
 public class SearchInterface extends VacationInteraction{
-    public static ResultItemController lastItem;
-    public static UiController ui;
+    public static uiController ui;
 
     public void search(String text, LocalDate value) {
         if(text.equals("")){
@@ -31,8 +28,7 @@ public class SearchInterface extends VacationInteraction{
             return;
         }
         for(int i=0;i<list.length;i++){
-            ui.addResultItem();
-            lastItem.defineContent(list[i]);
+            ui.addResultItem(list[i]);
         }
     }
 }

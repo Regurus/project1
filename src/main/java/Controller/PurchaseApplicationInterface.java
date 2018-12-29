@@ -2,11 +2,9 @@ package Controller;
 
 import Model.PurchaseApplication;
 import Model.Vacation;
-import View.ResultItemController;
-import View.myListingsItemController;
+import View.uiController;
 
 public class PurchaseApplicationInterface extends VacationInteraction{
-    public static myListingsItemController current;
 
     public void getPublishedItems(){
         this.updateUI(activeConnection.getVacationsByName(LoginInterface.getCurrentUser()));
@@ -18,8 +16,7 @@ public class PurchaseApplicationInterface extends VacationInteraction{
             return;
         }
         for(int i=0;i<vacations.length;i++){
-            ResultItemController.UI.addPublishedItem();
-            current.defineContent(vacations[i]);
+            uiController.Ui.addPublishedItem(vacations[i]);
         }
     }
 

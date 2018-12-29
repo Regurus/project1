@@ -1,17 +1,15 @@
 package View;
 
 import Controller.MyListingsInterface;
-import Controller.SearchInterface;
 import Model.Vacation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 
-public class myListingsItemController {
+public class myListingsItemController implements Item{
 
     private Vacation containedItem;
-    private UiController UI;
 
     @FXML
     private Label trip_dest_lbl;
@@ -31,8 +29,7 @@ public class myListingsItemController {
         this.trip_dest_lbl.setText("Trip to: "+vc.getDest_region()+" -> "+vc.getDest_city());
         this.trip_date_lbl.setText("In Dates: "+vc.getStart().replace('-','/')+" - "+vc.getEnd().replace('-','/'));
         this.containedItem = vc;
-        this.UI = SearchInterface.ui;
-        if(UiController.purAddInterface.hasApplicant(containedItem.getListing_id())){
+        if(uiController.purAddInterface.hasApplicant(containedItem.getListing_id())){
             status_lbl.setText("Status: Pending for approval.");
             this.approve_btn.setDisable(false);
             this.decline_btn.setDisable(false);
@@ -43,21 +40,32 @@ public class myListingsItemController {
             this.decline_btn.setDisable(true);
         }
     }
+
+    @Override
+    public String getType() {
+        return "Listing Item";
+    }
+
     @FXML
     private void handleDelete(){
         if(containedItem!=null)
-            UiController.addVacInterface.deleteFromDB(containedItem.getListing_id());
+            uiController.addVacInterface.deleteFromDB(containedItem.getListing_id());
+        uiController.Ui.removeItem(this);
     }
     @FXML
     private void handleAccept(){
         if(containedItem!=null){
-            UiController.addVacInterface.deleteFromDB(containedItem.getListing_id());
-            UiController.PI.addPVacation(containedItem);
+            uiController.addVacInterface.deleteFromDB(containedItem.getListing_id());
+            uiController.PI.addPVacation(containedItem);
             containedItem=null;
+            uiController.Ui.removeItem(this);
         }
     }
     @FXML
     private void handleDecline(){
-        UiController.purAddInterface.declinePurchaseApplication(containedItem.getListing_id());
+        uiController.purAddInterface.declinePurchaseApplication(containedItem.getListing_id());
+        status_lbl.setText("Status: Listed.");
+        this.approve_btn.setDisable(true);
+        this.decline_btn.setDisable(true);
     }
 }

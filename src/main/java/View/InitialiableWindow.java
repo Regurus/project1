@@ -1,5 +1,5 @@
 package View;
 
 public interface InitialiableWindow {
-    void inializeUserData();
+    void initializeUserData();
 }

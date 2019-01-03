@@ -2,15 +2,11 @@ package Controller;
 
 import Model.PurchasedVacation;
 import Model.Vacation;
-import View.UiController;
-import View.purchasedItemController;
-
+import View.uiController;
 import java.time.LocalDate;
 
 public class PurchasesInterface extends PurchasedVacationInteraction{
 
-    public static UiController UI;
-    public static purchasedItemController lastItem;
 
     public void getPublishedItems(){
         Vacation[] vacs = this.getPurchasingHistory(LoginInterface.getCurrentUser());
@@ -23,8 +19,7 @@ public class PurchasesInterface extends PurchasedVacationInteraction{
             return;
         }
         for(int i=0;i<vacations.length;i++){
-            UI.addPurchasedItem();
-            lastItem.defineContent(vacations[i],((PurchasedVacation)vacations[i]).getPurchase_date());
+            uiController.Ui.addPurchasedItem((PurchasedVacation)vacations[i]);
         }
     }
 
@@ -36,6 +31,7 @@ public class PurchasesInterface extends PurchasedVacationInteraction{
         String time_stamp = LocalDate.now().toString();
         PurchasedVacation purchasedVacation = new PurchasedVacation(purchased,time_stamp);
         activeConnection.createTuple(purchasedVacation.toStringArray());
+        uiController.Ui.addPurchasedItem(purchasedVacation);
     }
 
 }

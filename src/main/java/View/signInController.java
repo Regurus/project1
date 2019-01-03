@@ -1,9 +1,7 @@
 package View;
 
 import Controller.LoginInterface;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -11,12 +9,8 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
-public class signInController extends WindowController {
+public class signInController extends windowController {
     private static LoginInterface dataBase = new LoginInterface();
-    @FXML
-    Button signInButton;
-    @FXML
-    Button signUpButton;
     @FXML
     TextField username;
     @FXML

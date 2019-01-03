@@ -1,12 +1,15 @@
 package View;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.UUID;
 import Controller.*;
 import Model.ImageSaver;
 import Model.PurchaseApplication;
+import Model.PurchasedVacation;
 import Model.Vacation;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,19 +24,23 @@ import javafx.stage.FileChooser;
 import javafx.stage.WindowEvent;
 
 
-public class UiController extends WindowController implements InitialiableWindow {
+public class uiController extends windowController implements InitialiableWindow {
 
+    public static uiController Ui;
     private EditInterface data = new EditInterface();
-    public static AddVacationInterface addVacInterface = new AddVacationInterface();
-    public static PurchaseApplicationInterface purAddInterface = new PurchaseApplicationInterface();
+    static AddVacationInterface addVacInterface = new AddVacationInterface();
+    static PurchaseApplicationInterface purAddInterface = new PurchaseApplicationInterface();
     private MyListingsInterface MLI = new MyListingsInterface();
-    public static PurchasesInterface PI = new PurchasesInterface();
+    static PurchasesInterface PI = new PurchasesInterface();
     private String[] userValues;
     private int depressedBtn = 0;
     private SearchInterface searchInterface = new SearchInterface();
-    public static ResultItemController item;
-    public static boolean purchase_desition;
+    static resultItemController item;
+    boolean purchase_decision;
     private String imageID;
+    private HashMap<resultItemController,Node> resultsList = new HashMap<>();
+    private HashMap<purchasedItemController,Node> purchasedList = new HashMap<>();
+    private HashMap<myListingsItemController,Node> myListingList = new HashMap<>();
 
     //<editor-fold desc="Settings Controls">
     @FXML
@@ -148,44 +155,40 @@ public class UiController extends WindowController implements InitialiableWindow
     //</editor-fold>
 
     public void initialize(){
+        uiController.Ui = this;
         this.userValues=this.data.getUserInfo(LoginInterface.getCurrentUser());
         SearchInterface.ui = this;
         this.username_lbl.setText(this.userValues[0]);
         initializePublished();
-        inializeHomeScreen();
+        initializeHomeScreen();
         initializePurchases();
         //scrollPane.setContent(this.test_container);
     }
-    private void inializeHomeScreen(){
+    private void initializeHomeScreen(){
         Vacation[] existing = this.searchInterface.getTwenty();
         if(existing!=null&&existing.length>0){
-            Node[] nodes = new Node[existing.length];
             for(int i=0;i<existing.length;i++){
-                try{
-                    nodes[i] = FXMLLoader.load(getClass().getResource("/resultItem.fxml"));
-                }
-                catch (Exception e){
-                    System.out.println("FXML Error");
-                }
-                home_scr_items.getChildren().add(nodes[i]);
-                SearchInterface.lastItem.defineContent(existing[i]);
+                this.addItems("/resultItem.fxml", home_scr_items);
             }
+        }
+        assert existing != null;
+        resultItemController[] currentContent = this.resultsList.keySet().toArray(new resultItemController[existing.length]);
+        for(int i=0;i<existing.length;i++) {
+            currentContent[i].defineContent(existing[i]);
         }
         home_scr.toFront();
     }
     private void initializePublished(){
-        ResultItemController.UI = this;
         this.MLI.getPublishedItems();
     }
-    public void inializeUserData(){
+    public void initializeUserData(){
         username.setText(this.userValues[0]);
         username.editableProperty().setValue(false);
         fname.setText(this.userValues[2]);
         lname.setText(this.userValues[3]);
         city.setText(this.userValues[4]);
     }
-    public void initializePurchases(){
-        PurchasesInterface.UI = this;
+    private void initializePurchases(){
         PI.getPublishedItems();
     }
     public void handleUpdate() {
@@ -245,9 +248,12 @@ public class UiController extends WindowController implements InitialiableWindow
     public void handleSettingsClick(){
         user_edit_pane.toFront();
     }
+    public void handleMessagesClick(){
+
+    }
     public void handleLogoutClick(){
         LoginInterface.nullifyCurrentUser();
-        this.openNewWindow("Vaction4U","/signIn.fxml",600, 400);
+        this.openNewWindowAndCloseOld("Vaction4U","/signIn.fxml",600, 400);
         this.home_btn.getScene().getWindow().fireEvent(new WindowEvent(this.home_btn.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
     public void handleClose(){
@@ -286,14 +292,14 @@ public class UiController extends WindowController implements InitialiableWindow
     }
     public void handleApplication(){
         this.openNewWindow("Payment", "/paymentDialog.fxml",375,419);
-        if(UiController.purchase_desition){
+        if(this.purchase_decision){
             //do add application
-            String vacation_id = UiController.item.item.getListing_id();//vacation_id
+            String vacation_id = uiController.item.item.getListing_id();//vacation_id
             String applicant = LoginInterface.getCurrentUser();//applicant
             PurchaseApplication purchaseApplication = new PurchaseApplication(vacation_id,applicant);
             purAddInterface.acceptApplication(purchaseApplication);
 
-            UiController.purchase_desition=false;
+            this.purchase_decision =false;
             this.home_btn.fire();
         }
     }
@@ -315,6 +321,7 @@ public class UiController extends WindowController implements InitialiableWindow
             active = favorites_btn;
             this.favoritesIcon.setFill(Paint.valueOf("#FFFFFF"));
         }
+        assert active != null;
         active.setStyle("-fx-background-color:  #4682B4");
         Button newActive = null;
         if(newActiveButton==0){
@@ -333,35 +340,73 @@ public class UiController extends WindowController implements InitialiableWindow
             newActive = favorites_btn;
             this.favoritesIcon.setFill(Paint.valueOf("#4682B4"));
         }
+        assert newActive != null;
         newActive.setStyle("-fx-background-color:  #FFFFFF");
         this.depressedBtn = newActiveButton;
     }
-    public void addResultItem(){
-        this.addItems("/resultItem.fxml",home_scr_items);
+    public void addResultItem(Vacation item){
+        Item controller = this.addItems("/resultItem.fxml",home_scr_items);
+        assert controller != null;
+        controller.defineContent(item);
     }
-    public void addPublishedItem(){
-        this.addItems("/myListingsItem.fxml",published_scr_items);
+    public void addPublishedItem(Vacation item){
+        Item controller = this.addItems("/myListingsItem.fxml",published_scr_items);
+        assert controller != null;
+        controller.defineContent(item);
     }
-    public void addPurchasedItem(){
-        this.addItems("/purchasedItem.fxml",favorites_scr_items);
+    public void addPurchasedItem(PurchasedVacation item){
+        Item controller = this.addItems("/purchasedItem.fxml",favorites_scr_items);
+        assert controller != null;
+        controller.defineContent(item);
     }
-    private void addItems(String name,TilePane addTo){
+    private Item addItems(String name,TilePane addTo){
         try{
-            Node newResult = FXMLLoader.load(getClass().getResource(name));
-            addTo.getChildren().add(newResult);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(name));
+            Node res = fxmlLoader.load();
+            addTo.getChildren().add(res);
+            Object controller = fxmlLoader.getController();
+            this.placeController((Item)controller,res);
+            return (Item)controller;
         }
         catch (Exception e){
             System.out.println("FXML Error");
         }
+        return null;
     }
-    public void openDesciption(){
-        details_dest_lbl.setText("Destination: "+UiController.item.item.getDest_region()+","+UiController.item.item.getDest_city());
-        details_start_lbl.setText("Departure: "+UiController.item.item.getStart().replace("-","/"));
-        details_end_lbl.setText("Return: "+UiController.item.item.getEnd().replace('-','/'));
-        details_price_lbl.setText("Price: "+UiController.item.item.getPrice()+"$");
-        details_desc_area.setText(UiController.item.item.getDescription());
+    private void placeController(Item controller,Node node){
+        switch (controller.getType()) {
+            case "Result Item":
+                this.resultsList.put((resultItemController) controller, node);
+                break;
+            case "Purchased Item":
+                this.purchasedList.put((purchasedItemController) controller, node);
+                break;
+            case "Listing Item":
+                this.myListingList.put((myListingsItemController) controller, node);
+                break;
+        }
+    }
+    void removeItem(Item controller){
+        switch (controller.getType()) {
+            case "Result Item":
+                this.home_scr_items.getChildren().remove(this.resultsList.get(controller));
+                break;
+            case "Purchased Item":
+                this.favorites_scr_items.getChildren().remove(this.purchasedList.get(controller));
+                break;
+            case "Listing Item":
+                this.published_scr_items.getChildren().remove(this.myListingList.get(controller));
+                break;
+        }
+    }
+    void openDesciption(){
+        details_dest_lbl.setText("Destination: "+ uiController.item.item.getDest_region()+","+ uiController.item.item.getDest_city());
+        details_start_lbl.setText("Departure: "+ uiController.item.item.getStart().replace("-","/"));
+        details_end_lbl.setText("Return: "+ uiController.item.item.getEnd().replace('-','/'));
+        details_price_lbl.setText("Price: "+ uiController.item.item.getPrice()+"$");
+        details_desc_area.setText(uiController.item.item.getDescription());
         details_desc_area.setWrapText(true);
-        File file = new File(System.getProperty("user.dir")+"/src/main/resources/images/userImages/"+UiController.item.item.getImage_path());
+        File file = new File(System.getProperty("user.dir")+"/src/main/resources/images/userImages/"+ uiController.item.item.getImage_path());
         details_img.setImage(new Image(file.toURI().toString()));
         this.details_scr.toFront();
     }

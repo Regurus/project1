@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.Vacation;
-import View.ResultItemController;
+import View.uiController;
 import View.myListingsItemController;
 
 public class MyListingsInterface extends VacationInteraction{
@@ -17,8 +17,7 @@ public class MyListingsInterface extends VacationInteraction{
             return;
         }
         for(int i=0;i<vacations.length;i++){
-            ResultItemController.UI.addPublishedItem();
-            current.defineContent(vacations[i]);
+            uiController.Ui.addPublishedItem(vacations[i]);
         }
     }
     //public static boolean acceptApplication(Vacation vacation)

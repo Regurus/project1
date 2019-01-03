@@ -291,7 +291,7 @@ public class UiController extends WindowController implements InitialiableWindow
             String vacation_id = UiController.item.item.getListing_id();//vacation_id
             String applicant = LoginInterface.getCurrentUser();//applicant
             PurchaseApplication purchaseApplication = new PurchaseApplication(vacation_id,applicant);
-            purAddInterface.wiriteToDB(purchaseApplication);
+            purAddInterface.acceptApplication(purchaseApplication);
 
             UiController.purchase_desition=false;
             this.home_btn.fire();

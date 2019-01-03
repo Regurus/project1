@@ -27,7 +27,7 @@ public class PurchaseApplicationInterface extends VacationInteraction{
         return activeConnection.hasApplicant(vacation_id);
     }
 
-    public void wiriteToDB(PurchaseApplication purchaseApplication){
+    public void acceptApplication(PurchaseApplication purchaseApplication){
         activeConnection.applyForPurchase(purchaseApplication.getVacation_id(),purchaseApplication.getApplicant());
     }
 

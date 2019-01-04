@@ -6,8 +6,7 @@ import View.uiController;
 import java.time.LocalDate;
 
 public class SearchInterface extends VacationInteraction{
-    public static uiController ui;
-
+    public static SearchInterface SI;
     public void search(String text, LocalDate value) {
         if(text.equals("")){
             updateUi(activeConnection.getTuplesByDate(value.toString()));
@@ -28,7 +27,7 @@ public class SearchInterface extends VacationInteraction{
             return;
         }
         for(int i=0;i<list.length;i++){
-            ui.addResultItem(list[i]);
+            uiController.Ui.addResultItem(list[i]);
         }
     }
 }

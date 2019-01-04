@@ -8,6 +8,7 @@ public class AddVacationInterface extends VacationInteraction{
             return true;
         else return false;
     }*/
+    public static AddVacationInterface AVI;
 
     /**
      * This function receives a string of inputs to be inserted into the database and returns whether or not they are eligible to be inserted.

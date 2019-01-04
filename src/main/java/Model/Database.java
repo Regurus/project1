@@ -9,12 +9,8 @@ import java.sql.SQLException;
 public class Database {
     protected Connection currentConnection;
     protected Database(String name){
-        String address = " ";
         File a = new File("src/main/resources/Database.sqlite3");
         File parentFolder = new File(a.getParent());
-        if(address == null) {
-            throw new RuntimeException("No allocation for the database: " + name + "\nPlease refer to settings");
-        }
         deployDataBase(parentFolder.getParent(),name);
     }
     protected void deployDataBase(String location,String name){
@@ -25,7 +21,7 @@ public class Database {
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
                 System.out.println("The driver name is " + meta.getDriverName());
-                System.out.println("A new database has been created.");
+                System.out.println("Database connection established.");
             }
 
         } catch (SQLException e) {

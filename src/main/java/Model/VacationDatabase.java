@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.LoginInterface;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -114,7 +116,7 @@ public class VacationDatabase extends Database{
             pstmt.setString(2,location);
             pstmt.setString(3,date);
             rs = pstmt.executeQuery();
-            return this.parseResultSet(rs);
+            return this.parseResultSetNoCurrent(rs);
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -130,7 +132,7 @@ public class VacationDatabase extends Database{
             pstmt.setString(1,location);
             pstmt.setString(2,location);
             rs = pstmt.executeQuery();
-            Vacation res[] = /*this.filterResultSetByDate(*/this.parseResultSet(rs)/*, LocalDate.now().toString())*/;
+            Vacation res[] = /*this.filterResultSetByDate(*/this.parseResultSetNoCurrent(rs)/*, LocalDate.now().toString())*/;
             return res;
         }
         catch (SQLException e) {
@@ -145,7 +147,19 @@ public class VacationDatabase extends Database{
     }
 
     public Vacation[] getTuplesByDate(String date){
-        return this.getTuplesByField(date,"departure");
+        String field_name = "departure";
+        String sql = "SELECT * FROM vacation_table WHERE departure = ?;";
+        ResultSet rs = null;
+        try{
+            PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
+            pstmt.setString(1,date);
+            rs = pstmt.executeQuery();
+            return this.parseResultSetNoCurrent(rs);
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     public Vacation[] getVacationsByName(String name){
@@ -186,22 +200,40 @@ public class VacationDatabase extends Database{
     }
 
     public Vacation[] getTwentyVactions(){
-        ArrayList<Vacation> res = new ArrayList<>();
         try{
-            PreparedStatement pstmt  = this.currentConnection.prepareStatement("SELECT * FROM vacation_table LIMIT 20;");
+            PreparedStatement pstmt  = this.currentConnection.prepareStatement("SELECT * FROM vacation_table WHERE applicant = ? LIMIT 20;");
+            pstmt.setString(1,"admin");
             ResultSet rs = pstmt.executeQuery();
-            return this.parseResultSet(rs);
+            return this.parseResultSetNoCurrent(rs);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
         }
     }
 
+    private Vacation[] parseResultSetNoCurrent(ResultSet rs){
+        ArrayList<Vacation> res = new ArrayList<>();
+        try{
+            while(rs.next()){
+                if(!rs.getString(9).equalsIgnoreCase(LoginInterface.getCurrentUser()))
+                    res.add(new Vacation(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(1),rs.getString(9),rs.getString(10)));
+                else
+                    rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        Vacation[] arr = new Vacation[res.size()];
+        arr = res.toArray(arr);
+        return arr;
+    }
+
     private Vacation[] parseResultSet(ResultSet rs){
         ArrayList<Vacation> res = new ArrayList<>();
         try{
             while(rs.next()){
-                res.add(new Vacation(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(1),rs.getString(9),rs.getString(10)));
+                    res.add(new Vacation(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(1),rs.getString(9),rs.getString(10)));
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -6,7 +6,7 @@ import View.uiController;
 import java.time.LocalDate;
 
 public class PurchasesInterface extends PurchasedVacationInteraction{
-
+    public static PurchasesInterface PI;
 
     public void getPublishedItems(){
         Vacation[] vacs = this.getPurchasingHistory(LoginInterface.getCurrentUser());

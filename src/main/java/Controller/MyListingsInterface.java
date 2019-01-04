@@ -2,11 +2,10 @@ package Controller;
 
 import Model.Vacation;
 import View.uiController;
-import View.myListingsItemController;
 
 public class MyListingsInterface extends VacationInteraction{
-    public static myListingsItemController current;
 
+    public static MyListingsInterface MLI;
     public void getPublishedItems(){
         this.updateUI(activeConnection.getVacationsByName(LoginInterface.getCurrentUser()));
     }

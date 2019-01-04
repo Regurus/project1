@@ -4,7 +4,7 @@ import javafx.scene.Node;
 
 import java.util.HashMap;
 
-public class TradeSelectionDialogController extends WindowController{
+public class TradeSelectionDialogController extends windowController{
 
     private HashMap<myListingsItemController, Node> items;
 

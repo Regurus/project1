@@ -10,7 +10,7 @@ public class paymentDialogController {
     private Label price_lbl;
 
     public void initialize(){
-        this.price_lbl.setText(uiController.item.item.getPrice()+"$");
+        this.price_lbl.setText(uiController.Ui.item.item.getPrice()+"$");
     }
 
     public void close(){

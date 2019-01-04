@@ -6,17 +6,16 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class Vacation {
-    protected String dest_region;
-    protected String dest_city;
-    protected String price;
-    protected String start;
-    protected String end;
-    protected String description;
-    protected String image_path;
-    protected String listing_id;
-    protected String owner;
-    protected String applicant;
-
+    String dest_region;
+    String dest_city;
+    String price;
+    String start;
+    String end;
+    String description;
+    String image_path;
+    String listing_id;
+    String owner;
+    String applicant;
 
 
     public Vacation(String dest_region, String dest_city, String price, String start, String end, String description, String image_path, String listing_id, String owner, String applicant) {
@@ -31,51 +30,38 @@ public class Vacation {
         this.owner = owner;
         this.applicant = applicant;
     }
-
-
     public String getDest_region() {
         return dest_region;
     }
-
     public String getDest_city() {
         return dest_city;
     }
-
     public String getPrice() {
         return price;
     }
-
     public String getStart() {
         return start;
     }
-
     public String getEnd() {
         return end;
     }
-
     public String getDescription() {
         return description;
     }
-
     public String getImage_path() {
         return image_path;
     }
-
     public String getListing_id() {
         return listing_id;
     }
-
-    public String getOwner() {
+    String getOwner() {
         return owner;
     }
-
-    public String getApplicant() {
+    String getApplicant() {
         return applicant;
     }
-
     public String[] toStringArray(){
-        String[] res = {dest_region,dest_city,price,start,end,description,image_path,listing_id,owner,applicant};
-        return res;
+        return new String[] {dest_region,dest_city,price,start,end,description,image_path,listing_id,owner,applicant};
     }
     public int getVacationLenght(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);

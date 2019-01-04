@@ -1,6 +1,9 @@
 package View;
 
+import Controller.AddVacationInterface;
 import Controller.MyListingsInterface;
+import Controller.PurchaseApplicationInterface;
+import Controller.PurchasesInterface;
 import Model.Vacation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,13 +26,12 @@ public class myListingsItemController implements Item{
     private Button decline_btn;
     @FXML
     private void initialize(){
-        MyListingsInterface.current = this;
     }
     public void defineContent(Vacation vc){
         this.trip_dest_lbl.setText("Trip to: "+vc.getDest_region()+" -> "+vc.getDest_city());
         this.trip_date_lbl.setText("In Dates: "+vc.getStart().replace('-','/')+" - "+vc.getEnd().replace('-','/'));
         this.containedItem = vc;
-        if(uiController.purAddInterface.hasApplicant(containedItem.getListing_id())){
+        if(PurchaseApplicationInterface.PAI.hasApplicant(containedItem.getListing_id())){
             status_lbl.setText("Status: Pending for approval.");
             this.approve_btn.setDisable(false);
             this.decline_btn.setDisable(false);
@@ -49,21 +51,21 @@ public class myListingsItemController implements Item{
     @FXML
     private void handleDelete(){
         if(containedItem!=null)
-            uiController.addVacInterface.deleteFromDB(containedItem.getListing_id());
+            AddVacationInterface.AVI.deleteFromDB(containedItem.getListing_id());
         uiController.Ui.removeItem(this);
     }
     @FXML
     private void handleAccept(){
         if(containedItem!=null){
-            uiController.addVacInterface.deleteFromDB(containedItem.getListing_id());
-            uiController.PI.addPVacation(containedItem);
+            AddVacationInterface.AVI.deleteFromDB(containedItem.getListing_id());
+            PurchasesInterface.PI.addPVacation(containedItem);
             containedItem=null;
             uiController.Ui.removeItem(this);
         }
     }
     @FXML
     private void handleDecline(){
-        uiController.purAddInterface.declinePurchaseApplication(containedItem.getListing_id());
+        PurchaseApplicationInterface.PAI.declinePurchaseApplication(containedItem.getListing_id());
         status_lbl.setText("Status: Listed.");
         this.approve_btn.setDisable(true);
         this.decline_btn.setDisable(true);

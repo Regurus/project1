@@ -46,11 +46,4 @@ public class ImageSaver {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-
-        String st=new String();
-        File s=new File("C:\\Users\\Razi\\Pictures\\Saved Pictures\\download.jpg");
-        st=saveImage(s);
-        System.out.println(st);
-    }
 }

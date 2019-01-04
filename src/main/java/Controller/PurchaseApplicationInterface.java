@@ -6,6 +6,7 @@ import View.uiController;
 
 public class PurchaseApplicationInterface extends VacationInteraction{
 
+    public static PurchaseApplicationInterface PAI;
     public void getPublishedItems(){
         this.updateUI(activeConnection.getVacationsByName(LoginInterface.getCurrentUser()));
     }

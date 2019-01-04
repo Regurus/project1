@@ -27,17 +27,11 @@ import javafx.stage.WindowEvent;
 public class uiController extends windowController implements InitialiableWindow {
 
     public static uiController Ui;
-    private EditInterface data = new EditInterface();
-    static AddVacationInterface addVacInterface = new AddVacationInterface();
-    static PurchaseApplicationInterface purAddInterface = new PurchaseApplicationInterface();
-    private MyListingsInterface MLI = new MyListingsInterface();
-    static PurchasesInterface PI = new PurchasesInterface();
     private String[] userValues;
     private int depressedBtn = 0;
-    private SearchInterface searchInterface = new SearchInterface();
-    static resultItemController item;
     boolean purchase_decision;
     private String imageID;
+    protected resultItemController item;
     private HashMap<resultItemController,Node> resultsList = new HashMap<>();
     private HashMap<purchasedItemController,Node> purchasedList = new HashMap<>();
     private HashMap<myListingsItemController,Node> myListingList = new HashMap<>();
@@ -156,16 +150,26 @@ public class uiController extends windowController implements InitialiableWindow
 
     public void initialize(){
         uiController.Ui = this;
-        this.userValues=this.data.getUserInfo(LoginInterface.getCurrentUser());
-        SearchInterface.ui = this;
+        this.initializeInterfaces();
+        this.userValues=EditInterface.EI.getUserInfo(LoginInterface.getCurrentUser());
         this.username_lbl.setText(this.userValues[0]);
         initializePublished();
         initializeHomeScreen();
         initializePurchases();
         //scrollPane.setContent(this.test_container);
     }
+    private void initializeInterfaces(){
+
+        PurchaseApplicationInterface.PAI = new PurchaseApplicationInterface();
+        MyListingsInterface.MLI = new MyListingsInterface();
+        PurchasesInterface.PI = new PurchasesInterface();
+        SearchInterface.SI = new SearchInterface();
+        AddVacationInterface.AVI = new AddVacationInterface();
+        EditInterface.EI = new EditInterface();
+
+    }
     private void initializeHomeScreen(){
-        Vacation[] existing = this.searchInterface.getTwenty();
+        Vacation[] existing = SearchInterface.SI.getTwenty();
         if(existing!=null&&existing.length>0){
             for(int i=0;i<existing.length;i++){
                 this.addItems("/resultItem.fxml", home_scr_items);
@@ -179,7 +183,7 @@ public class uiController extends windowController implements InitialiableWindow
         home_scr.toFront();
     }
     private void initializePublished(){
-        this.MLI.getPublishedItems();
+        MyListingsInterface.MLI.getPublishedItems();
     }
     public void initializeUserData(){
         username.setText(this.userValues[0]);
@@ -189,7 +193,7 @@ public class uiController extends windowController implements InitialiableWindow
         city.setText(this.userValues[4]);
     }
     private void initializePurchases(){
-        PI.getPublishedItems();
+        PurchasesInterface.PI.getPublishedItems();
     }
     public void handleUpdate() {
         boolean dataChanged = false;
@@ -202,7 +206,7 @@ public class uiController extends windowController implements InitialiableWindow
             return;
         if(passwordChanged){
             String message = "";
-            if(!data.combinationApprove(LoginInterface.getCurrentUser(),opassword.getText()))
+            if(!EditInterface.EI.combinationApprove(LoginInterface.getCurrentUser(),opassword.getText()))
                 message = message+"Old password is incorrect!\n";
             if(!npassword.getText().equals(cpassword.getText()))
                 message = message+"New password doesn`t match!\n";
@@ -211,17 +215,17 @@ public class uiController extends windowController implements InitialiableWindow
             this.msg.setText(message);
             if(!message.equals(""))
                 return;
-            data.updatePassword(npassword.getText());
+            EditInterface.EI.updatePassword(npassword.getText());
             if(!dataChanged)
                 this.home_btn.fire();
         }
         if(dataChanged){
             if(!fname.getText().equals(this.userValues[2]))
-                data.updateDetails(fname.getText(),"fname");
+                EditInterface.EI.updateDetails(fname.getText(),"fname");
             if(!lname.getText().equals(this.userValues[3]))
-                data.updateDetails(lname.getText(),"lname");
+                EditInterface.EI.updateDetails(lname.getText(),"lname");
             if(!city.getText().equals(this.userValues[4]))
-                data.updateDetails(city.getText(),"city");
+                EditInterface.EI.updateDetails(city.getText(),"city");
             this.home_btn.fire();
         }
     }
@@ -278,13 +282,13 @@ public class uiController extends windowController implements InitialiableWindow
     }
     public void handleSearch(){
         this.home_scr_items.getChildren().clear();
-        this.searchInterface.search(this.searchBox.getText(),this.searchDate.getValue());
+        SearchInterface.SI.search(this.searchBox.getText(),this.searchDate.getValue());
     }
     public void handlePublishNewVacation(ActionEvent actionEvent) {
         String uniqueID = UUID.randomUUID().toString();
         Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText(),this.imageID,uniqueID,LoginInterface.getCurrentUser(),"admin");
-        if(addVacInterface.detailsApprove(vacation.toStringArray())){
-            addVacInterface.wiriteToDB(vacation.toStringArray());
+        if(AddVacationInterface.AVI.detailsApprove(vacation.toStringArray())){
+            AddVacationInterface.AVI.wiriteToDB(vacation.toStringArray());
             this.home_btn.fire();
         }
         else
@@ -294,11 +298,11 @@ public class uiController extends windowController implements InitialiableWindow
         this.openNewWindow("Payment", "/paymentDialog.fxml",375,419);
         if(this.purchase_decision){
             //do add application
-            String vacation_id = uiController.item.item.getListing_id();//vacation_id
+            String vacation_id = item.item.getListing_id();//vacation_id
             String applicant = LoginInterface.getCurrentUser();//applicant
             PurchaseApplication purchaseApplication = new PurchaseApplication(vacation_id,applicant);
-            purAddInterface.acceptApplication(purchaseApplication);
-
+            PurchaseApplicationInterface.PAI.acceptApplication(purchaseApplication);
+            this.home_scr_items.getChildren().remove(this.resultsList.get(this.item));
             this.purchase_decision =false;
             this.home_btn.fire();
         }
@@ -399,14 +403,15 @@ public class uiController extends windowController implements InitialiableWindow
                 break;
         }
     }
-    void openDesciption(){
-        details_dest_lbl.setText("Destination: "+ uiController.item.item.getDest_region()+","+ uiController.item.item.getDest_city());
-        details_start_lbl.setText("Departure: "+ uiController.item.item.getStart().replace("-","/"));
-        details_end_lbl.setText("Return: "+ uiController.item.item.getEnd().replace('-','/'));
-        details_price_lbl.setText("Price: "+ uiController.item.item.getPrice()+"$");
-        details_desc_area.setText(uiController.item.item.getDescription());
+    void openDesciption(resultItemController item){
+        this.item = item;
+        details_dest_lbl.setText("Destination: "+ item.item.getDest_region()+","+ item.item.getDest_city());
+        details_start_lbl.setText("Departure: "+ item.item.getStart().replace("-","/"));
+        details_end_lbl.setText("Return: "+ item.item.getEnd().replace('-','/'));
+        details_price_lbl.setText("Price: "+ item.item.getPrice()+"$");
+        details_desc_area.setText(item.item.getDescription());
         details_desc_area.setWrapText(true);
-        File file = new File(System.getProperty("user.dir")+"/src/main/resources/images/userImages/"+ uiController.item.item.getImage_path());
+        File file = new File(System.getProperty("user.dir")+"/src/main/resources/images/userImages/"+ item.item.getImage_path());
         details_img.setImage(new Image(file.toURI().toString()));
         this.details_scr.toFront();
     }

@@ -5,6 +5,7 @@ package Controller;
  * before closure the interface must receive all 3 boolean approvals only then it can send a update complete message
  */
 public class EditInterface extends LoginInteraction{
+    public static EditInterface EI;
     public boolean updateLogin(String newLogin){
         boolean exists = this.loginApprove(newLogin);
         if(exists)

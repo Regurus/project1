@@ -26,8 +26,7 @@ public class resultItemController implements Item{
 
     }
     public void openItem(){
-        uiController.item = this;
-        uiController.Ui.openDesciption();
+        uiController.Ui.openDesciption(this);
     }
     @Override
     public void defineContent(Vacation item){
@@ -38,11 +37,13 @@ public class resultItemController implements Item{
         lbl_price.setText(item.getPrice()+'$');
         String destR = item.getDest_region();
         if(destR.length()>10)
-            destR = destR.substring(0,destR.indexOf(' ',1))+"...";
+            if(destR.contains(" "))
+                destR = destR.substring(0,destR.indexOf(' ',1))+"...";
         lbl_area_name.setText(destR);
         String destC = item.getDest_city();
         if(destC.length()>10)
-            destC = destC.substring(0,destC.indexOf(' ',1))+"...";
+            if(destC.contains(" "))
+                destC = destC.substring(0,destC.indexOf(' ',1))+"...";
         lbl_city_name.setText(destC);
         File file = new File(System.getProperty("user.dir")+"/src/main/resources/images/userImages/"+item.getImage_path());
         this.preview.setImage(new Image(file.toURI().toString()));

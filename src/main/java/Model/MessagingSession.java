@@ -7,6 +7,8 @@ public class MessagingSession {
     private String user2;
     private boolean seenByUser2;
     private String content;
+
+
     public MessagingSession(String user1, boolean seenByUser1, String user2, boolean seenByUser2, String content) {
         this.user1 = user1;
         this.seenByUser1 = seenByUser1;
@@ -29,6 +31,18 @@ public class MessagingSession {
 
     public boolean isSeenByUser2() {
         return seenByUser2;
+    }
+
+    public String getUser1() {
+        return user1;
+    }
+
+    public String getUser2() {
+        return user2;
+    }
+
+    public String getContent() {
+        return content;
     }
     public String[] getMessages(){
         String[] result = this.content.split(MessageSystemDatabase.delimiter);

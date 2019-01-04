@@ -30,11 +30,9 @@ public class MessageSystemDatabase extends Database{
 
     }
 
-    public void createTuple(String[] tuple){
-        if(tuple.length!=5)
-            throw new RuntimeException("Incorrect tuple size, cannot index");
+    public void createTuple(MessagingSession session){
         String sql = "INSERT INTO "+this.name+" (user1,user2,seenByUser1,seenByUser2,content) VALUES(?,?,?,?,?)";
-        String[] args = {tuple[0],tuple[1],tuple[2],tuple[3],tuple[4]};
+        String[] args = {session.getUser1(),session.getUser2(),"1","0",session.getContent()};
         this.executeUpdateStatement(sql,args);
     }
 
@@ -68,8 +66,26 @@ public class MessageSystemDatabase extends Database{
         String sql = "UPDATE "+this.name+" SET "+field+" = ? "+ "WHERE user1 = ? AND user2 = ?";
         String[] args = {new_value,user1,user2};
         this.executeUpdateStatement(sql,args);
-    }
 
+    }
+    public boolean checkIfExists(String user1,String user2){
+        boolean flag = false;
+        String[] fields = {"user1","user2"};
+        String[] otherFields = {"user2","user1"};
+        String[] values = {user1,user2};
+        ResultSet temp = this.getTupleByFields(fields,values,"AND");
+        try{
+            if(!temp.next()){
+                temp = this.getTupleByFields(otherFields,values,"AND");
+                if(!temp.next())
+                    return false;
+            }
+        }
+        catch (Exception e){
+            System.out.printf("Database read error!");
+        }
+        return true;
+    }
     //change to messagingSession later.
     public MessagingSession[] parseConversation(ResultSet rs){
         ArrayList<MessagingSession> res = new ArrayList<>();
@@ -84,5 +100,13 @@ public class MessageSystemDatabase extends Database{
         MessagingSession[] arr = new MessagingSession[res.size()];
         arr = res.toArray(arr);
         return arr;
+    }
+    public MessagingSession[] getByUser(String user){
+        MessagingSession[] p1 = this.parseConversation(this.getTuplesByField("user1",user));
+        MessagingSession[] p2 = this.parseConversation(this.getTuplesByField("user2",user));
+        MessagingSession[] result = new MessagingSession[p1.length+p2.length];
+        System.arraycopy(p1,0,result,0,p1.length);
+        System.arraycopy(p2,0,result,p1.length-1,p2.length);
+        return result;
     }
 }

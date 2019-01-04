@@ -3,25 +3,22 @@ package Model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class MessageSystemDatabase extends Database{
 
-    private final String delimiter = ";";//used as a delimiter for
+    public static final String delimiter = ";";//used as a delimiter for
 
     public MessageSystemDatabase(){
-        //REMEMBER TO DEFINE USER1 AND USER2 AS KEY
         super("message_server");
-        String sql = "CREATE TABLE IF NOT EXISTS vacation_table(\n"
-                + "	vacation_id TEXT PRIMARY KEY,\n"
-                + "	destination_region TEXT NOT NULL,\n"
-                + "	destination_city TEXT NOT NULL,\n"
-                + "	price TEXT NOT NULL,\n"
-                + "	departure TEXT NOT NULL,\n"
-                + "	arrival TEXT NOT NULL,\n"
-                + "	description TEXT NOT NULL,\n"
-                + "	picture_name TEXT,\n"
-                + "	owner TEXT NOT NULL,\n"
-                + " applicant TEXT NOT NULL\n"
+        this.tableName = "message_table";
+        String sql = "CREATE TABLE IF NOT EXISTS message_table(\n"
+                + "	user1 TEXT NOT NULL,\n"
+                + "	user2 TEXT NOT NULL,\n"
+                + " seenByUser1 INTEGER NOT NULL,\n"
+                + "	seenByUser2 INTEGER NOT NULL,\n"
+                + "	content TEXT NOT NULL,\n"
+                + "	PRIMARY KEY (user1, user2)\n"
                 + ");";
         try{
             // create a new table
@@ -34,29 +31,58 @@ public class MessageSystemDatabase extends Database{
     }
 
     public void createTuple(String[] tuple){
-
+        if(tuple.length!=5)
+            throw new RuntimeException("Incorrect tuple size, cannot index");
+        String sql = "INSERT INTO "+this.name+" (user1,user2,seenByUser1,seenByUser2,content) VALUES(?,?,?,?,?)";
+        String[] args = {tuple[0],tuple[1],tuple[2],tuple[3],tuple[4]};
+        this.executeUpdateStatement(sql,args);
     }
 
     public void appendToTuple(String user1,String user2, String new_message){
         //getTupleByUsers
         //Append new message to the conversation (simple)
         //editTuple(update the existing tuple)
+        boolean flag = false;
+        String[] fields = {"user1","user2"};
+        String[] values = {user1,user2};
+        ResultSet temp = this.getTupleByFields(fields,values,"AND");
+
+        try{
+            String[] otherFields = {"user2","user1"};
+            if(!temp.next()){
+                temp = this.getTupleByFields(otherFields,values,"AND");
+                flag = true;
+            }
+            if(!flag){
+                this.editTuple(fields[0],fields[1],"content",temp.getString(5)+MessageSystemDatabase.delimiter+new_message);
+            }
+            else{
+                this.editTuple(otherFields[0],otherFields[1],"content",temp.getString(5)+MessageSystemDatabase.delimiter+new_message);
+            }
+        }
+        catch (Exception e){
+            System.out.printf("Database read error!");
+        }
     }
-
-    public void getTuplesByUser(String user){
-
-    }
-
-    private void getTupleByUsers(String user1, String user2){
-
-    }
-
     public void editTuple(String user1, String user2, String field, String new_value){
-
+        String sql = "UPDATE "+this.name+" SET "+field+" = ? "+ "WHERE user1 = ? AND user2 = ?";
+        String[] args = {new_value,user1,user2};
+        this.executeUpdateStatement(sql,args);
     }
 
     //change to messagingSession later.
-    public /*MessagingSession*/ void parseConversation(ResultSet rs){
-
+    public MessagingSession[] parseConversation(ResultSet rs){
+        ArrayList<MessagingSession> res = new ArrayList<>();
+        try{
+            while(rs.next()){
+                res.add(new MessagingSession(rs.getString(1),rs.getInt(3) == 1,rs.getString(2),rs.getInt(4)==1,rs.getString(5)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        MessagingSession[] arr = new MessagingSession[res.size()];
+        arr = res.toArray(arr);
+        return arr;
     }
 }

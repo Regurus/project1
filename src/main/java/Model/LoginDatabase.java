@@ -7,6 +7,7 @@ public class LoginDatabase extends Database {
 
     public LoginDatabase(){
         super("login_server");
+        this.tableName = "login_table";
         String sql = "CREATE TABLE IF NOT EXISTS login_table (\n"
                 + "	login text PRIMARY KEY,\n"
                 + "	password text NOT NULL,\n"
@@ -33,62 +34,28 @@ public class LoginDatabase extends Database {
         if(tuple.length!=5)
             throw new RuntimeException("Incorrect tuple size, cannot index");
         String sql = "INSERT INTO login_table (login,password,fname,lname,city) VALUES(?,?,?,?,?)";
-        try {
-            PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
-            pstmt.setString(1, tuple[0]);
-            pstmt.setString(2, tuple[1]);
-            pstmt.setString(3, tuple[2]);
-            pstmt.setString(4, tuple[3]);
-            pstmt.setString(5, tuple[4]);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Database insertion error.");
-        }
+        String[] args = {tuple[0],tuple[1],tuple[2],tuple[3],tuple[4]};
+        this.executeUpdateStatement(sql,args);
     }
     public void editTuple(String field, String newValue, String login){
         String sql = "UPDATE login_table SET "+field+" = ? "
                 + "WHERE login = ?";
-        try {
-            PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
-            // set the corresponding param
-            pstmt.setString(1, newValue);
-            pstmt.setString(2, login);
-            // update
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        String[] args = {newValue,login};
+        this.executeUpdateStatement(sql,args);
 
     }
     public void deleteTuple(String login){
         String sql = "DELETE FROM login_table WHERE login = ?";
-        try {
-            PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
-            // set the corresponding param
-            pstmt.setString(1, login);
-            // execute the delete statement
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
+        String[] args = {login};
+        this.executeUpdateStatement(sql,args);
     }
 
 
     public String[] getByLogin(String login){
         String sql = "SELECT login, password, fname, lname, city " + "FROM login_table WHERE login = ?";
-        ResultSet rs = null;
-        try{
-            PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
-            pstmt.setString(1,login);
-            rs = pstmt.executeQuery();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return this.parseResultSet(rs);
+        String[] args = {login};
+        ResultSet rs = this.executeGetStatement(sql,args);
+        return parseResultSet(rs);
     }
 
     private String[] parseResultSet(ResultSet rs){
@@ -99,7 +66,6 @@ public class LoginDatabase extends Database {
             e.printStackTrace();
             return null;
         }
-
         if(!exists)
             return null;
         String[] res = new String[5];

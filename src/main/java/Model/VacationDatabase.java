@@ -18,6 +18,7 @@ public class VacationDatabase extends Database{
     //<editor-fold desc="Creation management">
     public VacationDatabase(){
         super("vacation_server");
+        this.tableName = "vacation_table";
         String sql = "CREATE TABLE IF NOT EXISTS vacation_table(\n"
                 + "	vacation_id TEXT PRIMARY KEY,\n"
                 + "	destination_region TEXT NOT NULL,\n"
@@ -54,23 +55,8 @@ public class VacationDatabase extends Database{
         if(tuple.length!=10)
             throw new RuntimeException("Incorrect tuple size, cannot index");
         String sql = "INSERT INTO vacation_table (vacation_id,destination_region,destination_city,price,departure,arrival,description,picture_name,owner,applicant) VALUES(?,?,?,?,?,?,?,?,?,?)";
-        try {
-            PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
-            pstmt.setString(1, tuple[7]);
-            pstmt.setString(2, tuple[0]);
-            pstmt.setString(3, tuple[1]);
-            pstmt.setString(4, tuple[2]);
-            pstmt.setString(5, tuple[3]);
-            pstmt.setString(6, tuple[4]);
-            pstmt.setString(7, tuple[5]);
-            pstmt.setString(8, tuple[6]);
-            pstmt.setString(9, tuple[8]);
-            pstmt.setString(10, tuple[9]);//initially there is no applicant waiting to purchase this vacation, so "admin" behaves like null here
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Database insertion error.");
-        }
+        String[] args = {tuple[7],tuple[0],tuple[1],tuple[2],tuple[3],tuple[4],tuple[5],tuple[6],tuple[8],tuple[9]};
+        this.executeUpdateStatement(sql,args);
     }
     //</editor-fold>
 
@@ -78,108 +64,44 @@ public class VacationDatabase extends Database{
     private void editTuple(String vacation_id, String field, String newValue){
         String sql = "UPDATE vacation_table SET "+field+" = ? "
                 + "WHERE vacation_id = ?";
-        try {
-            PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
-            // set the corresponding param
-            pstmt.setString(1, newValue);
-            pstmt.setString(2, vacation_id);
-            // update
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        String[] args = {newValue, vacation_id};
+        this.executeUpdateStatement(sql,args);
 
     }
     public void deleteTuple(String vacation_id){
         String sql = "DELETE FROM vacation_table WHERE vacation_id = ?";
-        try {
-            PreparedStatement pstmt = this.currentConnection.prepareStatement(sql);
-            // set the corresponding param
-            pstmt.setString(1, vacation_id);
-            // execute the delete statement
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
+        String[] args = {vacation_id};
+        this.executeUpdateStatement(sql,args);
     }
     //</editor-fold>
 
     //<editor-fold desc="Querying">
     public Vacation[] getTuplesByLocationANDDate(String location, String date){
         String sql = "SELECT * FROM vacation_table WHERE (destination_region = ? OR destination_city = ?) AND departure = ?;";
-        ResultSet rs = null;
-        try{
-            PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
-            pstmt.setString(1,location);
-            pstmt.setString(2,location);
-            pstmt.setString(3,date);
-            rs = pstmt.executeQuery();
-            return this.parseResultSetNoCurrent(rs);
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        String[] args = {location,location,date};
+        ResultSet rs = this.executeGetStatement(sql,args);
+        return this.parseResultSetNoCurrent(rs);
     }
 
     public Vacation[] getTuplesByLocation(String location){
-        String sql = "SELECT * FROM vacation_table WHERE destination_region = ? OR destination_city = ?;";
-        ResultSet rs = null;
-        try{
-            PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
-            pstmt.setString(1,location);
-            pstmt.setString(2,location);
-            rs = pstmt.executeQuery();
-            Vacation res[] = /*this.filterResultSetByDate(*/this.parseResultSetNoCurrent(rs)/*, LocalDate.now().toString())*/;
-            return res;
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        String[] fields = {"destination_region","destination_city"};
+        String[] values = {location,location};
+        return this.parseResultSetNoCurrent(this.getTupleByFields(fields,values,"OR"));
     }
 
     public Vacation getTupleByID(String vacation_id){
-        Vacation[] tuple = getTuplesByField(vacation_id, "vacation_id");
+        Vacation[] tuple = this.parseResultSet(getTuplesByField("vacation_id",vacation_id ));
         return tuple[0];//assumption: querying by key should always return 1 result, as the key field has no duplicates
     }
 
     public Vacation[] getTuplesByDate(String date){
-        String field_name = "departure";
-        String sql = "SELECT * FROM vacation_table WHERE departure = ?;";
-        ResultSet rs = null;
-        try{
-            PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
-            pstmt.setString(1,date);
-            rs = pstmt.executeQuery();
-            return this.parseResultSetNoCurrent(rs);
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return this.parseResultSetNoCurrent(this.getTuplesByField("departure",date));
     }
 
     public Vacation[] getVacationsByName(String name){
-        return getTuplesByField(name,"owner");
+        return this.parseResultSet(getTuplesByField("owner",name));
     }
 
-    private Vacation[] getTuplesByField(String field_value, String field_name){
-        String sql = "SELECT * FROM vacation_table WHERE " + field_name + " = ?;";
-        ResultSet rs = null;
-        try{
-            PreparedStatement pstmt  = this.currentConnection.prepareStatement(sql);
-            pstmt.setString(1,field_value);
-            rs = pstmt.executeQuery();
-            return this.parseResultSet(rs);
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
 
     private Vacation[] filterResultSetByDate(Vacation[] parseResultSet, String departure){
         ArrayList<Vacation> relevantVacations = new ArrayList<>();

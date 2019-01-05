@@ -7,7 +7,7 @@ public class MessagingInterface extends MessageSystemInteraction{
     //user1 is the sender
     public void createNewConversation(String user1, String user2, String first_message){
         if(!this.sessionExists(user1,user2)){
-            MessagingSession msg = new MessagingSession(user1,true,user2,false,first_message+';');
+            MessagingSession msg = new MessagingSession(user1,true,user2,false,LoginInterface.getCurrentUser()+"+:+"+first_message+';');
             activeConnection.createTuple(msg);
         }
         else{

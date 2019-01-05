@@ -49,3 +49,9 @@
     -fx-text-fill: #FFFFFF;
     -fx-prompt-text-fill: #FFFFFF;
 }
+.text-area-msg{
+    -fx-font: 16px "Century Gothic";
+    -fx-background-color: #FFFFFF;
+    -fx-control-inner-background:#FFFFFF;
+    -fx-text-fill:#4682B4;
+}

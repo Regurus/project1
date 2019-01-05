@@ -18,6 +18,9 @@ public class SearchInterface extends VacationInteraction{
         }
         updateUi(activeConnection.getTuplesByLocationANDDate(text,value.toString()));
     }
+    public Vacation[] search(String text) {
+            return activeConnection.getTuplesByLocation(text);
+    }
     public Vacation[] getTwenty(){
         return activeConnection.getTwentyVactions();
     }

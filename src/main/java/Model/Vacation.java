@@ -18,6 +18,8 @@ public class Vacation {
     String applicant;
 
 
+
+
     public Vacation(String dest_region, String dest_city, String price, String start, String end, String description, String image_path, String listing_id, String owner, String applicant) {
         this.dest_region = dest_region;
         this.dest_city = dest_city;
@@ -54,10 +56,10 @@ public class Vacation {
     public String getListing_id() {
         return listing_id;
     }
-    String getOwner() {
+    public String getOwner() {
         return owner;
     }
-    String getApplicant() {
+    public String getApplicant() {
         return applicant;
     }
     public String[] toStringArray(){
@@ -76,5 +78,35 @@ public class Vacation {
         catch (Exception e){
             return 0;
         }
+    }
+    public void setDest_region(String dest_region) {
+        this.dest_region = dest_region;
+    }
+    public void setDest_city(String dest_city) {
+        this.dest_city = dest_city;
+    }
+    public void setPrice(String price) {
+        this.price = price;
+    }
+    public void setStart(String start) {
+        this.start = start;
+    }
+    public void setEnd(String end) {
+        this.end = end;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
+    public void setListing_id(String listing_id) {
+        this.listing_id = listing_id;
+    }
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+    public void setApplicant(String applicant) {
+        this.applicant = applicant;
     }
 }

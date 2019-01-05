@@ -31,7 +31,7 @@ public class MessageSystemDatabase extends Database{
     }
 
     public void createTuple(MessagingSession session){
-        String sql = "INSERT INTO "+this.name+" (user1,user2,seenByUser1,seenByUser2,content) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO "+this.tableName+" (user1,user2,seenByUser1,seenByUser2,content) VALUES(?,?,?,?,?)";
         String[] args = {session.getUser1(),session.getUser2(),"1","0",session.getContent()};
         this.executeUpdateStatement(sql,args);
     }
@@ -59,11 +59,11 @@ public class MessageSystemDatabase extends Database{
             }
         }
         catch (Exception e){
-            System.out.printf("Database read error!");
+            System.out.printf("Database read error! @appendToTuple");
         }
     }
     public void editTuple(String user1, String user2, String field, String new_value){
-        String sql = "UPDATE "+this.name+" SET "+field+" = ? "+ "WHERE user1 = ? AND user2 = ?";
+        String sql = "UPDATE "+this.tableName+" SET "+field+" = ? "+ "WHERE user1 = ? AND user2 = ?";
         String[] args = {new_value,user1,user2};
         this.executeUpdateStatement(sql,args);
 
@@ -82,7 +82,7 @@ public class MessageSystemDatabase extends Database{
             }
         }
         catch (Exception e){
-            System.out.printf("Database read error!");
+            System.out.printf("Database read error! @checkIfExists");
         }
         return true;
     }
@@ -105,8 +105,10 @@ public class MessageSystemDatabase extends Database{
         MessagingSession[] p1 = this.parseConversation(this.getTuplesByField("user1",user));
         MessagingSession[] p2 = this.parseConversation(this.getTuplesByField("user2",user));
         MessagingSession[] result = new MessagingSession[p1.length+p2.length];
-        System.arraycopy(p1,0,result,0,p1.length);
-        System.arraycopy(p2,0,result,p1.length-1,p2.length);
+        if(p1.length>0)
+            System.arraycopy(p1,0,result,0,p1.length);
+        if(p2.length>0)
+            System.arraycopy(p2,0,result,p1.length-1,p2.length);
         return result;
     }
 }

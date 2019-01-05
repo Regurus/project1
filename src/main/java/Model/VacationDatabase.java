@@ -84,6 +84,11 @@ public class VacationDatabase extends Database{
     }
 
     public Vacation[] getTuplesByLocation(String location){
+        if(location.length()==36){
+            String[] fields = {"vacation_id"};
+            String[] values = {location};
+            return this.parseResultSetNoCurrent(this.getTuplesByField("vacation_id",location));
+        }
         String[] fields = {"destination_region","destination_city"};
         String[] values = {location,location};
         return this.parseResultSetNoCurrent(this.getTupleByFields(fields,values,"OR"));

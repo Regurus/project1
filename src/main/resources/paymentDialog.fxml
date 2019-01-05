@@ -1,58 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
-<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="419.0" prefWidth="375.0" style="-fx-background-color: #4682B4; -fx-border-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.paymentDialogController">
+<AnchorPane prefHeight="550.0" prefWidth="700.0" style="-fx-background-color: #4682B4; -fx-border-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.paymentDialogController">
    <children>
-      <MaterialDesignIconView fill="WHITE" glyphName="CLOSE_BOX" layoutX="349.0" layoutY="23.0" onMouseClicked="#close" size="25" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Label layoutX="38.0" layoutY="72.0" prefHeight="36.0" prefWidth="300.0" text="In odrer to commit for buying a ticket," textFill="WHITE">
+      <MaterialDesignIconView fill="WHITE" glyphName="CLOSE_BOX" layoutX="649.0" layoutY="36.0" onMouseClicked="#close" size="25" strokeType="OUTSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+      <RadioButton fx:id="offer_dot" layoutX="73.0" layoutY="73.0" mnemonicParsing="false" onAction="#select_offer" prefHeight="34.0" prefWidth="194.0" text="Send Purchase Offer" textFill="WHITE" AnchorPane.leftAnchor="72.0" AnchorPane.topAnchor="72.0">
          <font>
             <Font name="Century Gothic" size="16.0" />
          </font>
-      </Label>
-      <Label layoutX="32.0" layoutY="108.0" prefHeight="36.0" prefWidth="313.0" text="you will need to pay full cost of the item." textFill="WHITE">
+         <toggleGroup>
+            <ToggleGroup fx:id="offer" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="trade_dot" layoutX="72.0" layoutY="151.0" mnemonicParsing="false" onAction="#select_trade" prefHeight="34.0" prefWidth="167.0" text="Send Trade Offer" textFill="WHITE" toggleGroup="$offer">
          <font>
             <Font name="Century Gothic" size="16.0" />
          </font>
-      </Label>
-      <Label layoutX="22.0" layoutY="144.0" prefHeight="36.0" prefWidth="333.0" text="In case your application will be approved," textFill="WHITE">
+      </RadioButton>
+      <TextArea fx:id="msg" layoutX="27.0" layoutY="232.0" prefHeight="74.0" prefWidth="646.0" promptText="Enter message here" styleClass="text-area-msg" stylesheets="@style.css">
+         <font>
+            <Font name="Century Gothic" size="14.0" />
+         </font>
+      </TextArea>
+      <Button layoutX="279.0" layoutY="491.0" mnemonicParsing="false" onAction="#submit" prefHeight="45.0" prefWidth="142.0" style="-fx-background-color: #FFFFFF;" text="Send Request">
          <font>
             <Font name="Century Gothic" size="16.0" />
          </font>
-      </Label>
-      <Label layoutX="18.0" layoutY="180.0" prefHeight="36.0" prefWidth="342.0" text="the transaction will complete automatically" textFill="WHITE">
-         <font>
-            <Font name="Century Gothic" size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="25.0" layoutY="210.0" prefHeight="36.0" prefWidth="329.0" text="Otherwise your payment will be refunded." textFill="WHITE">
-         <font>
-            <Font name="Century Gothic" size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="78.0" layoutY="294.0" prefHeight="36.0" prefWidth="132.0" text="Invoice Amount:" textFill="WHITE">
-         <font>
-            <Font name="Century Gothic" size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="price_lbl" layoutX="210.0" layoutY="294.0" prefHeight="36.0" prefWidth="132.0" text="\$PRICE" textFill="WHITE">
-         <font>
-            <Font name="Century Gothic" size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="78.0" layoutY="344.0" prefHeight="36.0" prefWidth="132.0" text="Checkout with:" textFill="WHITE">
-         <font>
-            <Font name="Century Gothic" size="16.0" />
-         </font>
-      </Label>
-      <FontAwesomeIconView fill="WHITE" glyphName="PAYPAL" layoutX="222.0" layoutY="372.0" onMouseClicked="#payAndClose" size="30" strokeType="OUTSIDE" strokeWidth="0.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></FontAwesomeIconView>
+      </Button>
+      <Label layoutX="101.0" layoutY="106.0" prefHeight="17.0" prefWidth="550.0" text="In this case you will need to meet with the seller in person, and pay the seller in cash." textFill="WHITE" />
+      <Label layoutX="101.0" layoutY="123.0" prefHeight="17.0" prefWidth="550.0" text="It`s best if you will send you prefered meeting details in the message below." textFill="WHITE" />
+      <Label layoutX="101.0" layoutY="185.0" prefHeight="17.0" prefWidth="550.0" text="In this case you need to select a existing listed valation you own from list below." textFill="WHITE" />
+      <Label layoutX="101.0" layoutY="202.0" prefHeight="17.0" prefWidth="550.0" text="You may add additional information of your choosing in the message below." textFill="WHITE" />
+      <ListView fx:id="my_vc" disable="true" layoutX="27.0" layoutY="314.0" prefHeight="143.0" prefWidth="646.0" />
    </children>
 </AnchorPane>

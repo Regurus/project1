@@ -4,13 +4,11 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
 import Controller.*;
-import Model.ImageSaver;
-import Model.PurchaseApplication;
-import Model.PurchasedVacation;
-import Model.Vacation;
+import Model.*;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -34,8 +32,9 @@ public class uiController extends windowController implements InitialiableWindow
     protected resultItemController item;
     private HashMap<resultItemController,Node> resultsList = new HashMap<>();
     private HashMap<purchasedItemController,Node> purchasedList = new HashMap<>();
-    private HashMap<myListingsItemController,Node> myListingList = new HashMap<>();
-
+    public HashMap<myListingsItemController,Node> myListingList = new HashMap<>();
+    private HashMap<MessagingItemController,Node> myMessagesList = new HashMap<>();
+    private HashMap<String,Node> myMessagesSessionList = new HashMap<>();
     //<editor-fold desc="Settings Controls">
     @FXML
     private TextField username;
@@ -137,8 +136,7 @@ public class uiController extends windowController implements InitialiableWindow
     private TextArea add_text_description;
     @FXML
     private ImageView add_image_preview;
-    @FXML
-    private Label add_msg;
+
     //</editor-fold>
 
     //<editor-fold desc="Search">
@@ -146,6 +144,17 @@ public class uiController extends windowController implements InitialiableWindow
     private DatePicker searchDate;
     @FXML
     private TextField searchBox;
+    //</editor-fold>
+
+    //<editor-fold desc="Messages">
+    @FXML
+    private TilePane msg_controls;
+    @FXML
+    private Label add_msg;
+    @FXML
+    private AnchorPane msg_scr;
+    @FXML
+    private AnchorPane msg_content;
     //</editor-fold>
 
     public void initialize(){
@@ -156,6 +165,7 @@ public class uiController extends windowController implements InitialiableWindow
         initializePublished();
         initializeHomeScreen();
         initializePurchases();
+        initializeMessages();
         //scrollPane.setContent(this.test_container);
     }
     private void initializeInterfaces(){
@@ -166,6 +176,7 @@ public class uiController extends windowController implements InitialiableWindow
         SearchInterface.SI = new SearchInterface();
         AddVacationInterface.AVI = new AddVacationInterface();
         EditInterface.EI = new EditInterface();
+        MessagingInterface.MI = new MessagingInterface();
 
     }
     private void initializeHomeScreen(){
@@ -192,10 +203,49 @@ public class uiController extends windowController implements InitialiableWindow
         lname.setText(this.userValues[3]);
         city.setText(this.userValues[4]);
     }
+    private void initializeMessages(){
+        MessagingSession[] user_msg = MessagingInterface.MI.getAllUsersConversations(LoginInterface.getCurrentUser());
+
+        for(int i=0;i<user_msg.length;i++){
+            //loadindg left hand section (message session selection menu)
+            String msg_with = " ";
+            if(user_msg[i].getUser1().equalsIgnoreCase(LoginInterface.getCurrentUser()))
+                msg_with = user_msg[i].getUser2();
+            else
+                msg_with = user_msg[i].getUser1();
+            Button msg_control = new Button(msg_with);
+            msg_control.setStyle("-fx-font: 16 Century Gothic; -fx-background-color: #FFFFFF;-fx-text-fill: #4682B4;-fx-pref-height: 40px;-fx-pref-width: 200px;");
+            msg_control.setOnAction(new EventHandler<ActionEvent>(){
+                @Override
+                public void handle(ActionEvent event) {
+                    event.getSource();
+                }
+            });
+            //end procedure
+            //loading items for right hand section (actual messaging sessions)
+            this.msg_controls.getChildren().add(msg_control);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/messageSessionItem.fxml"));
+            Node res = null;
+            try{
+                res = fxmlLoader.load();
+            }
+            catch (Exception e){
+                System.out.println("FXML Loading error! @/messageSessionItem.fxml");
+            }
+            MessagingItemController controller = (MessagingItemController)fxmlLoader.getController();
+            controller.defineContent(user_msg[i]);
+            this.myMessagesList.put(controller,res);
+            this.myMessagesSessionList.put(msg_with,res);
+            //end procedure
+        }
+
+    }
+    @FXML
     private void initializePurchases(){
         PurchasesInterface.PI.getPublishedItems();
     }
-    public void handleUpdate() {
+    @FXML
+    private void handleUpdate() {
         boolean dataChanged = false;
         boolean passwordChanged = false;
         if(!fname.getText().equals(this.userValues[2])||!lname.getText().equals(this.userValues[3])||!city.getText().equals(this.userValues[4]))
@@ -229,7 +279,8 @@ public class uiController extends windowController implements InitialiableWindow
             this.home_btn.fire();
         }
     }
-    public void handleMenuClick(ActionEvent actionEvent){
+    @FXML
+    private void handleMenuClick(ActionEvent actionEvent){
         int newButton=0;
         if (actionEvent.getSource() == home_btn) {
             home_scr.toFront();
@@ -249,21 +300,25 @@ public class uiController extends windowController implements InitialiableWindow
         }
         this.updateMenu(newButton);
     }
-    public void handleSettingsClick(){
+    @FXML
+    private void handleSettingsClick(){
         user_edit_pane.toFront();
     }
-    public void handleMessagesClick(){
+    private void handleMessagesClick(Button pressed){
 
     }
-    public void handleLogoutClick(){
+    @FXML
+    private void handleLogoutClick(){
         LoginInterface.nullifyCurrentUser();
         this.openNewWindowAndCloseOld("Vaction4U","/signIn.fxml",600, 400);
         this.home_btn.getScene().getWindow().fireEvent(new WindowEvent(this.home_btn.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
-    public void handleClose(){
+    @FXML
+    private void handleClose(){
         this.home_btn.getScene().getWindow().fireEvent(new WindowEvent(this.home_btn.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
-    public void handleOpenImage(){
+    @FXML
+    private void handleOpenImage(){
         FileChooser fileChooser = new FileChooser();
         File selectedImage = fileChooser.showOpenDialog(null);
         if(selectedImage !=null){
@@ -280,11 +335,13 @@ public class uiController extends windowController implements InitialiableWindow
             add_msg.setText("Invalid Image File");
         }
     }
-    public void handleSearch(){
+    @FXML
+    private void handleSearch(){
         this.home_scr_items.getChildren().clear();
         SearchInterface.SI.search(this.searchBox.getText(),this.searchDate.getValue());
     }
-    public void handlePublishNewVacation(ActionEvent actionEvent) {
+    @FXML
+    private void handlePublishNewVacation(ActionEvent actionEvent) {
         String uniqueID = UUID.randomUUID().toString();
         Vacation vacation = new Vacation(add_text_region.getText(),add_text_city.getText(),add_text_price.getText(),add_date_start.getValue().toString(),add_date_end.getValue().toString(),add_text_description.getText(),this.imageID,uniqueID,LoginInterface.getCurrentUser(),"admin");
         if(AddVacationInterface.AVI.detailsApprove(vacation.toStringArray())){
@@ -294,18 +351,21 @@ public class uiController extends windowController implements InitialiableWindow
         else
             this.add_msg.setText("All fields are required!");
     }
-    public void handleApplication(){
-        this.openNewWindow("Payment", "/paymentDialog.fxml",375,419);
+    @FXML
+    private void handleApplication(){
+        this.openNewWindow("Payment", "/paymentDialog.fxml",700,550);
         if(this.purchase_decision){
-            //do add application
-            String vacation_id = item.item.getListing_id();//vacation_id
-            String applicant = LoginInterface.getCurrentUser();//applicant
-            PurchaseApplication purchaseApplication = new PurchaseApplication(vacation_id,applicant);
-            PurchaseApplicationInterface.PAI.acceptApplication(purchaseApplication);
             this.home_scr_items.getChildren().remove(this.resultsList.get(this.item));
             this.purchase_decision =false;
             this.home_btn.fire();
         }
+    }
+    @FXML
+    private void handleOpenMSG(){
+        this.msg_scr.toFront();
+    }
+    private void openMessageSession(String with){
+        this.msg_content = (AnchorPane)this.myMessagesSessionList.get(with);
     }
     private void updateMenu(int newActiveButton){
         Button active = null;
@@ -373,7 +433,7 @@ public class uiController extends windowController implements InitialiableWindow
             return (Item)controller;
         }
         catch (Exception e){
-            System.out.println("FXML Error");
+            System.out.println("FXML Error @"+name);
         }
         return null;
     }

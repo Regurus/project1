@@ -27,7 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox fx:id="parent" prefHeight="680.0" prefWidth="1179.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.uiController">
+<HBox fx:id="parent" prefHeight="680.0" prefWidth="1179.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.uiController">
    <children>
       <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="100.0" style="-fx-background-color: #4682B4;">
          <children>
@@ -113,6 +113,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
@@ -125,6 +126,14 @@
                                           <Font name="Century Gothic Bold" size="14.0" />
                                        </font></Label>
                                     <Label fx:id="settings_btn" onMouseClicked="#handleSettingsClick" text="Settings" textFill="WHITE" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="Century Gothic" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Label>
+                                    <Label onMouseClicked="#handleOpenMSG" text="Messages" textFill="WHITE" GridPane.rowIndex="4">
                                        <font>
                                           <Font name="Century Gothic" size="14.0" />
                                        </font>
@@ -390,6 +399,20 @@
                               </HBox>
                            </children>
                         </AnchorPane>
+                        <AnchorPane fx:id="home_scr" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #4682b4;">
+                           <children>
+                              <Separator layoutY="232.0" prefHeight="0.0" prefWidth="1101.0" />
+                              <ImageView fitHeight="231.0" fitWidth="1101.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/stock_theme.png" />
+                                 </image></ImageView>
+                              <ScrollPane hbarPolicy="NEVER" layoutY="232.0" prefHeight="347.0" prefWidth="1101.0">
+                                 <content>
+                                    <TilePane fx:id="home_scr_items" prefWidth="1086.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
                         <AnchorPane fx:id="details_scr" style="-fx-background-color: #FFFFFF;">
                            <children>
                               <GridPane prefHeight="580.0" prefWidth="1101.0">
@@ -448,18 +471,17 @@
                                  </children>
                               </GridPane>
                            </children></AnchorPane>
-                        <AnchorPane fx:id="home_scr" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #4682b4;">
+                        <AnchorPane fx:id="msg_scr" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #4682b4;">
                            <children>
-                              <Separator layoutY="232.0" prefHeight="0.0" prefWidth="1101.0" />
-                              <ImageView fitHeight="231.0" fitWidth="1101.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/stock_theme.png" />
-                                 </image></ImageView>
-                              <ScrollPane hbarPolicy="NEVER" layoutY="232.0" prefHeight="347.0" prefWidth="1101.0">
-                                 <content>
-                                    <TilePane fx:id="home_scr_items" prefWidth="1086.0" />
-                                 </content>
-                              </ScrollPane>
+                              <HBox prefHeight="580.0" prefWidth="250.0">
+                                 <children>
+                                    <TilePane fx:id="msg_controls" prefHeight="580.0" prefWidth="250.0" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="250.0" prefHeight="580.0" prefWidth="850.0">
+                                 <children>
+                                    <AnchorPane prefHeight="580.0" prefWidth="855.0" />
+                                 </children></HBox>
                            </children>
                         </AnchorPane>
                      </children>

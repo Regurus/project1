@@ -52,10 +52,10 @@ public class MessageSystemDatabase extends Database{
                 flag = true;
             }
             if(!flag){
-                this.editTuple(fields[0],fields[1],"content",temp.getString(5)+MessageSystemDatabase.delimiter+new_message);
+                this.editTuple(values[0],values[1],"content",temp.getString(5)+MessageSystemDatabase.delimiter+new_message);
             }
             else{
-                this.editTuple(otherFields[0],otherFields[1],"content",temp.getString(5)+MessageSystemDatabase.delimiter+new_message);
+                this.editTuple(values[1],values[0],"content",temp.getString(5)+MessageSystemDatabase.delimiter+new_message);
             }
         }
         catch (Exception e){
@@ -105,10 +105,15 @@ public class MessageSystemDatabase extends Database{
         MessagingSession[] p1 = this.parseConversation(this.getTuplesByField("user1",user));
         MessagingSession[] p2 = this.parseConversation(this.getTuplesByField("user2",user));
         MessagingSession[] result = new MessagingSession[p1.length+p2.length];
-        if(p1.length>0)
-            System.arraycopy(p1,0,result,0,p1.length);
-        if(p2.length>0)
-            System.arraycopy(p2,0,result,p1.length-1,p2.length);
+        int currentIndex = 0;
+        for(int i=0;i<p1.length;i++){
+            result[currentIndex] = p1[i];
+            currentIndex++;
+        }
+        for(int i=0;i<p2.length;i++){
+            result[currentIndex] = p2[i];
+            currentIndex++;
+        }
         return result;
     }
 }

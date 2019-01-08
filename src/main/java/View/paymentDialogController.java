@@ -57,10 +57,10 @@ public class paymentDialogController {
             PurchaseApplication purchaseApplication = new PurchaseApplication(vacation_id,applicant);
             PurchaseApplicationInterface.PAI.acceptApplication(purchaseApplication);
             if(MessagingInterface.MI.sessionExists(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner()))
-                MessagingInterface.MI.sendMessage(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner(),"System"+MessagingItemController.delimiter+"Hello there is someone interested in your listing: "+this.msg.getText());
+                MessagingInterface.MI.sendMessage(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner(),"System"+MessagingItemController.delimiter+"Hello there is someone interested in your listing: "+uiController.Ui.item.item.getListing_id());
             else
-                MessagingInterface.MI.createNewConversation(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner(),"System"+MessagingItemController.delimiter+"Hello there is someone interested in your listing: ");
-            MessagingInterface.MI.sendMessage(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner(),LoginInterface.getCurrentUser()+MessagingItemController.delimiter+this.msg.getText());
+                MessagingInterface.MI.createNewConversation(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner(),"System"+MessagingItemController.delimiter+"Hello there is someone interested in your listing: "+uiController.Ui.item.item.getListing_id());
+            MessagingInterface.MI.sendMessage(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner(),this.msg.getText());
         }
         if(trade){
             String vacation_id = uiController.Ui.item.item.getListing_id();//vacation_id
@@ -68,10 +68,10 @@ public class paymentDialogController {
             PurchaseApplication purchaseApplication = new PurchaseApplication(vacation_id,applicant+paymentDialogController.delimiter+this.myItems.get(this.my_vc.getSelectionModel().getSelectedIndex()).getListing_id());
             PurchaseApplicationInterface.PAI.acceptApplication(purchaseApplication);
             if(MessagingInterface.MI.sessionExists(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner()))
-                MessagingInterface.MI.sendMessage(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner(),"System"+MessagingItemController.delimiter+"Hello there is someone interested in your listing, and want to trade it for vacation #"+this.myItems.get(this.my_vc.getSelectionModel().getSelectedIndex()).getListing_id()+": "+this.msg.getText());
+                MessagingInterface.MI.sendMessage(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner(),"System"+MessagingItemController.delimiter+"Hello there is someone interested in your listing("+uiController.Ui.item.item.getListing_id()+"), and want to trade it for vacation #"+this.myItems.get(this.my_vc.getSelectionModel().getSelectedIndex()).getListing_id()+": "+this.msg.getText());
             else
-                MessagingInterface.MI.createNewConversation(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner(),"System"+MessagingItemController.delimiter+"Hello there is someone interested in your listing, and want to trade it for vacation #"+this.myItems.get(this.my_vc.getSelectionModel().getSelectedIndex()).getListing_id()+": "+this.msg.getText());
-            MessagingInterface.MI.sendMessage(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner(),LoginInterface.getCurrentUser()+MessagingItemController.delimiter+this.msg.getText());
+                MessagingInterface.MI.createNewConversation(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner(),"System"+MessagingItemController.delimiter+"Hello there is someone interested in your listing("+uiController.Ui.item.item.getListing_id()+"), and want to trade it for vacation #"+this.myItems.get(this.my_vc.getSelectionModel().getSelectedIndex()).getListing_id()+": "+this.msg.getText());
+            MessagingInterface.MI.sendMessage(LoginInterface.getCurrentUser(),uiController.Ui.item.item.getOwner(),this.msg.getText());
         }
         this.my_vc.getScene().getWindow().fireEvent(new WindowEvent(this.my_vc.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }

@@ -6,6 +6,8 @@ import Model.MessagingSession;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
+import java.util.regex.Pattern;
+
 
 public class MessagingItemController {
     public static final String delimiter = ":+:";
@@ -26,13 +28,16 @@ public class MessagingItemController {
     @FXML
     private void sendMessage(){
         MessagingInterface.MI.sendMessage(item.getUser1(),item.getUser2(),msg_new.getText());
-        msg_cont.setText(msg_cont+"You: "+msg_new.getText()+'\n');
+        msg_cont.setText(msg_cont.getText()+"You: "+msg_new.getText()+'\n');
         msg_new.setText("");
     }
     private void load(){
         String[] content = this.item.getMessages();
+        Pattern pattern = Pattern.compile(Pattern.quote(MessagingItemController.delimiter));
         for(int i=0;i<content.length;i++){
-            String[] buffer = content[i].split(MessagingItemController.delimiter);
+            if(content[i].length()<5)
+                continue;;
+            String[] buffer = pattern.split(content[i]);
             if(buffer[0].equalsIgnoreCase(LoginInterface.getCurrentUser()))
                 msg_cont.setText(msg_cont.getText()+"You: "+buffer[1]+'\n');
             else

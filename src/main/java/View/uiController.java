@@ -214,11 +214,13 @@ public class uiController extends windowController implements InitialiableWindow
             else
                 msg_with = user_msg[i].getUser1();
             Button msg_control = new Button(msg_with);
-            msg_control.setStyle("-fx-font: 16 Century Gothic; -fx-background-color: #FFFFFF;-fx-text-fill: #4682B4;-fx-pref-height: 40px;-fx-pref-width: 200px;");
+            msg_control.setStyle("-fx-font-family: \"Century Gothic\"; -fx-font-size: 20; -fx-background-color: #FFFFFF;-fx-text-fill: #4682B4;-fx-pref-height: 40px;-fx-pref-width: 200px;");
             msg_control.setOnAction(new EventHandler<ActionEvent>(){
                 @Override
                 public void handle(ActionEvent event) {
-                    event.getSource();
+                    Button pressed = (Button)event.getTarget();
+                    String msg_with = pressed.getText();
+                    openMessageSession(msg_with);
                 }
             });
             //end procedure
@@ -359,13 +361,16 @@ public class uiController extends windowController implements InitialiableWindow
             this.purchase_decision =false;
             this.home_btn.fire();
         }
+        this.msg_controls.getChildren().removeAll();
+        this.initializeMessages();
     }
     @FXML
     private void handleOpenMSG(){
         this.msg_scr.toFront();
     }
     private void openMessageSession(String with){
-        this.msg_content = (AnchorPane)this.myMessagesSessionList.get(with);
+        this.msg_content.getChildren().clear();
+        this.msg_content.getChildren().add(this.myMessagesSessionList.get(with));
     }
     private void updateMenu(int newActiveButton){
         Button active = null;

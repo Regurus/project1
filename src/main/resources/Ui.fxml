@@ -473,15 +473,16 @@
                            </children></AnchorPane>
                         <AnchorPane fx:id="msg_scr" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #4682b4;">
                            <children>
-                              <HBox prefHeight="580.0" prefWidth="250.0">
+                              <HBox layoutX="30.0" prefHeight="580.0" prefWidth="220.0">
                                  <children>
-                                    <TilePane fx:id="msg_controls" prefHeight="580.0" prefWidth="250.0" />
+                                    <TilePane fx:id="msg_controls" prefHeight="580.0" prefWidth="226.0" vgap="5.0" />
                                  </children>
                               </HBox>
                               <HBox layoutX="250.0" prefHeight="580.0" prefWidth="850.0">
                                  <children>
-                                    <AnchorPane prefHeight="580.0" prefWidth="855.0" />
+                                    <AnchorPane fx:id="msg_content" prefHeight="580.0" prefWidth="855.0" />
                                  </children></HBox>
+                              <HBox prefHeight="580.0" prefWidth="32.0" />
                            </children>
                         </AnchorPane>
                      </children>
